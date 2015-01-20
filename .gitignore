@@ -1,1 +1,6 @@
 Electronics/RC-ELEC-05_HardDrive/HardDriveImage/SeniorProjectBlankXPHD.img
+Firmware/firmware/app.elf
+Firmware/firmware/app.elf.ver
+Firmware/firmware/app.map
+*.o
+*.d
