@@ -1,0 +1,9 @@
+-batch 
+-create fan_controller 
+-ver 1.00.a 
+-dir "C:\P4\Projects\PlateCycler\Beta\Firmware\fpga_board" 
+-lang vhdl 
+-bus plbv46 s 
+-reg 4 
+-xps 
+-ise 

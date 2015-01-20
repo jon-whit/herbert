@@ -1,0 +1,9 @@
+-batch 
+-create relay_controller 
+-ver 1.00.a 
+-dir "C:\Users\Lytle\Desktop\SeniorProjectFirmware\fpga_board" 
+-lang vhdl 
+-bus plbv46 s 
+-reg 6 
+-xps 
+-ise 

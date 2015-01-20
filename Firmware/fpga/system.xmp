@@ -1,0 +1,115 @@
+#Please do not modify this file by hand
+XmpVersion: 10.1.03
+VerMgmt: 10.1.03
+IntStyle: default
+MHS File: system.mhs
+MSS File: system.mss
+NPL File: projnav/system.ise
+Architecture: spartan3a
+Device: xc3s1400a
+Package: fg676
+SpeedGrade: -4
+UserCmd1: 
+UserCmd1Type: 0
+UserCmd2: 
+UserCmd2Type: 0
+TopInst: system_i
+GenSimTB: 0
+InsertNoPads: 0
+WarnForEAArch: 1
+HdlLang: VHDL
+Simulator: mti
+SimModel: BEHAVIORAL
+MixLangSim: 1
+UcfFile: data/system.ucf
+FpgaImpMode: 0
+EnableParTimingError: 0
+EnableResetOptimization: 0
+ShowLicenseDialog: 1
+LockAddr: DDR2_SDRAM,C_MPMC_BASEADDR,user_flash_spi,C_BASEADDR,config_flash_spi,C_BASEADDR,timer,C_BASEADDR,intc,C_BASEADDR,sbc_uart,C_BASEADDR,system,C_BASEADDR
+ICacheAddr: DDR2_SDRAM,,,
+DCacheAddr: DDR2_SDRAM,,,,
+Processor: microblaze_0
+BootLoop: 0
+XmdStub: 0
+SwProj: bootloader
+Processor: microblaze_0
+Executable: firmware/bootloader.elf
+Source: firmware/bootloader/main.c
+Source: firmware/bootloader/comm.c
+Source: firmware/bootloader/serial.c
+Source: firmware/bootloader/stubs.c
+Source: firmware/bootloader/timer.c
+Source: firmware/bootloader/vectors.c
+Source: firmware/common/assert.c
+Source: firmware/common/AT45DB161D.c
+Source: firmware/common/conversion.c
+Source: firmware/common/crc32.c
+Source: firmware/common/errors.c
+Source: firmware/common/flash.c
+Source: firmware/common/interrupt.c
+Source: firmware/common/processor.c
+Source: firmware/common/reboot.c
+Source: firmware/common/sprintf.c
+Source: firmware/common/printf.c
+Source: firmware/common/spi.c
+Source: firmware/common/update.c
+DefaultInit: EXECUTABLE
+InitBram: 1
+Active: 1
+CompilerOptLevel: 4
+GlobPtrOpt: 0
+DebugSym: 1
+ProfileFlag: 0
+SearchIncl: ./firmware/bootloader ./firmware/common
+ProgStart: 
+StackSize: 
+HeapSize: 
+LinkerScript: firmware/bootloader.ld
+ProgCCFlags: -Wall -DBOOTLOADER
+CompileInXps: 1
+NonXpsApp: 0
+SwProj: application
+Processor: microblaze_0
+Executable: firmware/app.elf
+Source: firmware/app/main.c
+Source: firmware/app/cache.c
+Source: firmware/app/comm.c
+Source: firmware/app/initialization.c
+Source: firmware/app/motion.c
+Source: firmware/app/os.c
+Source: firmware/app/serial.c
+Source: firmware/app/signal.c
+Source: firmware/app/startup.c
+Source: firmware/app/steppers.c
+Source: firmware/app/stepper_hw.c
+Source: firmware/app/timer.c
+Source: firmware/common/assert.c
+Source: firmware/common/AT45DB161D.c
+Source: firmware/common/conversion.c
+Source: firmware/common/crc16.c
+Source: firmware/common/crc32.c
+Source: firmware/common/errors.c
+Source: firmware/common/flash.c
+Source: firmware/common/interrupt.c
+Source: firmware/common/lcd.c
+Source: firmware/common/processor.c
+Source: firmware/common/reboot.c
+Source: firmware/common/spi.c
+Source: firmware/common/update.c
+Source: firmware/app/relay.c
+DefaultInit: EXECUTABLE
+InitBram: 0
+Active: 1
+CompilerOptLevel: 0
+GlobPtrOpt: 0
+DebugSym: 1
+ProfileFlag: 0
+SearchIncl: ./firmware/app ./firmware/common
+ProgStart: 
+StackSize: 
+HeapSize: 
+LinkerScript: firmware/app.ld
+ProgCCFlags: -Wall
+CompileInXps: 1
+NonXpsApp: 0

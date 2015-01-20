@@ -1,0 +1,456 @@
+
+# ##############################################################################
+# Created by Base System Builder Wizard for Xilinx EDK 10.1.03 Build EDK_K_SP3.6
+# Tue Jul 07 12:08:10 2009
+# Target Board:  Custom
+# Family:    spartan3a
+# Device:    xc3s1400a
+# Package:   fg676
+# Speed Grade:  -4
+# Processor: microblaze_0
+# System clock frequency: 66.67 MHz
+# On Chip Memory :  16 KB
+# Total Off Chip Memory : 128 MB
+# - DDR2_SDRAM = 128 MB
+# ##############################################################################
+ PARAMETER VERSION = 2.1.0
+
+
+ PORT fpga_0_DDR2_SDRAM_DDR2_ODT_pin = fpga_0_DDR2_SDRAM_DDR2_ODT, DIR = O
+ PORT fpga_0_DDR2_SDRAM_DDR2_Addr_pin = fpga_0_DDR2_SDRAM_DDR2_Addr, DIR = O, VEC = [12:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_BankAddr_pin = fpga_0_DDR2_SDRAM_DDR2_BankAddr, DIR = O, VEC = [1:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_CAS_n_pin = fpga_0_DDR2_SDRAM_DDR2_CAS_n, DIR = O
+ PORT fpga_0_DDR2_SDRAM_DDR2_CE_pin = fpga_0_DDR2_SDRAM_DDR2_CE, DIR = O
+ PORT fpga_0_DDR2_SDRAM_DDR2_CS_n_pin = fpga_0_DDR2_SDRAM_DDR2_CS_n, DIR = O
+ PORT fpga_0_DDR2_SDRAM_DDR2_RAS_n_pin = fpga_0_DDR2_SDRAM_DDR2_RAS_n, DIR = O
+ PORT fpga_0_DDR2_SDRAM_DDR2_WE_n_pin = fpga_0_DDR2_SDRAM_DDR2_WE_n, DIR = O
+ PORT fpga_0_DDR2_SDRAM_DDR2_DM_pin = fpga_0_DDR2_SDRAM_DDR2_DM, DIR = O, VEC = [3:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_DQS = fpga_0_DDR2_SDRAM_DDR2_DQS, DIR = IO, VEC = [3:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_DQS_n = fpga_0_DDR2_SDRAM_DDR2_DQS_n, DIR = IO, VEC = [3:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_DQ = fpga_0_DDR2_SDRAM_DDR2_DQ, DIR = IO, VEC = [31:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_Clk_pin = fpga_0_DDR2_SDRAM_DDR2_Clk, DIR = O, VEC = [1:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_Clk_n_pin = fpga_0_DDR2_SDRAM_DDR2_Clk_n, DIR = O, VEC = [1:0]
+ PORT fpga_0_DDR2_SDRAM_DDR2_DQS_Div_I_pin = fpga_0_DDR2_SDRAM_DDR2_DQS_Div_I, DIR = I
+ PORT fpga_0_DDR2_SDRAM_DDR2_DQS_Div_O_pin = fpga_0_DDR2_SDRAM_DDR2_DQS_Div_O, DIR = O
+ PORT sys_clk_pin = dcm_clk_s, DIR = I, SIGIS = CLK, CLK_FREQ = 125000000
+ PORT sys_rst_pin = sys_rst_s, DIR = I, RST_POLARITY = 0, SIGIS = RST
+ PORT debug_uart_TX_pin = debug_uart_TX, DIR = O
+ PORT debug_uart_RX_pin = debug_uart_RX, DIR = I
+ PORT sbc_uart_TX_pin = sbc_uart_TX, DIR = O
+ PORT sbc_uart_RX_pin = sbc_uart_RX, DIR = I
+ PORT pwm_lid_pwm_drive_pin = pwm_lid_pwm_drive, DIR = O, VEC = [0:1]
+ PORT pwm_pwm_error_pin = pwm_pwm_error, DIR = I, VEC = [0:23]
+ PORT pwm_pwm_enable_pin = pwm_pwm_enable, DIR = O, VEC = [0:23]
+ PORT pwm_pwm_drive_neg_pin = pwm_pwm_drive_neg, DIR = O, VEC = [0:23]
+ PORT pwm_pwm_drive_pos_pin = pwm_pwm_drive_pos, DIR = O, VEC = [0:23]
+ PORT sensor_a_spi_MOSI_O_pin = sensor_a_spi_MOSI_O, DIR = O
+ PORT sensor_a_spi_MISO_I_pin = sensor_a_spi_MISO_I, DIR = I
+ PORT sensor_a_spi_SCK_O_pin = sensor_a_spi_SCK_O, DIR = O
+ PORT motor_direction_pin = motor_direction, DIR = O
+ PORT motor_step_pin = motor_step, DIR = O
+ PORT motor_sensor_in_pin = motor_sensor_in, DIR = I, VEC = [0:1]
+ PORT motor_channel_sel_pin = motor_channel_sel, DIR = O, VEC = [0:1]
+ PORT motor_enable_pin = motor_enable, DIR = O, VEC = [0:2]
+ PORT led_spi_MOSI_O_pin = led_spi_MOSI_O, DIR = O
+ PORT led_spi_MISO_I_pin = led_spi_MISO_I, DIR = I
+ PORT led_spi_SCK_O_pin = led_spi_SCK_O, DIR = O
+ PORT lcd_data_IO = lcd_data_IO, DIR = IO, VEC = [0:7]
+ PORT lcd_rw_pin = lcd_rw, DIR = O
+ PORT lcd_rs_pin = lcd_rs, DIR = O
+ PORT lcd_enable_pin = lcd_enable, DIR = O
+ PORT config_flash_spi_SS_O_pin = config_flash_spi_SS_O, DIR = O, VEC = [0:0]
+ PORT config_flash_spi_SCK_O_pin = config_flash_spi_SCK_O, DIR = O
+ PORT config_flash_spi_MOSI_O_pin = config_flash_spi_MOSI_O, DIR = O
+ PORT config_flash_spi_MISO_I_pin = config_flash_spi_MISO_I, DIR = I
+ PORT user_flash_spi_SS_O_pin = user_flash_spi_SS_O, DIR = O, VEC = [0:0]
+ PORT user_flash_spi_SCK_O_pin = user_flash_spi_SCK_O, DIR = O
+ PORT user_flash_spi_MOSI_O_pin = user_flash_spi_MOSI_O, DIR = O
+ PORT user_flash_spi_MISO_I_pin = user_flash_spi_MISO_I, DIR = I
+ PORT spi_control_sensor_a_addr_pin = spi_control_sensor_a_addr, DIR = O, VEC = [0:3]
+ PORT spi_control_led_channel_pin = spi_control_led_channel, DIR = O, VEC = [0:2]
+ PORT spi_control_led_spi_addr_pin = spi_control_led_spi_addr, DIR = O, VEC = [0:2]
+ PORT spi_control_led_photo_sel_pin = spi_control_led_photo_sel, DIR = O
+ PORT spi_control_led_fan_enable_pin = spi_control_led_fan_enable, DIR = O
+ PORT spi_control_led_enable_pin = spi_control_led_enable, DIR = O
+ PORT spi_control_led_analog_control_pin = spi_control_led_analog_control, DIR = O
+ PORT system_dip_sw_pin = system_dip_sw, DIR = I, VEC = [0:3]
+ PORT system_debug_leds_pin = system_debug_leds, DIR = O, VEC = [0:7]
+ PORT system_activity_led_pin = system_activity_led, DIR = O
+ PORT system_heartbeat_led_pin = system_heartbeat_led, DIR = O
+ PORT system_bootloader_led_pin = system_bootloader_led, DIR = O
+ PORT relay_L_pin = relay_L, DIR = O
+ PORT relay_B_pin = relay_B, DIR = O
+ PORT relay_D_pin = relay_D, DIR = O
+ PORT relay_R_pin = relay_R, DIR = O
+ PORT relay_F_pin = relay_F, DIR = O
+ PORT relay_U_pin = relay_U, DIR = O
+ PORT motor2_direction_pin = motor2_direction, DIR = O
+ PORT motor2_step_pin = motor2_step, DIR = O
+ PORT motor2_sensor_in_pin = motor2_sensor_in, DIR = I, VEC = [0:1]
+ PORT motor2_channel_sel_pin = motor2_channel_sel, DIR = O, VEC = [0:1]
+ PORT motor2_enable_pin = motor2_enable, DIR = O, VEC = [0:2]
+
+
+BEGIN microblaze
+ PARAMETER INSTANCE = microblaze_0
+ PARAMETER HW_VER = 7.10.d
+ PARAMETER C_USE_ICACHE = 1
+ PARAMETER C_USE_DCACHE = 1
+ PARAMETER C_DEBUG_ENABLED = 1
+ PARAMETER C_ICACHE_BASEADDR = 0x90000000
+ PARAMETER C_ICACHE_HIGHADDR = 0x93ffffff
+ PARAMETER C_DCACHE_BASEADDR = 0x90000000
+ PARAMETER C_DCACHE_HIGHADDR = 0x93ffffff
+ PARAMETER C_AREA_OPTIMIZED = 1
+ PARAMETER C_FAMILY = spartan3a
+ PARAMETER C_INSTANCE = microblaze_0
+ PARAMETER C_USE_BARREL = 1
+ PARAMETER C_USE_FPU = 2
+ PARAMETER C_USE_DIV = 1
+ PARAMETER C_CACHE_BYTE_SIZE = 2048
+ PARAMETER C_DCACHE_BYTE_SIZE = 2048
+ BUS_INTERFACE DPLB = mb_plb
+ BUS_INTERFACE IPLB = mb_plb
+ BUS_INTERFACE ixcl = ixcl
+ BUS_INTERFACE dxcl = dxcl
+ BUS_INTERFACE DEBUG = microblaze_0_dbg
+ BUS_INTERFACE DLMB = dlmb
+ BUS_INTERFACE ILMB = ilmb
+ PORT MB_RESET = mb_reset
+ PORT INTERRUPT = intc_irq
+END
+
+BEGIN plb_v46
+ PARAMETER INSTANCE = mb_plb
+ PARAMETER HW_VER = 1.03.a
+ PORT PLB_Clk = sys_clk_s
+ PORT SYS_Rst = sys_bus_reset
+END
+
+BEGIN lmb_v10
+ PARAMETER INSTANCE = ilmb
+ PARAMETER HW_VER = 1.00.a
+ PORT LMB_Clk = sys_clk_s
+ PORT SYS_Rst = sys_bus_reset
+END
+
+BEGIN lmb_v10
+ PARAMETER INSTANCE = dlmb
+ PARAMETER HW_VER = 1.00.a
+ PORT LMB_Clk = sys_clk_s
+ PORT SYS_Rst = sys_bus_reset
+END
+
+BEGIN lmb_bram_if_cntlr
+ PARAMETER INSTANCE = dlmb_cntlr
+ PARAMETER HW_VER = 2.10.a
+ PARAMETER C_BASEADDR = 0x00000000
+ PARAMETER C_HIGHADDR = 0x00007fff
+ BUS_INTERFACE SLMB = dlmb
+ BUS_INTERFACE BRAM_PORT = dlmb_port
+END
+
+BEGIN lmb_bram_if_cntlr
+ PARAMETER INSTANCE = ilmb_cntlr
+ PARAMETER HW_VER = 2.10.a
+ PARAMETER C_BASEADDR = 0x00000000
+ PARAMETER C_HIGHADDR = 0x00007fff
+ BUS_INTERFACE SLMB = ilmb
+ BUS_INTERFACE BRAM_PORT = ilmb_port
+END
+
+BEGIN bram_block
+ PARAMETER INSTANCE = lmb_bram
+ PARAMETER HW_VER = 1.00.a
+ BUS_INTERFACE PORTA = ilmb_port
+ BUS_INTERFACE PORTB = dlmb_port
+END
+
+BEGIN mpmc
+ PARAMETER INSTANCE = DDR2_SDRAM
+ PARAMETER HW_VER = 4.03.a
+ PARAMETER C_NUM_PORTS = 3
+ PARAMETER C_PIM0_BASETYPE = 1
+ PARAMETER C_PIM1_BASETYPE = 1
+ PARAMETER C_MEM_PARTNO = MT47H16M16-3
+ PARAMETER C_XCL0_WRITEXFER = 0
+ PARAMETER C_PIM2_BASETYPE = 2
+ PARAMETER C_MPMC_CLK0_PERIOD_PS = 7499
+ PARAMETER C_MEM_DATA_WIDTH = 32
+ PARAMETER C_MEM_REG_DIMM = 0
+ PARAMETER C_MEM_CLK_WIDTH = 2
+ PARAMETER C_MPMC_BASEADDR = 0x90000000
+ PARAMETER C_MPMC_HIGHADDR = 0x93FFFFFF
+ BUS_INTERFACE XCL0 = ixcl
+ BUS_INTERFACE XCL1 = dxcl
+ BUS_INTERFACE SPLB2 = mb_plb
+ PORT DDR2_ODT = fpga_0_DDR2_SDRAM_DDR2_ODT
+ PORT DDR2_Addr = fpga_0_DDR2_SDRAM_DDR2_Addr
+ PORT DDR2_BankAddr = fpga_0_DDR2_SDRAM_DDR2_BankAddr
+ PORT DDR2_CAS_n = fpga_0_DDR2_SDRAM_DDR2_CAS_n
+ PORT DDR2_CE = fpga_0_DDR2_SDRAM_DDR2_CE
+ PORT DDR2_CS_n = fpga_0_DDR2_SDRAM_DDR2_CS_n
+ PORT DDR2_RAS_n = fpga_0_DDR2_SDRAM_DDR2_RAS_n
+ PORT DDR2_WE_n = fpga_0_DDR2_SDRAM_DDR2_WE_n
+ PORT DDR2_DM = fpga_0_DDR2_SDRAM_DDR2_DM
+ PORT DDR2_DQS = fpga_0_DDR2_SDRAM_DDR2_DQS
+ PORT DDR2_DQS_n = fpga_0_DDR2_SDRAM_DDR2_DQS_n
+ PORT DDR2_DQ = fpga_0_DDR2_SDRAM_DDR2_DQ
+ PORT DDR2_Clk = fpga_0_DDR2_SDRAM_DDR2_Clk
+ PORT DDR2_Clk_n = fpga_0_DDR2_SDRAM_DDR2_Clk_n
+ PORT DDR2_DQS_Div_I = fpga_0_DDR2_SDRAM_DDR2_DQS_Div_I
+ PORT DDR2_DQS_Div_O = fpga_0_DDR2_SDRAM_DDR2_DQS_Div_O
+ PORT MPMC_Clk0 = DDR2_SDRAM_mpmc_clk_s
+ PORT MPMC_Clk90 = DDR2_SDRAM_mpmc_clk_90_s
+ PORT MPMC_Rst = sys_periph_reset
+END
+
+BEGIN clock_generator
+ PARAMETER INSTANCE = clock_generator_0
+ PARAMETER HW_VER = 2.01.a
+ PARAMETER C_EXT_RESET_HIGH = 1
+ PARAMETER C_CLKIN_FREQ = 125000000
+ PARAMETER C_CLKOUT0_FREQ = 66666667
+ PARAMETER C_CLKOUT0_BUF = TRUE
+ PARAMETER C_CLKOUT0_PHASE = 0
+ PARAMETER C_CLKOUT0_GROUP = NONE
+ PARAMETER C_CLKOUT1_FREQ = 133333334
+ PARAMETER C_CLKOUT1_BUF = TRUE
+ PARAMETER C_CLKOUT1_PHASE = 0
+ PARAMETER C_CLKOUT1_GROUP = DCM0
+ PARAMETER C_CLKOUT2_FREQ = 133333334
+ PARAMETER C_CLKOUT2_BUF = TRUE
+ PARAMETER C_CLKOUT2_PHASE = 90
+ PARAMETER C_CLKOUT2_GROUP = DCM0
+ PORT CLKOUT0 = sys_clk_s
+ PORT CLKOUT1 = DDR2_SDRAM_mpmc_clk_s
+ PORT CLKOUT2 = DDR2_SDRAM_mpmc_clk_90_s
+ PORT CLKIN = dcm_clk_s
+ PORT LOCKED = Dcm_all_locked
+ PORT RST = net_gnd
+END
+
+BEGIN mdm
+ PARAMETER INSTANCE = debug_module
+ PARAMETER HW_VER = 1.00.d
+ PARAMETER C_MB_DBG_PORTS = 1
+ PARAMETER C_USE_UART = 1
+ PARAMETER C_UART_WIDTH = 8
+ PARAMETER C_BASEADDR = 0x84400000
+ PARAMETER C_HIGHADDR = 0x8440ffff
+ BUS_INTERFACE SPLB = mb_plb
+ BUS_INTERFACE MBDEBUG_0 = microblaze_0_dbg
+ PORT Debug_SYS_Rst = Debug_SYS_Rst
+END
+
+BEGIN proc_sys_reset
+ PARAMETER INSTANCE = proc_sys_reset_0
+ PARAMETER HW_VER = 2.00.a
+ PARAMETER C_EXT_RESET_HIGH = 0
+ PORT Slowest_sync_clk = sys_clk_s
+ PORT Dcm_locked = Dcm_all_locked
+ PORT Ext_Reset_In = sys_rst_s
+ PORT MB_Reset = mb_reset
+ PORT Bus_Struct_Reset = sys_bus_reset
+ PORT MB_Debug_Sys_Rst = Debug_SYS_Rst
+ PORT Peripheral_Reset = sys_periph_reset
+END
+
+BEGIN xps_uartlite
+ PARAMETER INSTANCE = debug_uart
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BAUDRATE = 115200
+ PARAMETER C_SPLB_CLK_FREQ_HZ = 66666667
+ PARAMETER C_USE_PARITY = 0
+ PARAMETER C_BASEADDR = 0x84020000
+ PARAMETER C_HIGHADDR = 0x8402ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT TX = debug_uart_TX
+ PORT RX = debug_uart_RX
+ PORT Interrupt = debug_uart_Interrupt
+END
+
+BEGIN xps_uartlite
+ PARAMETER INSTANCE = sbc_uart
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BAUDRATE = 115200
+ PARAMETER C_SPLB_CLK_FREQ_HZ = 66666667
+ PARAMETER C_USE_PARITY = 0
+ PARAMETER C_BASEADDR = 0x84000000
+ PARAMETER C_HIGHADDR = 0x8400ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT TX = sbc_uart_TX
+ PORT RX = sbc_uart_RX
+ PORT Interrupt = sbc_uart_Interrupt
+END
+
+BEGIN xps_intc
+ PARAMETER INSTANCE = intc
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0x81800000
+ PARAMETER C_HIGHADDR = 0x8180ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT Irq = intc_irq
+ PORT Intr = debug_uart_Interrupt & sbc_uart_Interrupt & config_flash_spi_IP2INTC_Irpt & user_flash_spi_IP2INTC_Irpt & led_spi_IP2INTC_Irpt & sensor_a_spi_IP2INTC_Irpt & pwm_IP2INTC_Irpt & motor_interrupt & motor2_interrupt & timer_Interrupt
+END
+
+BEGIN pwm_controller
+ PARAMETER INSTANCE = pwm
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xc4c00000
+ PARAMETER C_HIGHADDR = 0xc4c0ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT IP2INTC_Irpt = pwm_IP2INTC_Irpt
+ PORT lid_pwm_drive = pwm_lid_pwm_drive
+ PORT pwm_error = pwm_pwm_error
+ PORT pwm_enable = pwm_pwm_enable
+ PORT pwm_drive_neg = pwm_pwm_drive_neg
+ PORT pwm_drive_pos = pwm_pwm_drive_pos
+END
+
+BEGIN xps_spi
+ PARAMETER INSTANCE = sensor_a_spi
+ PARAMETER HW_VER = 2.00.b
+ PARAMETER C_SCK_RATIO = 64
+ PARAMETER C_BASEADDR = 0x83460000
+ PARAMETER C_HIGHADDR = 0x8346ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT IP2INTC_Irpt = sensor_a_spi_IP2INTC_Irpt
+ PORT MOSI_O = sensor_a_spi_MOSI_O
+ PORT MISO_I = sensor_a_spi_MISO_I
+ PORT SCK_O = sensor_a_spi_SCK_O
+END
+
+BEGIN motor_controller
+ PARAMETER INSTANCE = motor
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xc3620000
+ PARAMETER C_HIGHADDR = 0xc362ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT direction = motor_direction
+ PORT step = motor_step
+ PORT sensor_in = motor_sensor_in
+ PORT channel_sel = motor_channel_sel
+ PORT enable = motor_enable
+ PORT interrupt = motor_interrupt
+END
+
+BEGIN motor_controller
+ PARAMETER INSTANCE = motor2
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xc9400000
+ PARAMETER C_HIGHADDR = 0xc940ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT direction = motor2_direction
+ PORT step = motor2_step
+ PORT sensor_in = motor2_sensor_in
+ PORT channel_sel = motor2_channel_sel
+ PORT enable = motor2_enable
+ PORT interrupt = motor2_interrupt
+END
+
+BEGIN xps_spi
+ PARAMETER INSTANCE = led_spi
+ PARAMETER HW_VER = 2.00.b
+ PARAMETER C_SCK_RATIO = 128
+ PARAMETER C_BASEADDR = 0x83400000
+ PARAMETER C_HIGHADDR = 0x8340ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT IP2INTC_Irpt = led_spi_IP2INTC_Irpt
+ PORT MOSI_O = led_spi_MOSI_O
+ PORT SCK_O = led_spi_SCK_O
+ PORT MISO_I = led_spi_MISO_I
+END
+
+BEGIN lcd_controller
+ PARAMETER INSTANCE = lcd
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xc3600000
+ PARAMETER C_HIGHADDR = 0xc360ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT data_IO = lcd_data_IO
+ PORT rw = lcd_rw
+ PORT rs = lcd_rs
+ PORT enable = lcd_enable
+END
+
+BEGIN xps_timer
+ PARAMETER INSTANCE = timer
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0x83c00000
+ PARAMETER C_HIGHADDR = 0x83c0ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT Interrupt = timer_Interrupt
+END
+
+BEGIN xps_spi
+ PARAMETER INSTANCE = config_flash_spi
+ PARAMETER HW_VER = 2.00.b
+ PARAMETER C_SCK_RATIO = 2
+ PARAMETER C_BASEADDR = 0x83440000
+ PARAMETER C_HIGHADDR = 0x8344ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT IP2INTC_Irpt = config_flash_spi_IP2INTC_Irpt
+ PORT MOSI_O = config_flash_spi_MOSI_O
+ PORT MISO_I = config_flash_spi_MISO_I
+ PORT SCK_O = config_flash_spi_SCK_O
+ PORT SS_O = config_flash_spi_SS_O
+END
+
+BEGIN xps_spi
+ PARAMETER INSTANCE = user_flash_spi
+ PARAMETER HW_VER = 2.00.b
+ PARAMETER C_SCK_RATIO = 2
+ PARAMETER C_BASEADDR = 0x83420000
+ PARAMETER C_HIGHADDR = 0x8342ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT IP2INTC_Irpt = user_flash_spi_IP2INTC_Irpt
+ PORT MOSI_O = user_flash_spi_MOSI_O
+ PORT MISO_I = user_flash_spi_MISO_I
+ PORT SCK_O = user_flash_spi_SCK_O
+ PORT SS_O = user_flash_spi_SS_O
+END
+
+BEGIN spi_controller
+ PARAMETER INSTANCE = spi_control
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xcb200000
+ PARAMETER C_HIGHADDR = 0xcb20ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT sensor_b_addr = spi_control_sensor_b_addr
+ PORT sensor_a_addr = spi_control_sensor_a_addr
+ PORT led_channel = spi_control_led_channel
+ PORT led_spi_addr = spi_control_led_spi_addr
+ PORT led_photo_sel = spi_control_led_photo_sel
+ PORT led_fan_enable = spi_control_led_fan_enable
+ PORT led_enable = spi_control_led_enable
+ PORT led_analog_control = spi_control_led_analog_control
+END
+
+BEGIN system_controller
+ PARAMETER INSTANCE = system
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xc5400000
+ PARAMETER C_HIGHADDR = 0xc540ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT dip_sw = system_dip_sw
+ PORT debug_leds = system_debug_leds
+ PORT activity_led = system_activity_led
+ PORT heartbeat_led = system_heartbeat_led
+ PORT bootloader_led = system_bootloader_led
+END
+
+BEGIN relay_controller
+ PARAMETER INSTANCE = relay
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xcbe00000
+ PARAMETER C_HIGHADDR = 0xcbe0ffff
+ BUS_INTERFACE SPLB = mb_plb
+ PORT relay_L = relay_L
+ PORT relay_B = relay_B
+ PORT relay_D = relay_D
+ PORT relay_R = relay_R
+ PORT relay_F = relay_F
+ PORT relay_U = relay_U
+END
+

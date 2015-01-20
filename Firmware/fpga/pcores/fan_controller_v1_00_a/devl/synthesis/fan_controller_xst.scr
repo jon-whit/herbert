@@ -1,0 +1,12 @@
+run
+-opt_level 2
+-opt_mode speed
+-ifmt mixed
+-ifn "C:\P4\Projects\PlateCycler\Beta\Firmware\fpga_board\pcores\fan_controller_v1_00_a\devl\synthesis\fan_controller_xst.prj"
+-top fan_controller
+-p virtex5
+-ofn "C:\P4\Projects\PlateCycler\Beta\Firmware\fpga_board\pcores\fan_controller_v1_00_a\devl\synthesis\fan_controller_xst.ngc"
+-iobuf NO
+-rtlview YES
+-hierarchy_separator /
+-work_lib fan_controller_v1_00_a

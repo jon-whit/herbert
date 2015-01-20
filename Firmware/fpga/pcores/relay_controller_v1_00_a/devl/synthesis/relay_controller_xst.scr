@@ -1,0 +1,12 @@
+run
+-opt_level 2
+-opt_mode speed
+-ifmt mixed
+-ifn "C:\Users\Lytle\Desktop\SeniorProjectFirmware\fpga_board\pcores\relay_controller_v1_00_a\devl\synthesis\relay_controller_xst.prj"
+-top relay_controller
+-p virtex5
+-ofn "C:\Users\Lytle\Desktop\SeniorProjectFirmware\fpga_board\pcores\relay_controller_v1_00_a\devl\synthesis\relay_controller_xst.ngc"
+-iobuf NO
+-rtlview YES
+-hierarchy_separator /
+-work_lib relay_controller_v1_00_a
