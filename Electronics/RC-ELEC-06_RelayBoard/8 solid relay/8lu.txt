@@ -1,0 +1,21 @@
+1、欧姆龙5V固态继电器 每路 240V 2A，输出带电阻式保险丝240V 2A.
+OMRON 5V solid state relays every road 240V 2A, output with resistive fuse 240V 2A.
+2、尺寸：138*71*25(长*宽*高）
+   Size:138*71*25mm
+3、输入电源：5V DC  (160MA)
+   Power supply: 5V DC(160mA)
+4、输入控制信号电压：
+   Input control signal voltage
+     （0-0.5V low stage SSR is OFF)
+
+      (2.5-20V high stage SSR is ON)
+
+SSR Spec.:
+              Manufacturer: OMRON
+              Part number: G3MB-202P, 5V version.
+              Isolation: Phototriac.
+              Zero cross: Yes.
+              Rated output load: 2A at 100 to 240VAC.(50/60Hz).
+              Load type: General purpose.
+              OMRON Datasheet:
+

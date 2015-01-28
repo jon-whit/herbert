@@ -1,0 +1,15 @@
+Block Diagrams are written using the web-based tool draw.io
+
+Steps to create new block diagram:
+	
+	1. Go to www.draw.io
+
+	2. Create a new diagram with desired name
+
+Saving a diagram to your computer:
+
+	1. Click File, Save, and the xml document will be dowloaded.  Save this file along with the image of the diagram
+
+	2. To save the image of the diagram, click File, Save as..., and select a format
+
+	3. For all block diagrams save both an image (.jpg, .png, etc.) and the xml file for future edits
