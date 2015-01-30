@@ -3,7 +3,7 @@
 
 #include "stdafx.h"
 #include <DebugCaptureDlg.h>
-#include <SystemDlg.h>
+#include <ManualDlg.h>
 #include <Messages.h>
 #include <StringFormatting.h>
 #include <fstream>
@@ -70,7 +70,7 @@ void DebugCaptureDlg::OnOK()
 
 void DebugCaptureDlg::OnClose()
 {
-    ((SystemDlg*)m_parentWindow)->CloseDebugCaptureDlg();
+    ((ManualDlg*)m_parentWindow)->CloseDebugCaptureDlg();
     DestroyWindow();
 }
 

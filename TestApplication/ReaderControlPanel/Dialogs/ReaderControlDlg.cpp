@@ -22,68 +22,8 @@ static const char profile_keyDialogYPos[]       = "Dialog Y Position";
 
 const static char profile_sectionComm[]         = "COM Settings";
 const static char profile_keyFPGAPort[]         = "FPGA Port";
-const static char profile_keyPCBPort[]          = "PCB Port";
-const static char profile_defaultFPGACommPort[] = "COM2";
-const static char profile_defaultPCBCommPort[]  = "COM1";
+const static char profile_defaultFPGACommPort[] = "COM1";
 
-
-
-/////////////////////////////////////////////////////////////////////////////
-// CAboutDlg dialog used for App About
-
-class CAboutDlg : public CDialog
-{
-public:
-    CAboutDlg();
-
-// Dialog Data
-    //{{AFX_DATA(CAboutDlg)
-    enum { IDD = IDD_ABOUTBOX };
-    CStatic m_staticVersionNumber;
-    //}}AFX_DATA
-
-    // ClassWizard generated virtual function overrides
-    //{{AFX_VIRTUAL(CAboutDlg)
-    protected:
-    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV support
-    //}}AFX_VIRTUAL
-
-// Implementation
-protected:
-    //{{AFX_MSG(CAboutDlg)
-    virtual BOOL OnInitDialog();
-    //}}AFX_MSG
-    DECLARE_MESSAGE_MAP()
-};
-
-CAboutDlg::CAboutDlg() : CDialog(CAboutDlg::IDD)
-{
-    //{{AFX_DATA_INIT(CAboutDlg)
-    //}}AFX_DATA_INIT
-}
-
-void CAboutDlg::DoDataExchange(CDataExchange* pDX)
-{
-    CDialog::DoDataExchange(pDX);
-    //{{AFX_DATA_MAP(CAboutDlg)
-    DDX_Control(pDX, IDC_STATIC_VERSION, m_staticVersionNumber);
-    //}}AFX_DATA_MAP
-}
-
-BOOL CAboutDlg::OnInitDialog() 
-{
-    CDialog::OnInitDialog();
-    
-    m_staticVersionNumber.SetWindowText(APP_VERSION_NUMBER_STR);
-
-    return TRUE;  // return TRUE unless you set the focus to a control
-                  // EXCEPTION: OCX Property Pages should return FALSE
-}
-
-BEGIN_MESSAGE_MAP(CAboutDlg, CDialog)
-    //{{AFX_MSG_MAP(CAboutDlg)
-    //}}AFX_MSG_MAP
-END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
 // CReaderControlDlg dialog
@@ -93,8 +33,6 @@ CReaderControlDlg::CReaderControlDlg(CWnd* pParent /*=NULL*/)
     , m_rspQueue(new TransactionGuiMessagingThreadQueue(this, WM_COMM_TRANSACTION_COMPLETE))
     , m_fpgaComm(FpgaComm::getInstance())
     , m_tabDlgManual(this)
-    , m_tabDlgPcb(this)
-    , m_tabDlgSystem(this)
     , m_waitingForResponseCount(0)
     , m_instrument(Instrument::getInstance())
     , m_instrumentEventQueue(new GuiInstrumentEventQueue(this, WM_INSTRUMENT_EVENT))
@@ -117,7 +55,6 @@ void CReaderControlDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_BUTTON_STOP, m_buttonStop);
     DDX_Control(pDX, IDC_BUTTON_CONNECT, m_buttonConnect);
     DDX_Control(pDX, IDC_COMBO_FPGACOMMPORT, m_comboFPGACommPort);
-    DDX_Control(pDX, IDC_COMBO_PCBCOMMPORT, m_comboPCBCommPort);
     DDX_Control(pDX, IDC_TABS, m_tabs);
     DDX_Control(pDX, IDC_STATIC_FPGA_FW_VER_STR, m_staticFPGAFirmwareVersion);
     DDX_Control(pDX, IDC_STATIC_FPGA_FW_BUILD_DATE, m_staticFPGAFirmwareBuildDate);
@@ -125,12 +62,7 @@ void CReaderControlDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_STATIC_FPGA_FW_BUILD_DATE_LABEL, m_staticFPGAFirmwareBuildDateLabel);
     DDX_Control(pDX, IDC_STATIC_FPGA_VERSION_LABEL, m_staticFPGAVersionLabel);
     DDX_Control(pDX, IDC_STATIC_FPGA_VER_STR, m_staticFPGAVersion);
-    DDX_Control(pDX, IDC_STATIC_PCB_FW_VERSION_LABEL, m_staticPCBFirmwareVersionLabel);
-    DDX_Control(pDX, IDC_STATIC_PCB_FW_VER_STR, m_staticPCBFirmwareVersion);
-    DDX_Control(pDX, IDC_STATIC_PCB_FW_BUILD_DATE_LABEL, m_staticPCBFirmwareBuildDateLabel);
-    DDX_Control(pDX, IDC_STATIC_PCB_FW_BUILD_DATE, m_staticPCBFirmwareBuildDate);
-    DDX_Control(pDX, IDC_STATIC_HD_IMAGE_VERSION, m_staticHDImageVersion);
-    DDX_Control(pDX, IDC_STATIC_SYSTEM_SERIAL_NUMBER, m_staticSystemSerialNumber);
+
 }
 
 BEGIN_MESSAGE_MAP(CReaderControlDlg, DialogEx)
@@ -154,13 +86,7 @@ BOOL CReaderControlDlg::OnInitDialog()
 {
     DialogEx::OnInitDialog();
 
-    // Add "About..." menu item to system menu.
-
-    // IDM_ABOUTBOX must be in the system command range.
-    ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-    ASSERT(IDM_ABOUTBOX < 0xF000);
-
-    CMenu* pSysMenu = GetSystemMenu(FALSE);
+        CMenu* pSysMenu = GetSystemMenu(FALSE);
     if (pSysMenu != NULL)
     {
         CString strAboutMenu;
@@ -168,7 +94,6 @@ BOOL CReaderControlDlg::OnInitDialog()
         if (!strAboutMenu.IsEmpty())
         {
             pSysMenu->AppendMenu(MF_SEPARATOR);
-            pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
         }
     }
 
@@ -189,7 +114,6 @@ BOOL CReaderControlDlg::OnInitDialog()
     // Configure Stop button
     COLORREF transparentColor = RGB(0, 0, 0); //(192, 192, 192);
     m_buttonStop.SetBitmaps(IDB_BITMAP_STOP, transparentColor);
-//    m_buttonStop.SetFlat(FALSE);
     m_buttonStop.SetWindowText("");
 
 
@@ -197,10 +121,6 @@ BOOL CReaderControlDlg::OnInitDialog()
     m_staticFPGAFirmwareVersion.SetWindowText("...");
     m_staticFPGAFirmwareBuildDate.SetWindowText("...");
     m_staticFPGAVersion.SetWindowText("...");
-
-    m_staticPCBFirmwareVersion.SetWindowText("...");
-    m_staticPCBFirmwareBuildDate.SetWindowText("...");
-
 
     // Set Dialog position
     int xPos = AfxGetApp()->GetProfileInt(profile_sectionApp, profile_keyDialogXPos, -1);
@@ -211,13 +131,8 @@ BOOL CReaderControlDlg::OnInitDialog()
 
     // Configure Tab Dialogs
     m_tabs.addDialog(m_tabDlgManual, "Manual Control");
-    m_tabs.addDialog(m_tabDlgPcb, "PCB Control");
-    m_tabs.addDialog(m_tabDlgSystem, "System");
 
     m_tabDialogs.Add(&m_tabDlgManual);
-    m_tabDialogs.Add(&m_tabDlgManual);
-    m_tabDialogs.Add(&m_tabDlgPcb);
-    m_tabDialogs.Add(&m_tabDlgSystem);
     
     int currentTab = AfxGetApp()->GetProfileInt(profile_sectionApp, profile_keyTabSelection, 0);
     m_tabs.changeTab((currentTab >= 0 && currentTab < m_tabs.GetItemCount()) ? currentTab : 0);
@@ -225,10 +140,8 @@ BOOL CReaderControlDlg::OnInitDialog()
 
     // Configure Com port
     CString fpgaPort = AfxGetApp()->GetProfileString(profile_sectionComm, profile_keyFPGAPort, profile_defaultFPGACommPort);
-    CString pcbPort  = AfxGetApp()->GetProfileString(profile_sectionComm, profile_keyPCBPort, profile_defaultPCBCommPort);
 
-    UpdateCommPorts(fpgaPort, pcbPort);
-
+    UpdateCommPorts(fpgaPort);
 
     m_instrument.watchErrorMessages(m_instrumentEventQueue);
     m_instrument.watchExceptions(m_instrumentEventQueue);
@@ -236,32 +149,22 @@ BOOL CReaderControlDlg::OnInitDialog()
     m_instrument.watchPCBInfoUpdate(m_instrumentEventQueue);
     
     DisplayConnected();
-
-    m_staticHDImageVersion.SetWindowText(m_instrument.getHDImageVersion().c_str());
-    m_staticSystemSerialNumber.SetWindowText(m_instrument.getSystemSerialNumber().c_str());
-
     return TRUE;  // return TRUE  unless you set the focus to a control
 }
 
 void CReaderControlDlg::UpdateCommPorts()
 {
     CString fpgaPort;
-    CString pcbPort;
     m_comboFPGACommPort.GetWindowText(fpgaPort);
-    m_comboPCBCommPort.GetWindowText(pcbPort);
-    UpdateCommPorts(fpgaPort, pcbPort);
+    UpdateCommPorts(fpgaPort);
 }
 
 
-void CReaderControlDlg::UpdateCommPorts(const CString& fpgaPort, const CString& pcbPort)
+void CReaderControlDlg::UpdateCommPorts(const CString& fpgaPort)
 {
     while(m_comboFPGACommPort.GetCount() > 0)
     {
         m_comboFPGACommPort.DeleteString(0);
-    }
-    while(m_comboPCBCommPort.GetCount() > 0)
-    {
-        m_comboPCBCommPort.DeleteString(0);
     }
 
     std::vector<std::string> ports;
@@ -270,31 +173,17 @@ void CReaderControlDlg::UpdateCommPorts(const CString& fpgaPort, const CString& 
     for(std::vector<std::string>::iterator i = ports.begin(); i != ports.end(); ++i)
     {
         m_comboFPGACommPort.AddString((*i).c_str());
-        m_comboPCBCommPort.AddString((*i).c_str());
     }
 
     if(m_comboFPGACommPort.SelectString(-1, fpgaPort) == CB_ERR)
     {
         m_comboFPGACommPort.SetCurSel(0);
     }
-
-    if(m_comboPCBCommPort.SelectString(-1, pcbPort) == CB_ERR)
-    {
-        m_comboPCBCommPort.SetCurSel(0);
-    }
 }
 
 void CReaderControlDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-    if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-    {
-        CAboutDlg dlgAbout;
-        dlgAbout.DoModal();
-    }
-    else
-    {
-        DialogEx::OnSysCommand(nID, lParam);
-    }
+     DialogEx::OnSysCommand(nID, lParam);
 }
 
 // If you add a minimize button to your dialog, you will need the code below
@@ -348,10 +237,8 @@ void CReaderControlDlg::OnCancel()
     CString fpgaPort;
     CString pcbPort;
     m_comboFPGACommPort.GetWindowText(fpgaPort);
-    m_comboPCBCommPort.GetWindowText(pcbPort);
 
     AfxGetApp()->WriteProfileString(profile_sectionComm, profile_keyFPGAPort, fpgaPort);
-    AfxGetApp()->WriteProfileString(profile_sectionComm, profile_keyPCBPort, pcbPort);
 
     for(int i = 0; i < m_tabDialogs.GetSize(); i++)
     {
@@ -452,15 +339,6 @@ LRESULT CReaderControlDlg::OnInstrumentEvent(WPARAM wParam, LPARAM lParam)
                 m_staticFPGAVersion.SetWindowText(e->fpgaVersion().c_str());
             }
             break;
-
-        case InstrumentEvent::Type_PCBInfoUpdate:
-            {
-                PCBInfoUpdate* e = dynamic_cast<PCBInfoUpdate*>(instrumentEvent.get());
-                m_staticPCBFirmwareVersion.SetWindowText(e->firmwareVersion().c_str());
-                m_staticPCBFirmwareBuildDate.SetWindowText(e->firmwareBuildDate().c_str());
-            }
-            break;
-
         default:
             // Ignore
             break;
@@ -489,7 +367,6 @@ void CReaderControlDlg::OnButtonConnect()
             CString fpgaPort;
             CString pcbPort;
             m_comboFPGACommPort.GetWindowText(fpgaPort);
-            m_comboPCBCommPort.GetWindowText(pcbPort);
             m_instrument.connect(LPCSTR(fpgaPort), LPCSTR(pcbPort));
         }
     }
@@ -519,7 +396,6 @@ void CReaderControlDlg::DisplayConnected()
     }
 
     m_comboFPGACommPort.EnableWindow(!connected);
-    m_comboPCBCommPort.EnableWindow(!connected);
     m_buttonStop.EnableWindow(fpgaConnected);
 
     m_staticFPGAFirmwareVersion.EnableWindow(fpgaConnected);
@@ -528,11 +404,6 @@ void CReaderControlDlg::DisplayConnected()
     m_staticFPGAVersionLabel.EnableWindow(fpgaConnected);
     m_staticFPGAFirmwareVersionLabel.EnableWindow(fpgaConnected);
     m_staticFPGAFirmwareBuildDateLabel.EnableWindow(fpgaConnected);
-
-    m_staticPCBFirmwareVersion.EnableWindow(pcbConnected);
-    m_staticPCBFirmwareBuildDate.EnableWindow(pcbConnected);
-    m_staticPCBFirmwareVersionLabel.EnableWindow(pcbConnected);
-    m_staticPCBFirmwareBuildDateLabel.EnableWindow(pcbConnected);
 
     for(int i = 0; i < m_tabDialogs.GetSize(); i++)
     {

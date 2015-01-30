@@ -14,8 +14,6 @@
 #include <FpgaComm.h>
 #include <TabCtrlEx.h>
 #include <ManualDlg.h>
-#include <SystemDlg.h>
-#include <PcbDlg.h>
 #include <Instrument.h>
 #include "afxwin.h"
 
@@ -64,13 +62,12 @@ protected:
     DECLARE_MESSAGE_MAP()
 
     void UpdateCommPorts();
-    void UpdateCommPorts(const CString& fpgaPort, const CString& pcbPort);
+    void UpdateCommPorts(const CString& fpgaPort);
 
     // Controls
     CButtonST  m_buttonStop;
     CButton    m_buttonConnect;
     CComboBox  m_comboFPGACommPort;
-    CComboBox  m_comboPCBCommPort;
     TabCtrlEx  m_tabs;
     CStatic    m_staticFPGAFirmwareVersion;
     CStatic    m_staticFPGAFirmwareBuildDate;
@@ -78,12 +75,6 @@ protected:
     CStatic    m_staticFPGAFirmwareVersionLabel;
     CStatic    m_staticFPGAFirmwareBuildDateLabel;
     CStatic    m_staticFPGAVersionLabel;
-    CStatic    m_staticPCBFirmwareVersion;
-    CStatic    m_staticPCBFirmwareBuildDate;
-    CStatic    m_staticPCBFirmwareVersionLabel;
-    CStatic    m_staticPCBFirmwareBuildDateLabel;
-    CStatic    m_staticHDImageVersion;
-    CStatic    m_staticSystemSerialNumber;
 
 
 private:
@@ -113,8 +104,6 @@ private:
 
     // Tab dialogs
     ManualDlg         m_tabDlgManual;
-    PcbDlg            m_tabDlgPcb;
-    SystemDlg         m_tabDlgSystem;
 
     CArray<ReaderControlTabDlg*, ReaderControlTabDlg*> m_tabDialogs;
 };
