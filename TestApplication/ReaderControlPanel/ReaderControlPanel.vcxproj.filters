@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{cd49edbc-f763-45c5-90a4-a3e8dd81019f}</UniqueIdentifier>
+      <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{5d42f2c7-8026-4ce0-8cec-7765df462aad}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl</Extensions>
+    </Filter>
+    <Filter Include="Comm">
+      <UniqueIdentifier>{48895fd0-ce3e-4ab3-9d8a-32e023b00cd2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls">
+      <UniqueIdentifier>{803599f1-1546-45cc-b734-cd50904665e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls\XListCtrl">
+      <UniqueIdentifier>{c0f2555d-b14c-4660-b19a-078929fc6894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Controls\GridCtrl">
+      <UniqueIdentifier>{c8438ad0-7bf8-4bfb-a44f-d23dae54772d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility">
+      <UniqueIdentifier>{dbfdd14a-6aeb-4b9b-9be3-0d47dad84a75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utility\TinyXML">
+      <UniqueIdentifier>{c458399f-d341-480d-b3f7-563e0053a37b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{10a7b12d-5302-498f-a2f7-d6e36287f50d}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
+    </Filter>
+    <Filter Include="Dialogs">
+      <UniqueIdentifier>{420d5549-af2e-4c64-a7c1-3f89037ba68a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Instrument.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InstrumentEvent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="InstrumentTypes.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ReaderControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StdAfx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\Comm.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\Commands.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\CommPkt.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\crc16.c">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\crc32.c">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\errors.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\FpgaComm.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\PcbComm.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\Serial.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Comm\SerialEx.cpp">
+      <Filter>Comm</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\BCMenu.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\BtnST.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\DialogEx.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\NumberEdit.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\TabCtrlEx.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\TextProgressCtrl.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\ValidatingEdit.cpp">
+      <Filter>Controls</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\XListCtrl\XComboList.cpp">
+      <Filter>Controls\XListCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\XListCtrl\XHeaderCtrl.cpp">
+      <Filter>Controls\XListCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\XListCtrl\XListCtrl.cpp">
+      <Filter>Controls\XListCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\GridCtrl\GridCell.cpp">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\GridCtrl\GridCellBase.cpp">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\GridCtrl\GridCtrl.cpp">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\GridCtrl\GridDropTarget.cpp">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\GridCtrl\InPlaceEdit.cpp">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls\GridCtrl\TitleTip.cpp">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\enumser.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Exceptions.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\File.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Logging.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Mutex.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Semaphore.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\StackWalker.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\StringFormatting.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Thread.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\Timestamp.cpp">
+      <Filter>Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TinyXML\tinystr.cpp">
+      <Filter>Utility\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TinyXML\tinyxml.cpp">
+      <Filter>Utility\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TinyXML\tinyxmlerror.cpp">
+      <Filter>Utility\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility\TinyXML\tinyxmlparser.cpp">
+      <Filter>Utility\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\DebugCaptureDlg.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\FirmwareUpgradeDlg.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\ManualDlg.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\PcbDlg.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\ReaderControlDlg.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\ReaderControlTabDlg.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\SystemDlg.cpp">
+      <Filter>Dialogs</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ReaderControl.rc">
+      <Filter>Source Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Instrument.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstrumentEvent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InstrumentTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Messages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ReaderControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StdAfx.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="types.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Version.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\Comm.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\Commands.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\CommPkt.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\crc16.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\crc32.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\error_list.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\errors.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\FpgaComm.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\PcbComm.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\Serial.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Comm\SerialEx.h">
+      <Filter>Comm</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\BCMenu.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\BtnST.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\ColorCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\DialogEx.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\FontCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\MemDC.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\NumberEdit.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\TabCtrlEx.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\TemplDef.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\TextProgressCtrl.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\ValidatingEdit.h">
+      <Filter>Controls</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\XListCtrl\XComboList.h">
+      <Filter>Controls\XListCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\XListCtrl\XHeaderCtrl.h">
+      <Filter>Controls\XListCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\XListCtrl\XListCtrl.h">
+      <Filter>Controls\XListCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\GridCtrl\CellRange.h">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\GridCtrl\GridCell.h">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\GridCtrl\GridCellBase.h">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\GridCtrl\GridCtrl.h">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\GridCtrl\GridDropTarget.h">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\GridCtrl\InPlaceEdit.h">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls\GridCtrl\TitleTip.h">
+      <Filter>Controls\GridCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\AutoFilePointer.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\AutoPointer.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\enumser.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Exceptions.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\File.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Logging.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Mutex.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Semaphore.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\StackWalker.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\StringFormatting.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Thread.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\ThreadData.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\ThreadQueue.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\Timestamp.h">
+      <Filter>Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TinyXML\tinystr.h">
+      <Filter>Utility\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility\TinyXML\tinyxml.h">
+      <Filter>Utility\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\DebugCaptureDlg.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\FirmwareUpgradeDlg.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\ManualDlg.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\PcbDlg.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\ReaderControlDlg.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\ReaderControlTabDlg.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\SystemDlg.h">
+      <Filter>Dialogs</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\iti_large.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\iti_small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="bitmaps\stop.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\ReaderControl.rc2">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

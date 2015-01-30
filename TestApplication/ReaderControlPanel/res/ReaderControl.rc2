@@ -1,0 +1,56 @@
+//
+// READERCONTROL.RC2 - resources Microsoft Visual C++ does not edit directly
+//
+
+#ifdef APSTUDIO_INVOKED
+	#error this file is not editable by Microsoft Visual C++
+#endif //APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Add manually edited resources here...
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+#include "Version.h"
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION FILEVER
+ PRODUCTVERSION PRODUCTVER
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904b0"
+        BEGIN
+            VALUE "Comments", "Reader Control Panel\0"
+            VALUE "CompanyName", "Idaho Technology\0"
+            VALUE "FileDescription", "Reader Control Panel\0"
+            VALUE "FileVersion", STRFILEVER
+            VALUE "InternalName", "Reader Control Panel\0"
+            VALUE "LegalCopyright", STRCOPYRIGHT
+            VALUE "LegalTrademarks", "\0"
+            VALUE "OriginalFilename", "ReaderControlPanel.exe\0"
+            VALUE "PrivateBuild", "\0"
+            VALUE "ProductName", "Reader Control Panel\0"
+            VALUE "ProductVersion", STRPRODUCTVER
+            VALUE "SpecialBuild", "\0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1200
+    END
+END
+

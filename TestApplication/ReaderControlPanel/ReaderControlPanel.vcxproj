@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E925196E-4FCE-43AA-9BB5-15C968355AFB}</ProjectGuid>
+    <RootNamespace>ReaderControlPanel</RootNamespace>
+    <Keyword>MFCProj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v110_xp</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>11.0.61030.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/ReaderControlPanel.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>.\;.\Comm;.\Dialogs;.\Utility;.\Utility\TinyXML;.\Controls;.\Controls\XListCtrl;.\Controls\GridCtrl;..\boost\boost_1_49_0;..\boost\boost_extra;..\fastformat\fastformat-0.6.4\include;..\stlsoft\stlsoft-1.9.104\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;XLISTCTRLLIB_STATIC;_CRT_SECURE_NO_WARNINGS;TIXML_USE_STL;WINVER=0x0600;NOMINMAX;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <ExceptionHandling>Async</ExceptionHandling>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderOutputFile>.\Debug/ReaderControlPanel.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <ShowIncludes>false</ShowIncludes>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>nafxcwd.lib;libcpmtd.lib;UxTheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)$(ProjectName).exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>.\PGR;..\..\..\..\lib;..\fastformat\fastformat-0.6.4\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalManifestDependencies>type=%27win32%27 name=%27Microsoft.Windows.Common-Controls%27 version=%276.0.0.0%27 processorArchitecture=%27X86%27 publicKeyToken=%276595b64144ccf1df%27 language=%27*%27;%(AdditionalManifestDependencies)</AdditionalManifestDependencies>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/ReaderControlPanel.pdb</ProgramDatabaseFile>
+      <GenerateMapFile>true</GenerateMapFile>
+      <MapFileName>ReaderControlPanel.map</MapFileName>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug/ReaderControlPanel.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Message>Creating MD5...</Message>
+      <Command>cd $(OutDir)
+md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/ReaderControlPanel.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeaderFile>stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeaderOutputFile>.\Release/ReaderControlPanel.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <OutputFile>.\Release/ReaderControlPanel.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>.\Release/ReaderControlPanel.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release/ReaderControlPanel.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Instrument.cpp" />
+    <ClCompile Include="InstrumentEvent.cpp" />
+    <ClCompile Include="InstrumentTypes.cpp" />
+    <ClCompile Include="ReaderControl.cpp" />
+    <ClCompile Include="StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Comm\Comm.cpp" />
+    <ClCompile Include="Comm\Commands.cpp" />
+    <ClCompile Include="Comm\CommPkt.cpp" />
+    <ClCompile Include="Comm\crc16.c" />
+    <ClCompile Include="Comm\crc32.c" />
+    <ClCompile Include="Comm\errors.cpp" />
+    <ClCompile Include="Comm\FpgaComm.cpp" />
+    <ClCompile Include="Comm\PcbComm.cpp" />
+    <ClCompile Include="Comm\Serial.cpp" />
+    <ClCompile Include="Comm\SerialEx.cpp" />
+    <ClCompile Include="Controls\BCMenu.cpp" />
+    <ClCompile Include="Controls\BtnST.cpp" />
+    <ClCompile Include="Controls\DialogEx.cpp" />
+    <ClCompile Include="Controls\NumberEdit.cpp" />
+    <ClCompile Include="Controls\TabCtrlEx.cpp" />
+    <ClCompile Include="Controls\TextProgressCtrl.cpp" />
+    <ClCompile Include="Controls\ValidatingEdit.cpp" />
+    <ClCompile Include="Controls\XListCtrl\XComboList.cpp" />
+    <ClCompile Include="Controls\XListCtrl\XHeaderCtrl.cpp" />
+    <ClCompile Include="Controls\XListCtrl\XListCtrl.cpp" />
+    <ClCompile Include="Controls\GridCtrl\GridCell.cpp" />
+    <ClCompile Include="Controls\GridCtrl\GridCellBase.cpp" />
+    <ClCompile Include="Controls\GridCtrl\GridCtrl.cpp" />
+    <ClCompile Include="Controls\GridCtrl\GridDropTarget.cpp" />
+    <ClCompile Include="Controls\GridCtrl\InPlaceEdit.cpp" />
+    <ClCompile Include="Controls\GridCtrl\TitleTip.cpp" />
+    <ClCompile Include="Utility\enumser.cpp" />
+    <ClCompile Include="Utility\Exceptions.cpp" />
+    <ClCompile Include="Utility\File.cpp" />
+    <ClCompile Include="Utility\Logging.cpp" />
+    <ClCompile Include="Utility\Mutex.cpp" />
+    <ClCompile Include="Utility\Semaphore.cpp" />
+    <ClCompile Include="Utility\StackWalker.cpp" />
+    <ClCompile Include="Utility\StringFormatting.cpp" />
+    <ClCompile Include="Utility\Thread.cpp" />
+    <ClCompile Include="Utility\Timestamp.cpp" />
+    <ClCompile Include="Utility\TinyXML\tinystr.cpp" />
+    <ClCompile Include="Utility\TinyXML\tinyxml.cpp" />
+    <ClCompile Include="Utility\TinyXML\tinyxmlerror.cpp" />
+    <ClCompile Include="Utility\TinyXML\tinyxmlparser.cpp" />
+    <ClCompile Include="Dialogs\DebugCaptureDlg.cpp" />
+    <ClCompile Include="Dialogs\FirmwareUpgradeDlg.cpp" />
+    <ClCompile Include="Dialogs\ManualDlg.cpp" />
+    <ClCompile Include="Dialogs\PcbDlg.cpp" />
+    <ClCompile Include="Dialogs\ReaderControlDlg.cpp" />
+    <ClCompile Include="Dialogs\ReaderControlTabDlg.cpp" />
+    <ClCompile Include="Dialogs\SystemDlg.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ReaderControl.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Instrument.h" />
+    <ClInclude Include="InstrumentEvent.h" />
+    <ClInclude Include="InstrumentTypes.h" />
+    <ClInclude Include="Messages.h" />
+    <ClInclude Include="ReaderControl.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="StdAfx.h" />
+    <ClInclude Include="types.h" />
+    <ClInclude Include="Version.h" />
+    <ClInclude Include="Comm\Comm.h" />
+    <ClInclude Include="Comm\Commands.h" />
+    <ClInclude Include="Comm\CommPkt.h" />
+    <ClInclude Include="Comm\crc16.h" />
+    <ClInclude Include="Comm\crc32.h" />
+    <ClInclude Include="Comm\error_list.h" />
+    <ClInclude Include="Comm\errors.h" />
+    <ClInclude Include="Comm\FpgaComm.h" />
+    <ClInclude Include="Comm\PcbComm.h" />
+    <ClInclude Include="Comm\Serial.h" />
+    <ClInclude Include="Comm\SerialEx.h" />
+    <ClInclude Include="Controls\BCMenu.h" />
+    <ClInclude Include="Controls\BtnST.h" />
+    <ClInclude Include="Controls\ColorCtrl.h" />
+    <ClInclude Include="Controls\DialogEx.h" />
+    <ClInclude Include="Controls\FontCtrl.h" />
+    <ClInclude Include="Controls\MemDC.h" />
+    <ClInclude Include="Controls\NumberEdit.h" />
+    <ClInclude Include="Controls\TabCtrlEx.h" />
+    <ClInclude Include="Controls\TemplDef.h" />
+    <ClInclude Include="Controls\TextProgressCtrl.h" />
+    <ClInclude Include="Controls\ValidatingEdit.h" />
+    <ClInclude Include="Controls\XListCtrl\XComboList.h" />
+    <ClInclude Include="Controls\XListCtrl\XHeaderCtrl.h" />
+    <ClInclude Include="Controls\XListCtrl\XListCtrl.h" />
+    <ClInclude Include="Controls\GridCtrl\CellRange.h" />
+    <ClInclude Include="Controls\GridCtrl\GridCell.h" />
+    <ClInclude Include="Controls\GridCtrl\GridCellBase.h" />
+    <ClInclude Include="Controls\GridCtrl\GridCtrl.h" />
+    <ClInclude Include="Controls\GridCtrl\GridDropTarget.h" />
+    <ClInclude Include="Controls\GridCtrl\InPlaceEdit.h" />
+    <ClInclude Include="Controls\GridCtrl\TitleTip.h" />
+    <ClInclude Include="Utility\AutoFilePointer.h" />
+    <ClInclude Include="Utility\AutoPointer.h" />
+    <ClInclude Include="Utility\enumser.h" />
+    <ClInclude Include="Utility\Exceptions.h" />
+    <ClInclude Include="Utility\File.h" />
+    <ClInclude Include="Utility\Logging.h" />
+    <ClInclude Include="Utility\Mutex.h" />
+    <ClInclude Include="Utility\Semaphore.h" />
+    <ClInclude Include="Utility\StackWalker.h" />
+    <ClInclude Include="Utility\StringFormatting.h" />
+    <ClInclude Include="Utility\Thread.h" />
+    <ClInclude Include="Utility\ThreadData.h" />
+    <ClInclude Include="Utility\ThreadQueue.h" />
+    <ClInclude Include="Utility\Timestamp.h" />
+    <ClInclude Include="Utility\TinyXML\tinystr.h" />
+    <ClInclude Include="Utility\TinyXML\tinyxml.h" />
+    <ClInclude Include="Dialogs\DebugCaptureDlg.h" />
+    <ClInclude Include="Dialogs\FirmwareUpgradeDlg.h" />
+    <ClInclude Include="Dialogs\ManualDlg.h" />
+    <ClInclude Include="Dialogs\PcbDlg.h" />
+    <ClInclude Include="Dialogs\ReaderControlDlg.h" />
+    <ClInclude Include="Dialogs\ReaderControlTabDlg.h" />
+    <ClInclude Include="Dialogs\SystemDlg.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\iti_large.ico" />
+    <Image Include="res\iti_small.ico" />
+    <Image Include="bitmaps\stop.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\ReaderControl.rc2" />
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties RESOURCE_FILE="ReaderControl.rc" />
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
