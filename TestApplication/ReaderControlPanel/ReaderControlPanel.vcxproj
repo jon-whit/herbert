@@ -206,10 +206,8 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClCompile Include="Dialogs\DebugCaptureDlg.cpp" />
     <ClCompile Include="Dialogs\FirmwareUpgradeDlg.cpp" />
     <ClCompile Include="Dialogs\ManualDlg.cpp" />
-    <ClCompile Include="Dialogs\PcbDlg.cpp" />
     <ClCompile Include="Dialogs\ReaderControlDlg.cpp" />
     <ClCompile Include="Dialogs\ReaderControlTabDlg.cpp" />
-    <ClCompile Include="Dialogs\SystemDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ReaderControl.rc" />
@@ -275,10 +273,8 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClInclude Include="Dialogs\DebugCaptureDlg.h" />
     <ClInclude Include="Dialogs\FirmwareUpgradeDlg.h" />
     <ClInclude Include="Dialogs\ManualDlg.h" />
-    <ClInclude Include="Dialogs\PcbDlg.h" />
     <ClInclude Include="Dialogs\ReaderControlDlg.h" />
     <ClInclude Include="Dialogs\ReaderControlTabDlg.h" />
-    <ClInclude Include="Dialogs\SystemDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\iti_large.ico" />

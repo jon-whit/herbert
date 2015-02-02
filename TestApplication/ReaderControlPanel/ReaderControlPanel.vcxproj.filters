@@ -180,16 +180,10 @@
     <ClCompile Include="Dialogs\ManualDlg.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="Dialogs\PcbDlg.cpp">
-      <Filter>Dialogs</Filter>
-    </ClCompile>
     <ClCompile Include="Dialogs\ReaderControlDlg.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="Dialogs\ReaderControlTabDlg.cpp">
-      <Filter>Dialogs</Filter>
-    </ClCompile>
-    <ClCompile Include="Dialogs\SystemDlg.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
   </ItemGroup>
@@ -379,16 +373,10 @@
     <ClInclude Include="Dialogs\ManualDlg.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="Dialogs\PcbDlg.h">
-      <Filter>Dialogs</Filter>
-    </ClInclude>
     <ClInclude Include="Dialogs\ReaderControlDlg.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
     <ClInclude Include="Dialogs\ReaderControlTabDlg.h">
-      <Filter>Dialogs</Filter>
-    </ClInclude>
-    <ClInclude Include="Dialogs\SystemDlg.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
   </ItemGroup>
