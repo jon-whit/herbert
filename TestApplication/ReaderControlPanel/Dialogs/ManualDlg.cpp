@@ -2,7 +2,7 @@
 //
 
 #include "stdafx.h"
-#include "ReaderControl.h"
+#include "HerbertController.h"
 #include "ManualDlg.h"
 #include <FirmwareUpgradeDlg.h>
 
@@ -20,7 +20,7 @@ const static char* profile_sectionManual     = "Manual Settings";
 const static char* profile_keyAutoHeader     = "auto header";
 const static int   profile_defaultAutoHeader = TRUE;
 const static char* profile_keyMsg1           = "msg1";
-
+const static char* profile_keyMsg2           = "msg2";
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,7 @@ const static char* profile_keyMsg1           = "msg1";
 
 
 ManualDlg::ManualDlg(CWnd* parentWnd)
-	: ReaderControlTabDlg(ManualDlg::IDD, parentWnd)
+	: HerbertControllerTabDlg(ManualDlg::IDD, parentWnd)
     , m_comm(FpgaComm::getInstance())
     , m_connected(false)
 	, m_debugCaptureDlg(NULL)
@@ -45,16 +45,48 @@ ManualDlg::ManualDlg(CWnd* parentWnd)
 
 void ManualDlg::DoDataExchange(CDataExchange* pDX)
 {
-	ReaderControlTabDlg::DoDataExchange(pDX);
+	HerbertControllerTabDlg::DoDataExchange(pDX);
 	//{{AFX_DATA_MAP(ManualDlg)
 	DDX_Control(pDX, IDC_EDIT_MSG1, m_editMsg1);
+	DDX_Control(pDX, IDC_EDIT_MSG2, m_editMsg2);
 	DDX_Control(pDX, IDC_BUTTON_SEND1, m_buttonSend1);
+	DDX_Control(pDX, IDC_BUTTON_SEND2, m_buttonSend2);
+	DDX_Control(pDX, IDC_BUTTON_LIN, m_buttonLIn);
+	DDX_Control(pDX, IDC_BUTTON_LOUT, m_buttonLOut);
+	DDX_Control(pDX, IDC_BUTTON_LC, m_buttonLC);
+	DDX_Control(pDX, IDC_BUTTON_LCC, m_buttonLCC);
+	DDX_Control(pDX, IDC_BUTTON_L2, m_buttonL2);
+	DDX_Control(pDX, IDC_BUTTON_FIN, m_buttonFIn);
+	DDX_Control(pDX, IDC_BUTTON_FOUT, m_buttonFOut);
+	DDX_Control(pDX, IDC_BUTTON_FC, m_buttonFC);
+	DDX_Control(pDX, IDC_BUTTON_FCC, m_buttonFCC);
+	DDX_Control(pDX, IDC_BUTTON_F2, m_buttonF2);
+	DDX_Control(pDX, IDC_BUTTON_RIN, m_buttonRIn);
+	DDX_Control(pDX, IDC_BUTTON_ROUT, m_buttonROut);
+	DDX_Control(pDX, IDC_BUTTON_RC, m_buttonRC);
+	DDX_Control(pDX, IDC_BUTTON_RCC, m_buttonRCC);
+	DDX_Control(pDX, IDC_BUTTON_R2, m_buttonR2);
+	DDX_Control(pDX, IDC_BUTTON_BIN, m_buttonBIn);
+	DDX_Control(pDX, IDC_BUTTON_BOUT, m_buttonBOut);
+	DDX_Control(pDX, IDC_BUTTON_BC, m_buttonBC);
+	DDX_Control(pDX, IDC_BUTTON_BCC, m_buttonBCC);
+	DDX_Control(pDX, IDC_BUTTON_B2, m_buttonB2);
+	DDX_Control(pDX, IDC_BUTTON_UIN, m_buttonUIn);
+	DDX_Control(pDX, IDC_BUTTON_UOUT, m_buttonUOut);
+	DDX_Control(pDX, IDC_BUTTON_UC, m_buttonUC);
+	DDX_Control(pDX, IDC_BUTTON_UCC, m_buttonUCC);
+	DDX_Control(pDX, IDC_BUTTON_U2, m_buttonU2);
+	DDX_Control(pDX, IDC_BUTTON_DIN, m_buttonDIn);
+	DDX_Control(pDX, IDC_BUTTON_DOUT, m_buttonDOut);
+	DDX_Control(pDX, IDC_BUTTON_DC, m_buttonDC);
+	DDX_Control(pDX, IDC_BUTTON_DCC, m_buttonDCC);
+	DDX_Control(pDX, IDC_BUTTON_D2, m_buttonD2);
 	DDX_Control(pDX, IDC_EDIT_OUTPUT, m_outputWindow);
 	//}}AFX_DATA_MAP
 }
 
 
-BEGIN_MESSAGE_MAP(ManualDlg, ReaderControlTabDlg)
+BEGIN_MESSAGE_MAP(ManualDlg, HerbertControllerTabDlg)
 	//{{AFX_MSG_MAP(ManualDlg)
 	ON_BN_CLICKED(IDC_BUTTON_CLEAR_OUTPUT, OnButtonClearOutput)
 	ON_EN_SETFOCUS(IDC_EDIT_MSG1, OnSetFocusEditMsg1)
@@ -67,6 +99,38 @@ BEGIN_MESSAGE_MAP(ManualDlg, ReaderControlTabDlg)
 	ON_BN_CLICKED(IDC_BUTTON_UPGRADE_FIRMWARE, &ManualDlg::OnBnClickedButtonUpgradeFirmware)
 	ON_BN_CLICKED(IDC_BUTTON_UPGRADE_FPGA, &ManualDlg::OnBnClickedButtonUpgradeFpga)
 	ON_BN_CLICKED(IDC_BUTTON_DEBUG_CAPTURE, &ManualDlg::OnBnClickedButtonDebugCapture)
+	ON_EN_SETFOCUS(IDC_EDIT_MSG2, &ManualDlg::OnEnSetfocusEditMsg2)
+	ON_BN_CLICKED(IDC_BUTTON_SEND2, &ManualDlg::OnBnClickedButtonSend2)
+	ON_BN_CLICKED(IDC_BUTTON_LIN, &ManualDlg::OnBnClickedButtonLin)
+	ON_BN_CLICKED(IDC_BUTTON_LOUT, &ManualDlg::OnBnClickedButtonLout)
+	ON_BN_CLICKED(IDC_BUTTON_LC, &ManualDlg::OnBnClickedButtonLc)
+	ON_BN_CLICKED(IDC_BUTTON_LCC, &ManualDlg::OnBnClickedButtonLcc)
+	ON_BN_CLICKED(IDC_BUTTON_L2, &ManualDlg::OnBnClickedButtonL2)
+	ON_BN_CLICKED(IDC_BUTTON_FIN, &ManualDlg::OnBnClickedButtonFin)
+	ON_BN_CLICKED(IDC_BUTTON_FOUT, &ManualDlg::OnBnClickedButtonFout)
+	ON_BN_CLICKED(IDC_BUTTON_FC, &ManualDlg::OnBnClickedButtonFc)
+	ON_BN_CLICKED(IDC_BUTTON_FCC, &ManualDlg::OnBnClickedButtonFcc)
+	ON_BN_CLICKED(IDC_BUTTON_F2, &ManualDlg::OnBnClickedButtonF2)
+	ON_BN_CLICKED(IDC_BUTTON_RIN, &ManualDlg::OnBnClickedButtonRin)
+	ON_BN_CLICKED(IDC_BUTTON_ROUT, &ManualDlg::OnBnClickedButtonRout)
+	ON_BN_CLICKED(IDC_BUTTON_RC, &ManualDlg::OnBnClickedButtonRc)
+	ON_BN_CLICKED(IDC_BUTTON_RCC, &ManualDlg::OnBnClickedButtonRcc)
+	ON_BN_CLICKED(IDC_BUTTON_R2, &ManualDlg::OnBnClickedButtonR2)
+	ON_BN_CLICKED(IDC_BUTTON_BIN, &ManualDlg::OnBnClickedButtonBin)
+	ON_BN_CLICKED(IDC_BUTTON_BOUT, &ManualDlg::OnBnClickedButtonBout)
+	ON_BN_CLICKED(IDC_BUTTON_BC, &ManualDlg::OnBnClickedButtonBc)
+	ON_BN_CLICKED(IDC_BUTTON_BCC, &ManualDlg::OnBnClickedButtonBcc)
+	ON_BN_CLICKED(IDC_BUTTON_B2, &ManualDlg::OnBnClickedButtonB2)
+	ON_BN_CLICKED(IDC_BUTTON_UIN, &ManualDlg::OnBnClickedButtonUin)
+	ON_BN_CLICKED(IDC_BUTTON_UOUT, &ManualDlg::OnBnClickedButtonUout)
+	ON_BN_CLICKED(IDC_BUTTON_UC, &ManualDlg::OnBnClickedButtonUc)
+	ON_BN_CLICKED(IDC_BUTTON_UCC, &ManualDlg::OnBnClickedButtonUcc)
+	ON_BN_CLICKED(IDC_BUTTON_U2, &ManualDlg::OnBnClickedButtonU2)
+	ON_BN_CLICKED(IDC_BUTTON_DIN, &ManualDlg::OnBnClickedButtonDin)
+	ON_BN_CLICKED(IDC_BUTTON_DOUT, &ManualDlg::OnBnClickedButtonDout)
+	ON_BN_CLICKED(IDC_BUTTON_DC, &ManualDlg::OnBnClickedButtonDc)
+	ON_BN_CLICKED(IDC_BUTTON_DCC, &ManualDlg::OnBnClickedButtonDcc)
+	ON_BN_CLICKED(IDC_BUTTON_D2, &ManualDlg::OnBnClickedButtonD2)
 END_MESSAGE_MAP()
 
 /////////////////////////////////////////////////////////////////////////////
@@ -74,11 +138,12 @@ END_MESSAGE_MAP()
 
 BOOL ManualDlg::OnInitDialog() 
 {
-	ReaderControlTabDlg::OnInitDialog();
+	HerbertControllerTabDlg::OnInitDialog();
 	
     int autoHeader = AfxGetApp()->GetProfileInt(profile_sectionManual, profile_keyAutoHeader, profile_defaultAutoHeader);
 
     m_editMsg1.SetWindowText(AfxGetApp()->GetProfileString(profile_sectionManual, profile_keyMsg1));
+	m_editMsg2.SetWindowText(AfxGetApp()->GetProfileString(profile_sectionManual, profile_keyMsg2));
 
     SetTimer(1, TIMER_PERIOD_ms, NULL);
 
@@ -107,6 +172,7 @@ BOOL ManualDlg::SaveSettingsAndExit()
 
     CString msg;
     m_editMsg1.GetWindowText(msg); AfxGetApp()->WriteProfileString(profile_sectionManual, profile_keyMsg1, msg);
+	m_editMsg2.GetWindowText(msg); AfxGetApp()->WriteProfileString(profile_sectionManual, profile_keyMsg2, msg);
 
     return TRUE;
 }
@@ -116,7 +182,41 @@ void ManualDlg::DisplayFPGAConnected(BOOL connected)
 {
     m_outputWindow.EnableWindow(connected);
     m_editMsg1.EnableWindow(connected);
+	m_editMsg2.EnableWindow(connected);
     m_buttonSend1.EnableWindow(connected);
+	m_buttonSend2.EnableWindow(connected);
+
+	m_buttonLIn.EnableWindow(connected);
+	m_buttonLOut.EnableWindow(connected);
+	m_buttonLC.EnableWindow(connected);
+	m_buttonLCC.EnableWindow(connected);
+	m_buttonL2.EnableWindow(connected);
+	m_buttonFIn.EnableWindow(connected);
+	m_buttonFOut.EnableWindow(connected);
+	m_buttonFC.EnableWindow(connected);
+	m_buttonFCC.EnableWindow(connected);
+	m_buttonF2.EnableWindow(connected);
+	m_buttonRIn.EnableWindow(connected);
+	m_buttonROut.EnableWindow(connected);
+	m_buttonRC.EnableWindow(connected);
+	m_buttonRCC.EnableWindow(connected);
+	m_buttonR2.EnableWindow(connected);
+	m_buttonBIn.EnableWindow(connected);
+	m_buttonBOut.EnableWindow(connected);
+	m_buttonBC.EnableWindow(connected);
+	m_buttonBCC.EnableWindow(connected);
+	m_buttonB2.EnableWindow(connected);
+	m_buttonUIn.EnableWindow(connected);
+	m_buttonUOut.EnableWindow(connected);
+	m_buttonUC.EnableWindow(connected);
+	m_buttonUCC.EnableWindow(connected);
+	m_buttonU2.EnableWindow(connected);
+	m_buttonDIn.EnableWindow(connected);
+	m_buttonDOut.EnableWindow(connected);
+	m_buttonDC.EnableWindow(connected);
+	m_buttonDCC.EnableWindow(connected);
+	m_buttonD2.EnableWindow(connected);
+
 
     m_connected = connected;
 }
@@ -127,7 +227,7 @@ void ManualDlg::OnTimer(UINT nIDEvent)
 {
     KillTimer(nIDEvent);
 	
-	ReaderControlTabDlg::OnTimer(nIDEvent);
+	HerbertControllerTabDlg::OnTimer(nIDEvent);
 }
 
 
@@ -282,4 +382,195 @@ void ManualDlg::CloseDebugCaptureDlg()
         m_debugCaptureDlg->ShowWindow(SW_HIDE);
         m_debugCaptureDlg = NULL;
     }
+}
+
+void ManualDlg::OnEnSetfocusEditMsg2()
+{
+	 m_activeEditBox = &m_editMsg2;
+}
+
+
+void ManualDlg::OnBnClickedButtonSend2()
+{
+	GetAndSendCmd(&m_editMsg2);
+}
+
+
+void ManualDlg::OnBnClickedButtonLin()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonLout()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonLc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonLcc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonL2()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonFin()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonFout()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonFc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonFcc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonF2()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonRin()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonRout()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonRc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonRcc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonR2()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonBin()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonBout()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonBc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonBcc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonB2()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonUin()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonUout()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonUc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonUcc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonU2()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonDin()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonDout()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonDc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonDcc()
+{
+	// TODO: Add your control notification handler code here
+}
+
+
+void ManualDlg::OnBnClickedButtonD2()
+{
+	// TODO: Add your control notification handler code here
 }

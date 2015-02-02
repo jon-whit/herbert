@@ -54,17 +54,6 @@ namespace Commands
     const char SET_RAMP_RATE_STR[]        = "SetRampRate";
     const char GET_RAMP_RATE_STR[]        = "GetRampRate";
 
-    const char GET_PCB_GET_STATUS_STR[]   = "GetStatus";
-    const char GET_PCB_GET_VOLTAGE_STR[]  = "GetVoltage";
-    const char GET_PCB_GET_ON_STATE_STR[] = "GetOnState";
-    const char GET_PCB_SET_ON_STATE_STR[] = "SetOnState";
-    const char GET_PCB_SBC_PWR_SW_STR[]   = "SBCPwrSwitch";
-    const char GET_PCB_RESET_SBC_STR[]    = "ResetSBC";
-    const char GET_PCB_GET_ROT_SW_STR[]   = "GetRotarySwitch";
-    const char GET_PCB_SET_HB_LED_STR[]   = "SetHeartbeatLED";
-    const char GET_PCB_SET_ACT_LED_STR[]  = "SetActivityLED";
-    const char GET_PCB_SET_ERR_LED_STR[]  = "SetErrorLED";
-
     const char CHANNEL_ALL[]              = "ALL";
     const char CHANNEL_BLOCK[]            = "BLOCK";
     const char CHANNEL_LID[]              = "LID";

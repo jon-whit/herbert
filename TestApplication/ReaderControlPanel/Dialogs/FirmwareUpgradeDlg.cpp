@@ -74,7 +74,7 @@ INT_PTR FirmwareUpgradeDlg::DoModal(UpgradeType upgradeType)
 BOOL FirmwareUpgradeDlg::OnInitDialog()
 {
     SetWindowText((m_upgradeType == UpgradeFirmware) ? 
-        "Reader FPGA Firmware Upgrade" : "Reader FPGA Image Upgrade");
+        "Herbert FPGA Firmware Upgrade" : "Herbert FPGA Image Upgrade");
 
     DialogEx::OnInitDialog();
 

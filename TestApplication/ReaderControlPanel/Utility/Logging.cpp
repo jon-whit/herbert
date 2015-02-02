@@ -23,7 +23,7 @@
 
 
 
-const char DEFAULT_LOG_FILE_NAME[] = "ReaderControlPanel.log";
+const char DEFAULT_LOG_FILE_NAME[] = "HerbertController.log";
 
 
 const int MAX_LOG_LINE_LEN              = 5000;

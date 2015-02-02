@@ -2,7 +2,7 @@
 //
 //  Messages.h
 //
-//  ReaderControl windows message defines
+//  HerbertController windows message defines
 //
 //  Copyright 2009 Idaho Technology
 //  Created by Brett Gilbert

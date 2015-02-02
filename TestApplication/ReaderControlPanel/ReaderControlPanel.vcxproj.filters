@@ -45,9 +45,6 @@
     <ClCompile Include="InstrumentTypes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ReaderControl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="StdAfx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -70,9 +67,6 @@
       <Filter>Comm</Filter>
     </ClCompile>
     <ClCompile Include="Comm\FpgaComm.cpp">
-      <Filter>Comm</Filter>
-    </ClCompile>
-    <ClCompile Include="Comm\PcbComm.cpp">
       <Filter>Comm</Filter>
     </ClCompile>
     <ClCompile Include="Comm\Serial.cpp">
@@ -180,10 +174,13 @@
     <ClCompile Include="Dialogs\ManualDlg.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="Dialogs\ReaderControlDlg.cpp">
+    <ClCompile Include="HerbertController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialogs\HerbertControllerDlg.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
-    <ClCompile Include="Dialogs\ReaderControlTabDlg.cpp">
+    <ClCompile Include="Dialogs\HerbertControllerTabDlg.cpp">
       <Filter>Dialogs</Filter>
     </ClCompile>
   </ItemGroup>
@@ -203,9 +200,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Messages.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ReaderControl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
@@ -242,9 +236,6 @@
       <Filter>Comm</Filter>
     </ClInclude>
     <ClInclude Include="Comm\FpgaComm.h">
-      <Filter>Comm</Filter>
-    </ClInclude>
-    <ClInclude Include="Comm\PcbComm.h">
       <Filter>Comm</Filter>
     </ClInclude>
     <ClInclude Include="Comm\Serial.h">
@@ -373,29 +364,32 @@
     <ClInclude Include="Dialogs\ManualDlg.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="Dialogs\ReaderControlDlg.h">
+    <ClInclude Include="HerbertController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Dialogs\HerbertControllerDlg.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
-    <ClInclude Include="Dialogs\ReaderControlTabDlg.h">
+    <ClInclude Include="Dialogs\HerbertControllerTabDlg.h">
       <Filter>Dialogs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\iti_large.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-    <Image Include="res\iti_small.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="bitmaps\stop.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\rc_large.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\rc_small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\ReaderControl.rc2">
+    <None Include="ClassDiagram1.cd" />
+    <None Include="res\HerbertController.rc2">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

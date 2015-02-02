@@ -14,6 +14,7 @@
     <ProjectGuid>{E925196E-4FCE-43AA-9BB5-15C968355AFB}</ProjectGuid>
     <RootNamespace>ReaderControlPanel</RootNamespace>
     <Keyword>MFCProj</Keyword>
+    <ProjectName>HerbertController</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -157,7 +158,7 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClCompile Include="Instrument.cpp" />
     <ClCompile Include="InstrumentEvent.cpp" />
     <ClCompile Include="InstrumentTypes.cpp" />
-    <ClCompile Include="ReaderControl.cpp" />
+    <ClCompile Include="HerbertController.cpp" />
     <ClCompile Include="StdAfx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdafx.h</PrecompiledHeaderFile>
@@ -170,7 +171,6 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClCompile Include="Comm\crc32.c" />
     <ClCompile Include="Comm\errors.cpp" />
     <ClCompile Include="Comm\FpgaComm.cpp" />
-    <ClCompile Include="Comm\PcbComm.cpp" />
     <ClCompile Include="Comm\Serial.cpp" />
     <ClCompile Include="Comm\SerialEx.cpp" />
     <ClCompile Include="Controls\BCMenu.cpp" />
@@ -206,8 +206,8 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClCompile Include="Dialogs\DebugCaptureDlg.cpp" />
     <ClCompile Include="Dialogs\FirmwareUpgradeDlg.cpp" />
     <ClCompile Include="Dialogs\ManualDlg.cpp" />
-    <ClCompile Include="Dialogs\ReaderControlDlg.cpp" />
-    <ClCompile Include="Dialogs\ReaderControlTabDlg.cpp" />
+    <ClCompile Include="Dialogs\HerbertControllerDlg.cpp" />
+    <ClCompile Include="Dialogs\HerbertControllerTabDlg.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="ReaderControl.rc" />
@@ -217,7 +217,7 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClInclude Include="InstrumentEvent.h" />
     <ClInclude Include="InstrumentTypes.h" />
     <ClInclude Include="Messages.h" />
-    <ClInclude Include="ReaderControl.h" />
+    <ClInclude Include="HerbertController.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="StdAfx.h" />
     <ClInclude Include="types.h" />
@@ -230,7 +230,6 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClInclude Include="Comm\error_list.h" />
     <ClInclude Include="Comm\errors.h" />
     <ClInclude Include="Comm\FpgaComm.h" />
-    <ClInclude Include="Comm\PcbComm.h" />
     <ClInclude Include="Comm\Serial.h" />
     <ClInclude Include="Comm\SerialEx.h" />
     <ClInclude Include="Controls\BCMenu.h" />
@@ -273,16 +272,16 @@ md5sum $(ProjectName).exe &gt; $(ProjectName).exe.md5
     <ClInclude Include="Dialogs\DebugCaptureDlg.h" />
     <ClInclude Include="Dialogs\FirmwareUpgradeDlg.h" />
     <ClInclude Include="Dialogs\ManualDlg.h" />
-    <ClInclude Include="Dialogs\ReaderControlDlg.h" />
-    <ClInclude Include="Dialogs\ReaderControlTabDlg.h" />
+    <ClInclude Include="Dialogs\HerbertControllerDlg.h" />
+    <ClInclude Include="Dialogs\HerbertControllerTabDlg.h" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="res\iti_large.ico" />
-    <Image Include="res\iti_small.ico" />
+    <Image Include="res\rc_large.ico" />
+    <Image Include="res\rc_small.ico" />
     <Image Include="bitmaps\stop.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\ReaderControl.rc2" />
+    <None Include="res\HerbertController.rc2" />
     <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>

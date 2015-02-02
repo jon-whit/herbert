@@ -5,7 +5,6 @@
 #include <boost/shared_ptr.hpp>
 #include <InstrumentEvent.h>
 #include <FpgaComm.h>
-#include <PcbComm.h>
 #include <Exceptions.h>
 #include <ThreadQueue.h>
 #include <enumser.h>
@@ -34,11 +33,10 @@ public:
     static Instrument& getInstance();
     ~Instrument();
 
-    void connect(const std::string& fpgaCommPort, const std::string& pcbCommPort);
+    void connect(const std::string& fpgaCommPort);
     void disconnect();
-    bool connected()     {return m_fpgaComm.IsOpen() || m_pcbComm.IsOpen();}
+    bool connected()     {return m_fpgaComm.IsOpen();}
     bool fpgaConnected() {return m_fpgaComm.IsOpen();}
-    bool pcbConnected()  {return m_pcbComm.IsOpen();}
 
     void updateSerialPorts();
     void getSerialPorts(std::vector<std::string>* ports);
@@ -48,7 +46,6 @@ public:
     void        watchFPGAInfoUpdate(InstrumentEventQueue::shared_ptr queue);
 
     static void updatePCBInfo();
-    void        watchPCBInfoUpdate(InstrumentEventQueue::shared_ptr queue);
 
     void        watchErrorMessages(InstrumentEventQueue::shared_ptr queue);
     void        watchLogMessages(InstrumentEventQueue::shared_ptr queue);
@@ -70,7 +67,6 @@ private:
 
     Mutex                             m_mutex;
     FpgaComm&                         m_fpgaComm;
-    PcbComm&                          m_pcbComm;
     InstrumentEventQueue::shared_ptr  m_exceptionQueue;
 
     std::vector<std::string>          m_serialPorts;
@@ -157,27 +153,6 @@ private:
     };
 
     FPGAInfoThread m_fpgaInfoThread;
-
-
-
-    ///////////////////////////////////////////////////////////////////////////////////
-    // PCB Info
-    class PCBInfoThread : public InstrumentThread
-    {
-    public:
-        PCBInfoThread(Instrument& instrument, Comm& comm) :
-          InstrumentThread("PCBInfoThread", instrument, comm) {}
-
-    private:
-        DWORD thread();
-        virtual bool  exitSleep()  { return !m_comm.IsOpen() || !isRunning(); }
-        virtual bool  exitThread() { return !m_comm.IsOpen() || !isRunning(); }
-
-        void sendInfo(const std::string& firmwareVersion,
-                      const std::string& firmwareBuildDate);
-    };
-        
-    PCBInfoThread m_pcbInfoThread;
 };
 
 

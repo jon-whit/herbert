@@ -1,46 +1,46 @@
 ========================================================================
-       MICROSOFT FOUNDATION CLASS LIBRARY : ReaderControl
+       MICROSOFT FOUNDATION CLASS LIBRARY : HerbertController
 ========================================================================
 
 
-AppWizard has created this ReaderControl application for you.  This application
+AppWizard has created this HerbertController application for you.  This application
 not only demonstrates the basics of using the Microsoft Foundation classes
 but is also a starting point for writing your application.
 
 This file contains a summary of what you will find in each of the files that
-make up your ReaderControl application.
+make up your HerbertController application.
 
-ReaderControl.dsp
+HerbertController.dsp
     This file (the project file) contains information at the project level and
     is used to build a single project or subproject. Other users can share the
     project (.dsp) file, but they should export the makefiles locally.
 
-ReaderControl.h
+HerbertController.h
     This is the main header file for the application.  It includes other
     project specific headers (including Resource.h) and declares the
-    CReaderControlApp application class.
+    CHerbertControllerApp application class.
 
-ReaderControl.cpp
+HerbertController.cpp
     This is the main application source file that contains the application
-    class CReaderControlApp.
+    class CHerbertControllerApp.
 
-ReaderControl.rc
+HerbertController.rc
     This is a listing of all of the Microsoft Windows resources that the
     program uses.  It includes the icons, bitmaps, and cursors that are stored
     in the RES subdirectory.  This file can be directly edited in Microsoft
 	Visual C++.
 
-ReaderControl.clw
+HerbertController.clw
     This file contains information used by ClassWizard to edit existing
     classes or add new classes.  ClassWizard also uses this file to store
     information needed to create and edit message maps and dialog data
     maps and to create prototype member functions.
 
-res\ReaderControl.ico
+res\HerbertController.ico
     This is an icon file, which is used as the application's icon.  This
-    icon is included by the main resource file ReaderControl.rc.
+    icon is included by the main resource file HerbertController.rc.
 
-res\ReaderControl.rc2
+res\HerbertController.rc2
     This file contains resources that are not edited by Microsoft 
 	Visual C++.  You should place all resources not editable by
 	the resource editor in this file.
@@ -52,10 +52,10 @@ res\ReaderControl.rc2
 
 AppWizard creates one dialog class:
 
-ReaderControlDlg.h, ReaderControlDlg.cpp - the dialog
-    These files contain your CReaderControlDlg class.  This class defines
+HerbertControllerDlg.h, HerbertControllerDlg.cpp - the dialog
+    These files contain your CHerbertControllerDlg class.  This class defines
     the behavior of your application's main dialog.  The dialog's
-    template is in ReaderControl.rc, which can be edited in Microsoft
+    template is in HerbertController.rc, which can be edited in Microsoft
 	Visual C++.
 
 
@@ -64,7 +64,7 @@ Other standard files:
 
 StdAfx.h, StdAfx.cpp
     These files are used to build a precompiled header (PCH) file
-    named ReaderControl.pch and a precompiled types file named StdAfx.obj.
+    named HerbertController.pch and a precompiled types file named StdAfx.obj.
 
 Resource.h
     This is the standard header file, which defines new resource IDs.

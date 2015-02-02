@@ -1,13 +1,13 @@
 //{{NO_DEPENDENCIES}}
 // Microsoft Visual C++ generated include file.
-// Used by ReaderControl.rc
+// Used by HerbertController.rc
 //
 #define IDS_ABOUTBOX                    101
-#define IDD_READERCONTROL_DIALOG        102
+#define IDD_HerbertController_DIALOG        102
 #define IDD_DIALOG_MANUAL               131
 #define IDB_BITMAP_STOP                 135
-#define IDI_ICON_ITI_LARGE              138
-#define IDI_ICON_ITI_SMALL              139
+#define IDI_ICON_RC_LARGE               138
+#define IDI_ICON_RC_SMALL               139
 #define IDD_DIALOG_FIRMWARE_UPGRADE     170
 #define IDD_DIALOG_DEBUG_CAPTURE        183
 #define IDC_BUTTON_CONNECT              1000

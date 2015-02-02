@@ -48,7 +48,7 @@ BEGIN
     "LANGUAGE 9, 1\r\n"
     "#pragma code_page(1252)\r\n"
     "#endif //_WIN32\r\n"
-    "#include ""res\\ReaderControl.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""res\\HerbertController.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
     "#include ""afxres.rc""         // Standard components\r\n"
     "#endif\r\n"
     "\0"
@@ -64,15 +64,15 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON_ITI_LARGE      ICON                    "res\\iti_large.ico"
-IDI_ICON_ITI_SMALL      ICON                    "res\\iti_small.ico"
+IDI_ICON_RC_LARGE      ICON                    "res\\rc_large.ico"
+IDI_ICON_RC_SMALL      ICON                    "res\\rc_small.ico"
 
 /////////////////////////////////////////////////////////////////////////////
 //
 // Dialog
 //
 
-IDD_READERCONTROL_DIALOG DIALOGEX 0, 0, 592, 412
+IDD_HerbertController_DIALOG DIALOGEX 0, 0, 592, 412
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
 CAPTION "Herbert Test/Calibration Application"
@@ -83,13 +83,13 @@ BEGIN
     CONTROL         "Tab1",IDC_TABS,"SysTabControl32",0x0,7,7,578,347
     COMBOBOX        IDC_COMBO_FPGACOMMPORT,69,379,41,64,CBS_DROPDOWNLIST | WS_VSCROLL | WS_TABSTOP
     LTEXT           "Comm Port",IDC_STATIC,73,368,40,8
-    GROUPBOX        "System Control Board",IDC_STATIC,63,357,180,46
-    RTEXT           "FW Version:",IDC_STATIC_FPGA_FW_VERSION_LABEL,115,377,48,8,0,WS_EX_RIGHT
-    RTEXT           "FW Build Date:",IDC_STATIC_FPGA_FW_BUILD_DATE_LABEL,115,387,48,8,0,WS_EX_RIGHT
-    LTEXT           "FW Version String",IDC_STATIC_FPGA_FW_VER_STR,166,377,74,8
-    LTEXT           "FW Build Date String",IDC_STATIC_FPGA_FW_BUILD_DATE,166,387,74,8
-    RTEXT           "FPGA Version:",IDC_STATIC_FPGA_VERSION_LABEL,115,367,48,8,0,WS_EX_RIGHT
-    LTEXT           "FPGA Version String",IDC_STATIC_FPGA_VER_STR,166,367,74,8
+    GROUPBOX        "System Control Board",IDC_STATIC,63,357,476,46
+    RTEXT           "FW Version:",IDC_STATIC_FPGA_FW_VERSION_LABEL,229,376,41,8,0,WS_EX_RIGHT
+    RTEXT           "FW Build Date:",IDC_STATIC_FPGA_FW_BUILD_DATE_LABEL,349,376,48,8,0,WS_EX_RIGHT
+    LTEXT           "FW Version String",IDC_STATIC_FPGA_FW_VER_STR,271,376,59,8
+    LTEXT           "FW Build Date String",IDC_STATIC_FPGA_FW_BUILD_DATE,400,376,74,8
+    RTEXT           "FPGA Version:",IDC_STATIC_FPGA_VERSION_LABEL,117,376,48,8,0,WS_EX_RIGHT
+    LTEXT           "FPGA Version String",IDC_STATIC_FPGA_VER_STR,167,376,63,8
 END
 
 IDD_DIALOG_MANUAL DIALOGEX 0, 0, 479, 260
@@ -174,7 +174,7 @@ END
 #ifdef APSTUDIO_INVOKED
 GUIDELINES DESIGNINFO
 BEGIN
-    IDD_READERCONTROL_DIALOG, DIALOG
+    IDD_HerbertController_DIALOG, DIALOG
     BEGIN
         LEFTMARGIN, 7
         RIGHTMARGIN, 585
@@ -223,7 +223,7 @@ IDB_BITMAP_STOP         BITMAP                  "bitmaps\\stop.bmp"
 
 STRINGTABLE
 BEGIN
-    IDS_ABOUTBOX            "&About ReaderControl..."
+    IDS_ABOUTBOX            "&About HerbertController..."
 END
 
 #endif    // English (United States) resources
@@ -246,7 +246,7 @@ END
 LANGUAGE 9, 1
 #pragma code_page(1252)
 #endif //_WIN32
-#include "res\ReaderControl.rc2"  // non-Microsoft Visual C++ edited resources
+#include "res\HerbertController.rc2"  // non-Microsoft Visual C++ edited resources
 #include "afxres.rc"         // Standard components
 #endif
 

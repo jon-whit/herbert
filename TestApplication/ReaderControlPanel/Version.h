@@ -15,8 +15,8 @@
 // Number format:        1, 2, 3, 4
 // Number string format: "1.2.3.4" 
 
-#define APP_VERSION_NUMBER          1, 13
-#define APP_VERSION_NUMBER_STR      "1.13"
+#define APP_VERSION_NUMBER          0, 01
+#define APP_VERSION_NUMBER_STR      "0.01"
 
 
 #define FILEVER        APP_VERSION_NUMBER
@@ -24,9 +24,9 @@
 #define STRFILEVER     APP_VERSION_NUMBER_STR
 #define STRPRODUCTVER  APP_VERSION_NUMBER_STR
 
-#define STRCOPYRIGHT   "Copyright © 2014"
+#define STRCOPYRIGHT   "Copyright © 2015"
 
-#define PROJECTNAME    "Olympia"
+#define PROJECTNAME    "Herbert"
 
 #endif
 
