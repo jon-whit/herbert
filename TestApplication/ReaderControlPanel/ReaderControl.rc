@@ -75,7 +75,7 @@ IDI_ICON_RC_SMALL      ICON                    "res\\rc_small.ico"
 IDD_HerbertController_DIALOG DIALOGEX 0, 0, 592, 412
 STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_MINIMIZEBOX | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
 EXSTYLE WS_EX_APPWINDOW
-CAPTION "Herbert Test/Calibration Application"
+CAPTION "Test/Calibration Application"
 FONT 8, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
     PUSHBUTTON      "Connect",IDC_BUTTON_CONNECT,7,361,49,42

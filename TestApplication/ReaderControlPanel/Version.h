@@ -15,8 +15,8 @@
 // Number format:        1, 2, 3, 4
 // Number string format: "1.2.3.4" 
 
-#define APP_VERSION_NUMBER          0, 01
-#define APP_VERSION_NUMBER_STR      "0.01"
+#define APP_VERSION_NUMBER          0, 02
+#define APP_VERSION_NUMBER_STR      "0.02"
 
 
 #define FILEVER        APP_VERSION_NUMBER

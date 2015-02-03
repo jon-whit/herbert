@@ -54,6 +54,8 @@ namespace Commands
     const char SET_RAMP_RATE_STR[]        = "SetRampRate";
     const char GET_RAMP_RATE_STR[]        = "GetRampRate";
 
+	const char MOVE_RELATIVE[]			  = "MoveRelative";
+
     const char CHANNEL_ALL[]              = "ALL";
     const char CHANNEL_BLOCK[]            = "BLOCK";
     const char CHANNEL_LID[]              = "LID";
@@ -208,6 +210,7 @@ namespace Commands
             TypeGetDebugCapture,
             TypePauseDebugCapture,
             TypeResumeDebugCapture,
+			TypeMoveRelative,
         };
 
         typedef boost::shared_ptr<Transaction> shared_ptr;
@@ -1313,6 +1316,14 @@ namespace Commands
             m_cmdPkt.SetCmd(RESUME_DEBUG_CAPTURE);
         }
     };
+
+	class MoveRelative : public Transaction 
+	{
+	public:
+		MoveRelative(std::string& motor, int steps);
+		BOOL processRsp(CommPkt* rspPkt);
+		Type type() {return TypeMoveRelative;}
+	};
 }
 
 #endif

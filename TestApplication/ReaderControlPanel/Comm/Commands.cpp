@@ -9,6 +9,7 @@
 
 #include <Commands.h>
 #include <StringFormatting.h>
+#include <boost/lexical_cast.hpp>
 
 
 //----------------------------------------------------------------
@@ -1186,6 +1187,17 @@ BOOL Commands::ResumeDebugCapture::processRsp(CommPkt* rspPkt)
     return rspPkt->GetDataLen() == 1;
 }
 
+Commands::MoveRelative::MoveRelative(std::string& motor, int steps)
+	: Transaction(HEADER_TO_MASTER_FROM_HOST)
+{
+	m_cmdPkt.SetCmd(MOVE_RELATIVE);
+	m_cmdPkt.AddData(motor.c_str());
+	m_cmdPkt.AddData(boost::lexical_cast<std::string>(steps).c_str());
+}
 
+BOOL Commands::MoveRelative::processRsp(CommPkt* rspPkt)
+{
+	return rspPkt->GetDataLen() == 1;
+}
 
 // EOF

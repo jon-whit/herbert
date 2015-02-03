@@ -398,7 +398,7 @@ void ManualDlg::OnBnClickedButtonSend2()
 
 void ManualDlg::OnBnClickedButtonLin()
 {
-	// TODO: Add your control notification handler code here
+	
 }
 
 
@@ -410,19 +410,22 @@ void ManualDlg::OnBnClickedButtonLout()
 
 void ManualDlg::OnBnClickedButtonLc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"L", -50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonLcc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"L", 50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonL2()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"L", 100));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -440,19 +443,22 @@ void ManualDlg::OnBnClickedButtonFout()
 
 void ManualDlg::OnBnClickedButtonFc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"F", -50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonFcc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"F", 50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonF2()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"F", 100));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -470,19 +476,22 @@ void ManualDlg::OnBnClickedButtonRout()
 
 void ManualDlg::OnBnClickedButtonRc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"R", -50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonRcc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"R", 50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonR2()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"R", 100));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -500,19 +509,22 @@ void ManualDlg::OnBnClickedButtonBout()
 
 void ManualDlg::OnBnClickedButtonBc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"B", -50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonBcc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"B", 50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonB2()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"B", 100));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -530,19 +542,22 @@ void ManualDlg::OnBnClickedButtonUout()
 
 void ManualDlg::OnBnClickedButtonUc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"U", -50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonUcc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"U", 50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonU2()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"U", 100));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -560,17 +575,20 @@ void ManualDlg::OnBnClickedButtonDout()
 
 void ManualDlg::OnBnClickedButtonDc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"D", -50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonDcc()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"D", 50));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonD2()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::MoveRelative((std::string)"D", 100));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
