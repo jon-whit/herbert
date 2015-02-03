@@ -333,7 +333,7 @@ static void stepper_hw_isr2(void *callbackRef2)
     }
 }
 
-void DisableMotors()
+void disableMotors()
 {    
     MOTOR_REGS_UFR.enable = 0;
     MOTOR_REGS_DBL.enable = 0;

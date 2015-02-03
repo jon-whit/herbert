@@ -32,7 +32,7 @@ enum StepperConstants
     stepperHome = INT_MAX, /*!< This value is reserved for home requests. */
   
     // These values need to be tested to see what frequencies work best  
-    defaultFastFrequency    = 2000,
+    defaultFastFrequency    = 1500,
     defaultSlowFrequency    = 100,
     defaultRampSteps        = 10,
 };

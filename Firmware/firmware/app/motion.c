@@ -642,7 +642,7 @@ bool motionProcess(void* unused)
                 else
                 {
                     printf("%d\n", (int)getTimer_ms(&armMotionData.timer));
-                    DisableMotors();
+                    disableMotors();
                     motionData.state = state_idle;
                 }
             }

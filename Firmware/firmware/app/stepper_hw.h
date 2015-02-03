@@ -29,7 +29,7 @@ bool stepper_get_alt_sensor_hw();
 void stepper_clear_direction_hw();
 void stepper_set_direction_hw();
 
-void DisableMotors();
+void disableMotors();
 
 
 

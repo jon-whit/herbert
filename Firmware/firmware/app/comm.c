@@ -59,7 +59,7 @@ enum CommDelimiters
 
 #define COMM_PROCESS_HOST_PERIOD_ms   10
 #define COMM_PROCESS_SLAVE_PERIOD_ms  10
-#define COMM_CONNECTION_TIMEOUT_s     60
+#define COMM_CONNECTION_TIMEOUT_s     600
 
 #define COMM_BYTE_TIME_us             87
 
@@ -75,9 +75,9 @@ enum CommDelimiters
 #define LOG_MSG_KEY                   "Log"
 #define ERROR_MSG_KEY                 "Error"
 
-#define LID_MOTOR_KEY                 "LID"
-#define DOOR_MOTOR_KEY                "DOOR"
-#define FILTER_MOTOR_KEY              "FILTER"
+#define U_MOTOR_KEY                   "U"
+#define F_MOTOR_KEY                   "F"
+#define R_MOTOR_KEY                   "R"
 
 #define FAST_STEPPER_KEY              "FAST"
 #define SLOW_STEPPER_KEY              "SLOW"
@@ -1204,15 +1204,15 @@ static bool validateHexParameterRange(CmdPkt* cmdPkt, int paramIndex, uint32 min
 
 static bool validateMotorParameter(CmdPkt* cmdPkt, int paramIndex, StepperMotor *motor)
 {
-    if(strcmp(LID_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
+    if(strcmp(U_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
     {
         *motor = stepperU;
     }
-    else if(strcmp(DOOR_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
+    else if(strcmp(F_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
     {
         *motor = stepperF;
     }
-    else if(strcmp(FILTER_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
+    else if(strcmp(R_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
     {
         *motor = stepperR;
     }
@@ -1249,81 +1249,7 @@ static bool validateStepperParameter(CmdPkt* cmdPkt, int paramIndex, StepperPara
 
 
 
-// static void addFilterPositionParameter(RspPkt* rspPkt)
-// {
-//     ASSERT(rspPkt);
 
-//     switch(getFilterPosition())
-//     {
-//         case filter_clear:
-//             addStringParamToRspPkt(rspPkt, "CL");
-//             break;
-
-//         case filter_blue:
-//             addStringParamToRspPkt(rspPkt, "B");
-//             break;
-
-//         case filter_green:
-//             addStringParamToRspPkt(rspPkt, "G");
-//             break;
-
-//         case filter_orange:
-//             addStringParamToRspPkt(rspPkt, "O");
-//             break;
-
-//         case filter_red:
-//             addStringParamToRspPkt(rspPkt, "R");
-//             break;
-
-//         case filter_crimson:
-//             addStringParamToRspPkt(rspPkt, "C");
-//             break;
-
-//         case filter_moving:
-//             addStringParamToRspPkt(rspPkt, "Moving");
-//             break;
-
-//         case filter_unknownPosition:
-//             addStringParamToRspPkt(rspPkt, "Unknown");
-//             break;
-
-//         default:
-//             ASSERT(false);
-//     }
-// }
-
-
-
-// static void addDoorPositionParameter(RspPkt* rspPkt)
-// {
-//     ASSERT(rspPkt);
-
-//     switch(getDoorPosition())
-//     {
-//         case door_opened:
-//             addStringParamToRspPkt(rspPkt, "Opened");
-//             break;
-
-//         case door_closed:
-//             addStringParamToRspPkt(rspPkt, "Closed");
-//             break;
-
-//         case door_opening:
-//             addStringParamToRspPkt(rspPkt, "Opening");
-//             break;
-
-//         case door_closing:
-//             addStringParamToRspPkt(rspPkt, "Closing");
-//             break;
-
-//         case door_unknownPosition:
-//             addStringParamToRspPkt(rspPkt, "Unknown");
-//             break;
-
-//         default:
-//             ASSERT(false);
-//     }
-// }
 
 
 
@@ -1364,6 +1290,7 @@ static void systemAbort()
     commData.monitoringConnection = false;
 
     motionAbort();
+    disableMotors();
 
     int i;
     for(i = 0; i < OfflineCommand_count; i++)
@@ -2039,7 +1966,7 @@ static void chActuateArm(CmdPkt* cmdPkt)
 
 static void chDisableMotors(CmdPkt* cmdPkt)
 {
-    DisableMotors();
+    disableMotors();
     sendRspOk(cmdPkt);
 }
 
