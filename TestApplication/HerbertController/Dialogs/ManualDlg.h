@@ -33,6 +33,12 @@ public:
 	CEdit	m_editMsg2;
 	CEdit	m_outputWindow;
 
+	CButton m_buttonClearOutput;
+
+	CButton m_buttonUpgradeFpga;
+	CButton m_buttonUpgradeFirmware;
+	CButton m_buttonCaptureDebugOutput;
+
 	CButton m_buttonLIn;
 	CButton m_buttonLOut;
 	CButton m_buttonLC;

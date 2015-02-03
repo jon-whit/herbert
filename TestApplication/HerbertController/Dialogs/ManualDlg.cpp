@@ -82,6 +82,11 @@ void ManualDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_BUTTON_DCC, m_buttonDCC);
 	DDX_Control(pDX, IDC_BUTTON_D2, m_buttonD2);
 	DDX_Control(pDX, IDC_EDIT_OUTPUT, m_outputWindow);
+
+	DDX_Control(pDX, IDC_BUTTON_UPGRADE_FPGA, m_buttonUpgradeFpga);
+	DDX_Control(pDX, IDC_BUTTON_UPGRADE_FIRMWARE, m_buttonUpgradeFirmware);
+	DDX_Control(pDX, IDC_BUTTON_DEBUG_CAPTURE, m_buttonCaptureDebugOutput);
+	DDX_Control(pDX, IDC_BUTTON_CLEAR_OUTPUT, m_buttonClearOutput);
 	//}}AFX_DATA_MAP
 }
 
@@ -185,6 +190,11 @@ void ManualDlg::DisplayFPGAConnected(BOOL connected)
 	m_editMsg2.EnableWindow(connected);
     m_buttonSend1.EnableWindow(connected);
 	m_buttonSend2.EnableWindow(connected);
+
+	m_buttonClearOutput.EnableWindow(connected);
+	m_buttonCaptureDebugOutput.EnableWindow(connected);
+	m_buttonUpgradeFirmware.EnableWindow(connected);
+	m_buttonUpgradeFpga.EnableWindow(connected);
 
 	m_buttonLIn.EnableWindow(connected);
 	m_buttonLOut.EnableWindow(connected);
@@ -398,13 +408,15 @@ void ManualDlg::OnBnClickedButtonSend2()
 
 void ManualDlg::OnBnClickedButtonLin()
 {
-	
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("L"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonLout()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("O"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -431,13 +443,15 @@ void ManualDlg::OnBnClickedButtonL2()
 
 void ManualDlg::OnBnClickedButtonFin()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("F"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonFout()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("O"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -464,13 +478,15 @@ void ManualDlg::OnBnClickedButtonF2()
 
 void ManualDlg::OnBnClickedButtonRin()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("R"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonRout()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("O"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -497,13 +513,15 @@ void ManualDlg::OnBnClickedButtonR2()
 
 void ManualDlg::OnBnClickedButtonBin()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("B"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonBout()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("O"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -530,13 +548,15 @@ void ManualDlg::OnBnClickedButtonB2()
 
 void ManualDlg::OnBnClickedButtonUin()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("U"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonUout()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("O"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
@@ -563,13 +583,15 @@ void ManualDlg::OnBnClickedButtonU2()
 
 void ManualDlg::OnBnClickedButtonDin()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("D"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 
 void ManualDlg::OnBnClickedButtonDout()
 {
-	// TODO: Add your control notification handler code here
+	Commands::Transaction::shared_ptr cmd(new Commands::ActuateArm("O"));
+    m_comm.sendCommand(m_rspQueue, cmd);
 }
 
 

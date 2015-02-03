@@ -1200,4 +1200,9 @@ BOOL Commands::MoveRelative::processRsp(CommPkt* rspPkt)
 	return rspPkt->GetDataLen() == 1;
 }
 
+BOOL Commands::ActuateArm::processRsp(CommPkt* rspPkt)
+{
+	return rspPkt->GetDataLen() == 1;
+}
+
 // EOF

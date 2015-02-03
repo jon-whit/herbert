@@ -53,6 +53,7 @@ namespace Commands
     const char GET_FPGA_STATUS_STR[]      = "GetStatus";
     const char SET_RAMP_RATE_STR[]        = "SetRampRate";
     const char GET_RAMP_RATE_STR[]        = "GetRampRate";
+	const char ACTUATE_ARM_STR[]		  = "ActuateArm";
 
 	const char MOVE_RELATIVE[]			  = "MoveRelative";
 
@@ -211,6 +212,7 @@ namespace Commands
             TypePauseDebugCapture,
             TypeResumeDebugCapture,
 			TypeMoveRelative,
+			TypeActuateArm,
         };
 
         typedef boost::shared_ptr<Transaction> shared_ptr;
@@ -1302,6 +1304,24 @@ namespace Commands
         }
     };
 
+	//----------------------------------------------------------------------------
+	
+	class ActuateArm : public Transaction
+	{
+	public:
+		BOOL processRsp(CommPkt* rspPkt);
+		Type type() {return TypeActuateArm;}
+
+		ActuateArm(const CString& arm) :
+			Transaction(HEADER_TO_MASTER_FROM_HOST)
+		{
+			m_cmdPkt.SetCmd(ACTUATE_ARM_STR);
+			m_cmdPkt.AddData(arm);
+		}
+
+		protected:
+			CString m_arm;
+	};
     //----------------------------------------------------------------------------
 
     class ResumeDebugCapture : public Transaction
