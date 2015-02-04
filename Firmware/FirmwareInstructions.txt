@@ -1,0 +1,9 @@
+Instructions for building and loading the firmware:
+
+	1. Using GNU make, send "make app" command from the location $GitHubLocation\herbert\Firmware\firmware
+
+	2. Next, send "make all" in $GitHubLocation\herbert\Firmware\
+
+	3. A herbert_scb.bin should have been created in the same directory
+
+	4. In Herbert Controller use the Upgrade Sys Ctrl Firmware... button and select the .bin file. 

@@ -1,0 +1,13 @@
+Instructions for building Herbert Controller GUI:
+
+	1. In Visual Studio 2012 open the HerbertController.sln
+
+	2. In the Herbert Controller Project Properties, Configuration set to Active(Debug), Platform set to Active(Win32), 
+           Under Configuration Properties, General, set the platform toolset to Visual Studio 2012 - Windows XP (v110_xp). 
+           (You may need to download this toolset).
+	
+	3. Build in Debug, Win32
+
+	4. The .exe will be generated in the $GithubLocation\herbert\TestApplication\HerbertController\Debug
+
+	5. Place this .exe onto the single board computer to run it.
