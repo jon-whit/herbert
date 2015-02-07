@@ -11,7 +11,7 @@
 #define version_h
 
 
-#define FW_VER "2.7"
+#define FW_VER_BOOT "0.1"
 
 
 #endif

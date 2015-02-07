@@ -28,6 +28,7 @@
 #include <flash.h>
 #include <relay.h>
 #include <stepper_hw.h>
+#include <switch.h>
 
 
 ///////////////////////////////////////////////////
@@ -294,6 +295,7 @@ static void chDisableMotors(CmdPkt* cmdPkt);
 
 static void chTimingTest(CmdPkt* cmdPkt);
 
+static void chTestGetSwitch(CmdPkt* cmdPkt);
 
 // -------------------------- Test & Dianostic Commands --------------------------
 
@@ -366,6 +368,8 @@ static const CommCommand commCommands[] =
     { "SendLogMessage",                     VAR_PARAM_COUNT, chSendLogMessage,                     },
 
     { "DisableCommWatchdog",                0,               chDisableCommWatchdog,                },
+
+    { "TestGetSwitch",                      0,               chTestGetSwitch,                      },
 
     // -------------------------- Test & Dianostic Commands --------------------------
     // { "GetDoorControlValues",               0,               chGetDoorControlValues,               },
@@ -1727,7 +1731,7 @@ static void chFirmwareVersion(CmdPkt* cmdPkt)
     RspPkt rspPkt;
 
     initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-    addParamToRspPkt(&rspPkt, "%s", FW_VER);
+    addParamToRspPkt(&rspPkt, "%s", FW_VER_APP);
     addParamToRspPkt(&rspPkt, "%s", __DATE__);
     addParamToRspPkt(&rspPkt, "%s", __TIME__);
     sendRspPkt(&rspPkt);
@@ -1973,6 +1977,12 @@ static void chDisableMotors(CmdPkt* cmdPkt)
 static void chTimingTest(CmdPkt* cmdPkt)
 {
     RotateArm(stepperR, rotation_clockwise, turn_half, 22);
+    sendRspOk(cmdPkt);
+}
+
+static void chTestGetSwitch(CmdPkt* cmdPkt)
+{
+    IsSwitchTriggered(LInSwitch);
     sendRspOk(cmdPkt);
 }
 

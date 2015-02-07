@@ -1,0 +1,10 @@
+-batch 
+-create switch_controller 
+-ver 1.00.a 
+-dir "C:\Git\herbert\Firmware\fpga" 
+-lang vhdl 
+-bus plbv46 s 
+-reg 24 
+-xps 
+-ise 
+-driver 

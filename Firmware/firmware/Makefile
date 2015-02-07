@@ -229,6 +229,7 @@ APP_SOURCES :=                  \
     app/startup.c               \
     app/stepper_hw.c            \
     app/steppers.c              \
+    app/switch.c                \
     app/timer.c                 \
     common/assert.c             \
     common/AT45DB161D.c         \
@@ -274,7 +275,7 @@ endif
 # Add the version define to the list
 APP_DEFINES :=                          \
     $(APP_DEFINES)                      \
-    -DFW_VER=\""$(APP_VERSION)"\"
+    -DFW_VER_APP=\""$(APP_VERSION)"\"
 
 # Determine the list of source directories.  The patsubst function
 # removes the '/filename' part of each source file, and the sort

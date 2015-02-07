@@ -1,0 +1,12 @@
+run
+-opt_level 2
+-opt_mode speed
+-ifmt mixed
+-ifn "C:\Git\herbert\Firmware\fpga\pcores\switch_controller_v1_00_a\devl\synthesis\switch_controller_xst.prj"
+-top switch_controller
+-p virtex5
+-ofn "C:\Git\herbert\Firmware\fpga\pcores\switch_controller_v1_00_a\devl\synthesis\switch_controller_xst.ngc"
+-iobuf NO
+-rtlview YES
+-hierarchy_separator /
+-work_lib switch_controller_v1_00_a

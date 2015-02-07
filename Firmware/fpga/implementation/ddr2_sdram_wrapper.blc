@@ -1,0 +1,29 @@
+Release 10.1 ngcbuild K.39 (nt)
+Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+
+Command Line: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\ngcbuild.exe -p
+xc3s1400afg676-4 -intstyle silent -uc ddr2_sdram_wrapper.ucf -sd ..
+ddr2_sdram_wrapper.ngc ../ddr2_sdram_wrapper.ngc
+
+Reading NGO file
+"C:/Git/herbert/Firmware/fpga/implementation/ddr2_sdram_wrapper/ddr2_sdram_wrapp
+er.ngc" ...
+
+Applying constraints in "ddr2_sdram_wrapper.ucf" to the design...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGCBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 115928 kilobytes
+
+Writing NGC file "../ddr2_sdram_wrapper.ngc" ...
+
+Writing NGCBUILD log file "../ddr2_sdram_wrapper.blc"...

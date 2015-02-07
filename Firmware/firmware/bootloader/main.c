@@ -38,7 +38,7 @@ int main (void)
     printf("===========================================\n");
     printf("   Herbert Bootloader\n");
     printf("     FPGA Version: %lu.%lu\n", FPGA_MAJOR_VER(), FPGA_MINOR_VER());
-    printf("     FW Version:   " FW_VER "\n");
+    printf("     FW Version:   " FW_VER_BOOT "\n");
     printf("     Built:        " __DATE__ " " __TIME__ "\n");
     printf("===========================================\n\n");
 

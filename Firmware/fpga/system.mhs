@@ -38,11 +38,6 @@
  PORT debug_uart_RX_pin = debug_uart_RX, DIR = I
  PORT sbc_uart_TX_pin = sbc_uart_TX, DIR = O
  PORT sbc_uart_RX_pin = sbc_uart_RX, DIR = I
- PORT pwm_lid_pwm_drive_pin = pwm_lid_pwm_drive, DIR = O, VEC = [0:1]
- PORT pwm_pwm_error_pin = pwm_pwm_error, DIR = I, VEC = [0:23]
- PORT pwm_pwm_enable_pin = pwm_pwm_enable, DIR = O, VEC = [0:23]
- PORT pwm_pwm_drive_neg_pin = pwm_pwm_drive_neg, DIR = O, VEC = [0:23]
- PORT pwm_pwm_drive_pos_pin = pwm_pwm_drive_pos, DIR = O, VEC = [0:23]
  PORT sensor_a_spi_MOSI_O_pin = sensor_a_spi_MOSI_O, DIR = O
  PORT sensor_a_spi_MISO_I_pin = sensor_a_spi_MISO_I, DIR = I
  PORT sensor_a_spi_SCK_O_pin = sensor_a_spi_SCK_O, DIR = O
@@ -84,6 +79,30 @@
  PORT relay_R_pin = relay_R, DIR = O
  PORT relay_F_pin = relay_F, DIR = O
  PORT relay_U_pin = relay_U, DIR = O
+ PORT switch_L_In_Signal_pin = switch_L_In_Signal, DIR = I
+ PORT switch_L_In_Stimulus_pin = switch_L_In_Stimulus, DIR = O
+ PORT switch_L_Out_Signal_pin = switch_L_Out_Signal, DIR = I
+ PORT switch_L_Out_Stimulus_pin = switch_L_Out_Stimulus, DIR = O
+ PORT switch_F_In_Signal_pin = switch_F_In_Signal, DIR = I
+ PORT switch_F_In_Stimulus_pin = switch_F_In_Stimulus, DIR = O
+ PORT switch_F_Out_Signal_pin = switch_F_Out_Signal, DIR = I
+ PORT switch_F_Out_Stimulus_pin = switch_F_Out_Stimulus, DIR = O
+ PORT switch_R_In_Signal_pin = switch_R_In_Signal, DIR = I
+ PORT switch_R_In_Stimulus_pin = switch_R_In_Stimulus, DIR = O
+ PORT switch_R_Out_Signal_pin = switch_R_Out_Signal, DIR = I
+ PORT switch_R_Out_Stimulus_pin = switch_R_Out_Stimulus, DIR = O
+ PORT switch_B_In_Signal_pin = switch_B_In_Signal, DIR = I
+ PORT switch_B_In_Stimulus_pin = switch_B_In_Stimulus, DIR = O
+ PORT switch_B_Out_Signal_pin = switch_B_Out_Signal, DIR = I
+ PORT switch_B_Out_Stimulus_pin = switch_B_Out_Stimulus, DIR = O
+ PORT switch_U_In_Signal_pin = switch_U_In_Signal, DIR = I
+ PORT switch_U_In_Stimulus_pin = switch_U_In_Stimulus, DIR = O
+ PORT switch_U_Out_Signal_pin = switch_U_Out_Signal, DIR = I
+ PORT switch_U_Out_Stimulus_pin = switch_U_Out_Stimulus, DIR = O
+ PORT switch_D_In_Signal_pin = switch_D_In_Signal, DIR = I
+ PORT switch_D_In_Stimulus_pin = switch_D_In_Stimulus, DIR = O
+ PORT switch_D_Out_Signal_pin = switch_D_Out_Signal, DIR = I
+ PORT switch_D_Out_Stimulus_pin = switch_D_Out_Stimulus, DIR = O
  PORT motor2_direction_pin = motor2_direction, DIR = O
  PORT motor2_step_pin = motor2_step, DIR = O
  PORT motor2_sensor_in_pin = motor2_sensor_in, DIR = I, VEC = [0:1]
@@ -301,11 +320,6 @@ BEGIN pwm_controller
  PARAMETER C_HIGHADDR = 0xc4c0ffff
  BUS_INTERFACE SPLB = mb_plb
  PORT IP2INTC_Irpt = pwm_IP2INTC_Irpt
- PORT lid_pwm_drive = pwm_lid_pwm_drive
- PORT pwm_error = pwm_pwm_error
- PORT pwm_enable = pwm_pwm_enable
- PORT pwm_drive_neg = pwm_pwm_drive_neg
- PORT pwm_drive_pos = pwm_pwm_drive_pos
 END
 
 BEGIN xps_spi
@@ -452,5 +466,37 @@ BEGIN relay_controller
  PORT relay_R = relay_R
  PORT relay_F = relay_F
  PORT relay_U = relay_U
+END
+
+BEGIN switch_controller
+ PARAMETER INSTANCE = switch_control
+ PARAMETER HW_VER = 1.00.a
+ PARAMETER C_BASEADDR = 0xCB210000
+ PARAMETER C_HIGHADDR = 0xCB21FFFF
+ BUS_INTERFACE SPLB = mb_plb
+ PORT switch_L_In_Signal = switch_L_In_Signal
+ PORT switch_L_In_Stimulus = switch_L_In_Stimulus
+ PORT switch_L_Out_Signal = switch_L_Out_Signal
+ PORT switch_L_Out_Stimulus = switch_L_Out_Stimulus
+ PORT switch_F_In_Signal = switch_F_In_Signal
+ PORT switch_F_In_Stimulus = switch_F_In_Stimulus
+ PORT switch_F_Out_Signal = switch_F_Out_Signal
+ PORT switch_F_Out_Stimulus = switch_F_Out_Stimulus
+ PORT switch_R_In_Signal = switch_R_In_Signal
+ PORT switch_R_In_Stimulus = switch_R_In_Stimulus
+ PORT switch_R_Out_Signal = switch_R_Out_Signal
+ PORT switch_R_Out_Stimulus = switch_R_Out_Stimulus
+ PORT switch_B_In_Signal = switch_B_In_Signal
+ PORT switch_B_In_Stimulus = switch_B_In_Stimulus
+ PORT switch_B_Out_Signal = switch_B_Out_Signal
+ PORT switch_B_Out_Stimulus = switch_B_Out_Stimulus
+ PORT switch_U_In_Signal = switch_U_In_Signal
+ PORT switch_U_In_Stimulus = switch_U_In_Stimulus
+ PORT switch_U_Out_Signal = switch_U_Out_Signal
+ PORT switch_U_Out_Stimulus = switch_U_Out_Stimulus
+ PORT switch_D_In_Signal = switch_D_In_Signal
+ PORT switch_D_In_Stimulus = switch_D_In_Stimulus
+ PORT switch_D_Out_Signal = switch_D_Out_Signal
+ PORT switch_D_Out_Stimulus = switch_D_Out_Stimulus
 END
 

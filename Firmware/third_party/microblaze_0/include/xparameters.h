@@ -229,6 +229,10 @@
 #define XPAR_RELAY_BASEADDR 0xCBE00000
 #define XPAR_RELAY_HIGHADDR 0xCBE0FFFF
 
+/* Definitions for peripheral SWITCH */
+#define XPAR_SWITCH_BASEADDR 0xCB210000
+#define XPAR_SWITCH_HIGHADDR 0xCB21FFFF
+
 
 /******************************************************************/
 

@@ -658,7 +658,7 @@ static void chFirmwareVersion(CmdPkt* cmdPkt)
     RspPkt rspPkt;
 
     initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-    addParamToRspPkt(&rspPkt, "Bootloader-%s", FW_VER);
+    addParamToRspPkt(&rspPkt, "Bootloader-%s", FW_VER_BOOT);
     addParamToRspPkt(&rspPkt, "%s", __DATE__);
     addParamToRspPkt(&rspPkt, "%s", __TIME__);
     sendRspPkt(&rspPkt);

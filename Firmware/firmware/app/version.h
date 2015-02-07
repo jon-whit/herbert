@@ -16,7 +16,7 @@
 
 
 
-#define FW_VER "0.03"
+#define FW_VER_APP "0.03"
 
 
 #endif

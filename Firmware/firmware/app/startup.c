@@ -64,7 +64,7 @@ void systemStartup()
     printf("-------------------------------------------\n");
     printf("   Plate Cycler App Firmware\n");
     printf("     FPGA Version: %lu.%lu\n", FPGA_MAJOR_VER(), FPGA_MINOR_VER());
-    printf("     FW Version:   " FW_VER "\n");
+    printf("     FW Version:   " FW_VER_APP "\n");
     printf("     Built:        " __DATE__ " " __TIME__ "\n");
     printf("-------------------------------------------\n\n");
 
@@ -95,7 +95,7 @@ void systemStartup()
 
     printf("System Ready.\n");
 
-    sendLogMsg("FPGA Firmware version " FW_VER " starting.");
+    sendLogMsg("FPGA Firmware version " FW_VER_APP " starting.");
 
     // Start task processor - never returns
     osStart();

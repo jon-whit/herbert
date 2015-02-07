@@ -132,6 +132,7 @@ int          getLidAltPinBreak2Pos(void);
 
 int          getStepperParameter(StepperMotor motor, StepperParameter stepperParam);
 void         setStepperParameter(StepperMotor motor, StepperParameter stepperParam, int value);
+void         RotateArm(StepperMotor stepperMotor, RotationDirection direction, TurnSize turnSize, int rotations);
 
 
 #endif
