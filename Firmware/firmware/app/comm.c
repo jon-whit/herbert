@@ -1982,7 +1982,7 @@ static void chTimingTest(CmdPkt* cmdPkt)
 
 static void chTestGetSwitch(CmdPkt* cmdPkt)
 {
-    IsSwitchTriggered(LInSwitch);
+    printf("%d\n", IsSwitchTriggered(LInSwitch));
     sendRspOk(cmdPkt);
 }
 
