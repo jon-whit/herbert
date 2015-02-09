@@ -1,1 +1,0 @@
- -p spartan3a -lang vhdl   firmware/bootloader.elf -s mti -X C:/Git/herbert/Firmware/fpga/ -E C:/Git/herbert/Firmware/fpga/
