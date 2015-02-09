@@ -1,0 +1,294 @@
+Release 10.1.03 ngdbuild K.39 (nt)
+Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
+
+Command Line: ngdbuild -p xc3s1400afg676-4 -nt timestamp -bm system.bmm
+C:/Github/herbert/Firmware/fpga/implementation/system.ngc -uc system.ucf
+system.ngd
+
+Reading NGO file "C:/Github/herbert/Firmware/fpga/implementation/system.ngc" ...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/microblaze_0_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/mb_plb_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/ilmb_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/dlmb_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/dlmb_cntlr_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/ilmb_cntlr_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/lmb_bram_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/ddr2_sdram_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/clock_generator_0_wrapper.ngc"..
+.
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/debug_module_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/proc_sys_reset_0_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/debug_uart_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/sbc_uart_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/intc_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/pwm_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/sensor_a_spi_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/motor_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/motor2_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/led_spi_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/lcd_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/timer_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/config_flash_spi_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/user_flash_spi_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/spi_control_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/system_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/relay_wrapper.ngc"...
+Loading design module
+"C:/Github/herbert/Firmware/fpga/implementation/switch_control_wrapper.ngc"...
+Gathering constraint information from source properties...
+Done.
+
+Applying constraints in "system.ucf" to the design...
+Resolving constraint associations...
+Checking Constraint Associations...
+INFO:ConstraintSystem:178 - TNM 'sys_clk_pin', used in period specification
+   'TS_sys_clk_pin', was traced into DCM_SP instance DCM_SP. The following new
+   TNM groups and period specifications were generated at the DCM_SP output(s): 
+   CLKFX: <TIMESPEC TS_clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_ =
+   PERIOD "clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_" TS_sys_clk_pin /
+   1.066666667 HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM
+   'clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_', used in period
+   specification 'TS_clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_', was
+   traced into DCM_SP instance DCM_SP. The following new TNM groups and period
+   specifications were generated at the DCM_SP output(s): 
+   CLK0: <TIMESPEC TS_clock_generator_0_clock_generator_0_DCM1_CLK_OUT_0_ =
+   PERIOD "clock_generator_0_clock_generator_0_DCM1_CLK_OUT_0_"
+   TS_clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_ HIGH 50%>
+
+INFO:ConstraintSystem:178 - TNM
+   'clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_', used in period
+   specification 'TS_clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_', was
+   traced into DCM_SP instance DCM_SP. The following new TNM groups and period
+   specifications were generated at the DCM_SP output(s): 
+   CLK90: <TIMESPEC TS_clock_generator_0_clock_generator_0_DCM1_CLK_OUT_1_ =
+   PERIOD "clock_generator_0_clock_generator_0_DCM1_CLK_OUT_1_"
+   TS_clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_ PHASE 1875 ps H...>
+
+INFO:ConstraintSystem:178 - TNM
+   'clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_', used in period
+   specification 'TS_clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_', was
+   traced into DCM_SP instance DCM_SP. The following new TNM groups and period
+   specifications were generated at the DCM_SP output(s): 
+   CLKDV: <TIMESPEC TS_clock_generator_0_clock_generator_0_DCM1_CLK_OUT_4_ =
+   PERIOD "clock_generator_0_clock_generator_0_DCM1_CLK_OUT_4_"
+   TS_clock_generator_0_clock_generator_0_DCM0_CLK_OUT_7_ * 2 HIGH 50%>
+
+Done...
+Checking Partitions ...
+
+Processing BMM file ...
+
+Checking expanded design ...
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[20].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[19].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[18].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[17].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[16].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[15].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[14].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[13].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[12].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[11].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[10].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[9].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[8].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[7].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[6].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[5].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[4].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[3].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[2].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[1].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR1_GENERATE[0].TCSR1_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[20].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[19].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[18].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[17].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[16].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[15].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[14].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[13].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[12].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[11].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[10].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[9].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[8].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[7].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[6].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[5].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[4].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[3].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[2].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[1].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:443 - SFF primitive
+   'timer/timer/TC_CORE_I/TIMER_CONTROL_I/TCSR0_GENERATE[0].TCSR0_FF_I' has
+   unconnected output pin
+WARNING:NgdBuild:452 - logical net 'N58' has no driver
+WARNING:NgdBuild:452 - logical net 'N59' has no driver
+WARNING:NgdBuild:452 - logical net 'N60' has no driver
+WARNING:NgdBuild:452 - logical net 'N61' has no driver
+WARNING:NgdBuild:452 - logical net 'N62' has no driver
+WARNING:NgdBuild:452 - logical net 'N63' has no driver
+WARNING:NgdBuild:452 - logical net 'N64' has no driver
+WARNING:NgdBuild:452 - logical net 'N65' has no driver
+WARNING:NgdBuild:452 - logical net 'N66' has no driver
+WARNING:NgdBuild:452 - logical net 'N67' has no driver
+WARNING:NgdBuild:452 - logical net 'N68' has no driver
+WARNING:NgdBuild:452 - logical net 'N69' has no driver
+WARNING:NgdBuild:452 - logical net 'N70' has no driver
+WARNING:NgdBuild:452 - logical net 'N71' has no driver
+WARNING:NgdBuild:452 - logical net 'N72' has no driver
+WARNING:NgdBuild:452 - logical net 'N73' has no driver
+WARNING:NgdBuild:452 - logical net 'N74' has no driver
+WARNING:NgdBuild:452 - logical net 'N75' has no driver
+WARNING:NgdBuild:452 - logical net 'N76' has no driver
+WARNING:NgdBuild:452 - logical net 'N77' has no driver
+WARNING:NgdBuild:452 - logical net 'N78' has no driver
+WARNING:NgdBuild:452 - logical net 'N79' has no driver
+WARNING:NgdBuild:452 - logical net 'N80' has no driver
+WARNING:NgdBuild:452 - logical net 'N81' has no driver
+WARNING:NgdBuild:452 - logical net 'N82' has no driver
+WARNING:NgdBuild:452 - logical net 'N83' has no driver
+WARNING:NgdBuild:452 - logical net 'N84' has no driver
+WARNING:NgdBuild:452 - logical net 'N85' has no driver
+WARNING:NgdBuild:452 - logical net 'N86' has no driver
+WARNING:NgdBuild:452 - logical net 'N87' has no driver
+WARNING:NgdBuild:452 - logical net 'N88' has no driver
+WARNING:NgdBuild:452 - logical net 'N89' has no driver
+WARNING:NgdBuild:452 - logical net 'N90' has no driver
+WARNING:NgdBuild:452 - logical net 'N91' has no driver
+WARNING:NgdBuild:452 - logical net 'N92' has no driver
+WARNING:NgdBuild:452 - logical net 'N93' has no driver
+WARNING:NgdBuild:452 - logical net 'N94' has no driver
+WARNING:NgdBuild:452 - logical net 'N95' has no driver
+WARNING:NgdBuild:452 - logical net 'N96' has no driver
+WARNING:NgdBuild:452 - logical net 'N97' has no driver
+WARNING:NgdBuild:478 - clock net debug_module/bscan_drck1 with clock driver
+   debug_module/debug_module/BUFG_DRCK1 drives no clock pins
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:  83
+
+Total memory usage is 208776 kilobytes
+
+Writing NGD file "system.ngd" ...
+
+Writing NGDBUILD log file "system.bld"...
