@@ -1,0 +1,22 @@
+microblaze_0
+APPLICATION_SOURCES = /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/main.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/cache.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/comm.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/initialization.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/motion.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/os.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/serial.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/signal.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/startup.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/steppers.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/stepper_hw.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/timer.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/assert.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/AT45DB161D.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/conversion.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/crc16.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/crc32.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/errors.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/flash.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/interrupt.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/lcd.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/processor.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/reboot.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/spi.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/update.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app/relay.c 
+APPLICATION_HEADERS = 
+APPLICATION_CC = mb-gcc
+APPLICATION_CC_SIZE = mb-size
+APPLICATION_CC_OPT = -O0
+APPLICATION_CFLAGS = -Wall
+APPLICATION_CC_SEARCH = # -B
+APPLICATION_LIBPATH = -L./microblaze_0/lib/ # -L
+APPLICATION_INCLUDES = -I./microblaze_0/include/   -I./firmware/app -I./firmware/common 
+APPLICATION_LFLAGS = # -l
+APPLICATION_LINKER_SCRIPT = /cygdrive/c/Git/herbert/Firmware/fpga/firmware/app.ld
+APPLICATION_CC_DEBUG_FLAG =  -g 
+APPLICATION_CC_PROFILE_FLAG = # -pg
+APPLICATION_CC_GLOBPTR_FLAG= # -mxl-gp-opt
+APPLICATION_MODE = executable
+APPLICATION_LIBG_OPT = -$(APPLICATION_MODE) microblaze_0
+APPLICATION_CC_INFERRED_FLAGS= -mno-xl-soft-mul -mhard-float -mxl-float-convert -mxl-float-sqrt -mxl-barrel-shift -mxl-pattern-compare -mno-xl-soft-div -mcpu=v7.10.d 
+APPLICATION_CC_START_ADDR_FLAG=  #  # -Wl,-defsym -Wl,_TEXT_START_ADDR=
+APPLICATION_CC_STACK_SIZE_FLAG=  #  # -Wl,-defsym -Wl,_STACK_SIZE=
+APPLICATION_CC_HEAP_SIZE_FLAG=  #  # -Wl,-defsym -Wl,_HEAP_SIZE=
+                  $(APPLICATION_CC_INFERRED_FLAGS)  \

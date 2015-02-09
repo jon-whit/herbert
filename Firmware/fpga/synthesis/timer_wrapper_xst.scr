@@ -1,0 +1,12 @@
+run
+-opt_mode speed
+-netlist_hierarchy as_optimized
+-opt_level 1
+-p xc3s1400afg676-4
+-top timer_wrapper
+-ifmt MIXED
+-ifn timer_wrapper_xst.prj
+-ofn ../implementation/timer_wrapper.ngc
+-hierarchy_separator /
+-iobuf NO
+-sd {../implementation/timer_wrapper}

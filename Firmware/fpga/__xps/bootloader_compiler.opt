@@ -1,0 +1,22 @@
+microblaze_0
+BOOTLOADER_SOURCES = /cygdrive/c/Git/herbert/Firmware/fpga/firmware/bootloader/main.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/bootloader/comm.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/bootloader/serial.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/bootloader/stubs.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/bootloader/timer.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/bootloader/vectors.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/assert.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/AT45DB161D.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/conversion.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/crc32.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/errors.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/flash.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/interrupt.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/processor.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/reboot.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/sprintf.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/printf.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/spi.c /cygdrive/c/Git/herbert/Firmware/fpga/firmware/common/update.c 
+BOOTLOADER_HEADERS = 
+BOOTLOADER_CC = mb-gcc
+BOOTLOADER_CC_SIZE = mb-size
+BOOTLOADER_CC_OPT = -Os
+BOOTLOADER_CFLAGS = -Wall -DBOOTLOADER
+BOOTLOADER_CC_SEARCH = # -B
+BOOTLOADER_LIBPATH = -L./microblaze_0/lib/ # -L
+BOOTLOADER_INCLUDES = -I./microblaze_0/include/   -I./firmware/bootloader -I./firmware/common 
+BOOTLOADER_LFLAGS = # -l
+BOOTLOADER_LINKER_SCRIPT = /cygdrive/c/Git/herbert/Firmware/fpga/firmware/bootloader.ld
+BOOTLOADER_CC_DEBUG_FLAG =  -g 
+BOOTLOADER_CC_PROFILE_FLAG = # -pg
+BOOTLOADER_CC_GLOBPTR_FLAG= # -mxl-gp-opt
+BOOTLOADER_MODE = executable
+BOOTLOADER_LIBG_OPT = -$(BOOTLOADER_MODE) microblaze_0
+BOOTLOADER_CC_INFERRED_FLAGS= -mno-xl-soft-mul -mhard-float -mxl-float-convert -mxl-float-sqrt -mxl-barrel-shift -mxl-pattern-compare -mno-xl-soft-div -mcpu=v7.10.d 
+BOOTLOADER_CC_START_ADDR_FLAG=  #  # -Wl,-defsym -Wl,_TEXT_START_ADDR=
+BOOTLOADER_CC_STACK_SIZE_FLAG=  #  # -Wl,-defsym -Wl,_STACK_SIZE=
+BOOTLOADER_CC_HEAP_SIZE_FLAG=  #  # -Wl,-defsym -Wl,_HEAP_SIZE=
+                  $(BOOTLOADER_CC_INFERRED_FLAGS)  \
