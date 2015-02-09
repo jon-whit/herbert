@@ -438,4 +438,17 @@ begin
   switch_D_In_Stimulus  <= switch_D_In_Stimulus_reg;
   switch_D_Out_Stimulus <= switch_D_Out_Stimulus_reg;
 
+  switch_L_In_Signal_reg  <= switch_L_In_Signal;
+  switch_L_Out_Signal_reg <= switch_L_Out_Signal;
+  switch_F_In_Signal_reg  <= switch_F_In_Signal;
+  switch_F_Out_Signal_reg <= switch_F_Out_Signal;
+  switch_R_In_Signal_reg  <= switch_R_In_Signal;
+  switch_R_Out_Signal_reg <= switch_R_Out_Signal;
+  switch_B_In_Signal_reg  <= switch_B_In_Signal;
+  switch_B_Out_Signal_reg <= switch_B_Out_Signal;
+  switch_U_In_Signal_reg  <= switch_U_In_Signal;
+  switch_U_Out_Signal_reg <= switch_U_Out_Signal;
+  switch_D_In_Signal_reg  <= switch_D_In_Signal;
+  switch_D_Out_Signal_reg <= switch_D_Out_Signal;
+
 end IMP;
