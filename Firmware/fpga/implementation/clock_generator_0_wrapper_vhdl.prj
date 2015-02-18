@@ -5,4 +5,4 @@ vhdl clock_generator_v2_01_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\
 vhdl clock_generator_v2_01_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\clock_generator_v2_01_a\hdl\vhdl\clock_selection.vhd"
 vhdl clock_generator_v2_01_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\clock_generator_v2_01_a\hdl\vhdl\reset_selection.vhd"
 vhdl clock_generator_v2_01_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\clock_generator_v2_01_a\hdl\vhdl\clock_generator.vhd"
-vhdl work "C:\Github\herbert\Firmware\fpga\hdl\clock_generator_0_wrapper.vhd"
+vhdl work "C:\Git\herbert\Firmware\fpga\hdl\clock_generator_0_wrapper.vhd"

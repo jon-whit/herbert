@@ -163,33 +163,33 @@ Net user_flash_spi_MISO_I_pin LOC = AF4 | IOSTANDARD = LVCMOS33; # USER_SPI_MISO
 
 #### Module Peltier Drive A constraints
 
-Net switch_L_In_Signal_pin   LOC = G21  | IOSTANDARD = LVCMOS33;   # INA1_1
+Net switch_L_In_Signal_pin   LOC = G21  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # INA1_1
 Net switch_L_In_Stimulus_pin LOC = G24  | IOSTANDARD = LVCMOS33;   # INA2_1
-Net switch_F_In_Signal_pin   LOC = F25  | IOSTANDARD = LVCMOS33;   # INA1_2
+Net switch_F_In_Signal_pin   LOC = F25  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # INA1_2
 Net switch_F_In_Stimulus_pin LOC = G23  | IOSTANDARD = LVCMOS33;   # INA2_2
-Net switch_R_In_Signal_pin   LOC = D25  | IOSTANDARD = LVCMOS33;   # INA1_3
+Net switch_R_In_Signal_pin   LOC = D25  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # INA1_3
 Net switch_R_In_Stimulus_pin LOC = D23  | IOSTANDARD = LVCMOS33;   # INA2_3
-Net switch_B_In_Signal_pin   LOC = A18  | IOSTANDARD = LVCMOS33;   # INA1_4
+Net switch_B_In_Signal_pin   LOC = A18  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # INA1_4
 Net switch_B_In_Stimulus_pin LOC = C21  | IOSTANDARD = LVCMOS33;   # INA2_4
-Net switch_U_In_Signal_pin   LOC = B17  | IOSTANDARD = LVCMOS33;   # INA1_5
+Net switch_U_In_Signal_pin   LOC = B17  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # INA1_5
 Net switch_U_In_Stimulus_pin LOC = G20  | IOSTANDARD = LVCMOS33;   # INA2_5
-Net switch_D_In_Signal_pin   LOC = B20  | IOSTANDARD = LVCMOS33;   # INA1_6
+Net switch_D_In_Signal_pin   LOC = B20  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # INA1_6
 Net switch_D_In_Stimulus_pin LOC = B19  | IOSTANDARD = LVCMOS33;   # INA2_6
 #Net pwm_pwm_drive_pos_pin  LOC = K18  | IOSTANDARD = LVCMOS33;   # INA1_7
 #Net pwm_pwm_drive_neg_pin  LOC = A15  | IOSTANDARD = LVCMOS33;   # INA2_7
 
 
-Net switch_L_Out_Signal_pin   LOC = F23  | IOSTANDARD = LVCMOS33;   # ~DA1
+Net switch_L_Out_Signal_pin   LOC = F23  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # ~DA1
 Net switch_L_Out_Stimulus_pin LOC = D22  | IOSTANDARD = LVCMOS33;   # ~FSA_1
-Net switch_F_Out_Signal_pin   LOC = E24  | IOSTANDARD = LVCMOS33;   # ~DA2
+Net switch_F_Out_Signal_pin   LOC = E24  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # ~DA2
 Net switch_F_Out_Stimulus_pin LOC = D24  | IOSTANDARD = LVCMOS33;   # ~FSA_2
-Net switch_R_Out_Signal_pin   LOC = C23  | IOSTANDARD = LVCMOS33;   # ~DA3
+Net switch_R_Out_Signal_pin   LOC = C23  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # ~DA3
 Net switch_R_Out_Stimulus_pin LOC = A22  | IOSTANDARD = LVCMOS33;   # ~FSA_3
-Net switch_B_Out_Signal_pin   LOC = D20  | IOSTANDARD = LVCMOS33;   # ~DA4
+Net switch_B_Out_Signal_pin   LOC = D20  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # ~DA4
 Net switch_B_Out_Stimulus_pin LOC = B21  | IOSTANDARD = LVCMOS33;   # ~FSA_4
-Net switch_U_Out_Signal_pin   LOC = F20  | IOSTANDARD = LVCMOS33;   # ~DA5
+Net switch_U_Out_Signal_pin   LOC = F20  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # ~DA5
 Net switch_U_Out_Stimulus_pin LOC = C18  | IOSTANDARD = LVCMOS33;   # ~FSA_5
-Net switch_D_Out_Signal_pin   LOC = K20  | IOSTANDARD = LVCMOS33;   # ~DA6
+Net switch_D_Out_Signal_pin   LOC = K20  | IOSTANDARD = LVCMOS33 | PULLDOWN;   # ~DA6
 Net switch_D_Out_Stimulus_pin LOC = D17  | IOSTANDARD = LVCMOS33;   # ~FSA_6
 #Net pwm_pwm_enable_pin     LOC = C16  | IOSTANDARD = LVCMOS33;   # ~DA7
 

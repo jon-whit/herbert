@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map K.39 on Mon Feb 09 09:34:58 2015
+// Written by: Map K.39 on Tue Feb 17 15:00:26 2015
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -66,18 +66,6 @@ COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<2>"
         LOCATE = SITE "SLICE_X0Y5" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<29>"
-        LOCATE = SITE "SLICE_X2Y59" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<21>"
-        LOCATE = SITE "SLICE_X2Y43" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<13>"
-        LOCATE = SITE "SLICE_X2Y23" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<5>"
-        LOCATE = SITE "SLICE_X2Y11" LEVEL 1;
-COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_wr_addr_out<0><1>"
         LOCATE = SITE "SLICE_X1Y2" LEVEL 1;
 COMP
@@ -90,11 +78,23 @@ COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_wr_addr_out<0><1>"
         LOCATE = SITE "SLICE_X3Y2" LEVEL 1;
 COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<29>"
+        LOCATE = SITE "SLICE_X2Y59" LEVEL 1;
+COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_wr_addr_out<0><3>"
         LOCATE = SITE "SLICE_X3Y3" LEVEL 1;
 COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<21>"
+        LOCATE = SITE "SLICE_X2Y43" LEVEL 1;
+COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read_controller/gen_wr[0].u_fifo_1_wr_en/din_delay"
         LOCATE = SITE "SLICE_X3Y5" LEVEL 1;
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<13>"
+        LOCATE = SITE "SLICE_X2Y23" LEVEL 1;
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<5>"
+        LOCATE = SITE "SLICE_X2Y11" LEVEL 1;
 COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_wr_addr_out<1><1>"
         LOCATE = SITE "SLICE_X1Y16" LEVEL 1;
@@ -185,15 +185,18 @@ COMP
 COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out<7>"
         LOCATE = SITE "SLICE_X2Y13" LEVEL 1;
+COMP "switch_L_Out_Signal_pin" LOCATE = SITE "F23" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<10>" LOCATE = SITE "N6" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<11>" LOCATE = SITE "P2" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<12>" LOCATE = SITE "P1" LEVEL 1;
 COMP "system_heartbeat_led_pin" LOCATE = SITE "A10" LEVEL 1;
+COMP "switch_B_In_Signal_pin" LOCATE = SITE "A18" LEVEL 1;
 COMP "switch_F_Out_Stimulus_pin" LOCATE = SITE "D24" LEVEL 1;
 COMP "sensor_a_spi_SCK_O_pin" LOCATE = SITE "F7" LEVEL 1;
 COMP "motor2_step_pin" LOCATE = SITE "B13" LEVEL 1;
 COMP "sensor_a_spi_MOSI_O_pin" LOCATE = SITE "E21" LEVEL 1;
 COMP "switch_U_In_Stimulus_pin" LOCATE = SITE "G20" LEVEL 1;
+COMP "switch_U_In_Signal_pin" LOCATE = SITE "B17" LEVEL 1;
 COMP "led_spi_SCK_O_pin" LOCATE = SITE "K19" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<0>" LOCATE = SITE "M8" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<1>" LOCATE = SITE "M3" LEVEL 1;
@@ -203,21 +206,9 @@ COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<4>" LOCATE = SITE "M5" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<5>" LOCATE = SITE "N4" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<6>" LOCATE = SITE "N5" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<7>" LOCATE = SITE "N2" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<24>"
-        LOCATE = SITE "SLICE_X0Y50" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<8>" LOCATE = SITE "N1" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<16>"
-        LOCATE = SITE "SLICE_X0Y30" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Addr_pin<9>" LOCATE = SITE "N7" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<8>"
-        LOCATE = SITE "SLICE_X0Y14" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQ<0>" LOCATE = SITE "AD1" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<0>"
-        LOCATE = SITE "SLICE_X0Y2" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQ<1>" LOCATE = SITE "AD2" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQ<2>" LOCATE = SITE "AC2" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQ<3>" LOCATE = SITE "AC3" LEVEL 1;
@@ -239,8 +230,21 @@ COMP "system_dip_sw_pin<1>" LOCATE = SITE "K26" LEVEL 1;
 COMP "system_dip_sw_pin<2>" LOCATE = SITE "L20" LEVEL 1;
 COMP "system_dip_sw_pin<3>" LOCATE = SITE "L17" LEVEL 1;
 COMP "relay_U_pin" LOCATE = SITE "W9" LEVEL 1;
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<24>"
+        LOCATE = SITE "SLICE_X0Y50" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_CAS_n_pin" LOCATE = SITE "K5" LEVEL 1;
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<16>"
+        LOCATE = SITE "SLICE_X0Y30" LEVEL 1;
 COMP "switch_R_Out_Stimulus_pin" LOCATE = SITE "A22" LEVEL 1;
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<8>"
+        LOCATE = SITE "SLICE_X0Y14" LEVEL 1;
+COMP "switch_R_In_Signal_pin" LOCATE = SITE "D25" LEVEL 1;
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out<0>"
+        LOCATE = SITE "SLICE_X0Y2" LEVEL 1;
 COMP "spi_control_led_channel_pin<0>" LOCATE = SITE "M21" LEVEL 1;
 COMP "spi_control_led_channel_pin<1>" LOCATE = SITE "M19" LEVEL 1;
 COMP "spi_control_led_channel_pin<2>" LOCATE = SITE "N21" LEVEL 1;
@@ -250,7 +254,9 @@ COMP "motor_channel_sel_pin<0>" LOCATE = SITE "AB24" LEVEL 1;
 COMP "motor_channel_sel_pin<1>" LOCATE = SITE "AB23" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Clk_n_pin<0>" LOCATE = SITE "R4" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Clk_n_pin<1>" LOCATE = SITE "P10" LEVEL 1;
+COMP "switch_B_Out_Signal_pin" LOCATE = SITE "D20" LEVEL 1;
 COMP "led_spi_MOSI_O_pin" LOCATE = SITE "P20" LEVEL 1;
+COMP "switch_D_In_Signal_pin" LOCATE = SITE "B20" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQ<10>" LOCATE = SITE "Y5" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQ<11>" LOCATE = SITE "Y6" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQ<20>" LOCATE = SITE "R8" LEVEL 1;
@@ -287,7 +293,9 @@ COMP "fpga_0_DDR2_SDRAM_DDR2_DQS<1>" LOCATE = SITE "U7" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQS<2>" LOCATE = SITE "V1" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQS<3>" LOCATE = SITE "R5" LEVEL 1;
 COMP "motor2_direction_pin" LOCATE = SITE "J19" LEVEL 1;
+COMP "switch_F_Out_Signal_pin" LOCATE = SITE "E24" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_CE_pin" LOCATE = SITE "L3" LEVEL 1;
+COMP "switch_L_In_Signal_pin" LOCATE = SITE "G21" LEVEL 1;
 COMP "sys_clk_pin" LOCATE = SITE "A14" LEVEL 1;
 COMP "motor_direction_pin" LOCATE = SITE "AE23" LEVEL 1;
 COMP "switch_R_In_Stimulus_pin" LOCATE = SITE "D23" LEVEL 1;
@@ -295,6 +303,7 @@ COMP "fpga_0_DDR2_SDRAM_DDR2_DM_pin<0>" LOCATE = SITE "U6" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DM_pin<1>" LOCATE = SITE "T10" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DM_pin<2>" LOCATE = SITE "U4" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DM_pin<3>" LOCATE = SITE "P4" LEVEL 1;
+COMP "switch_U_Out_Signal_pin" LOCATE = SITE "F20" LEVEL 1;
 COMP "switch_U_Out_Stimulus_pin" LOCATE = SITE "C18" LEVEL 1;
 COMP "config_flash_spi_MISO_I_pin" LOCATE = SITE "AF24" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_Clk_pin<0>" LOCATE = SITE "R3" LEVEL 1;
@@ -302,6 +311,7 @@ COMP "fpga_0_DDR2_SDRAM_DDR2_Clk_pin<1>" LOCATE = SITE "N9" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_ODT_pin" LOCATE = SITE "M10" LEVEL 1;
 COMP "sys_rst_pin" LOCATE = SITE "AE19" LEVEL 1;
 COMP "spi_control_led_analog_control_pin" LOCATE = SITE "P23" LEVEL 1;
+COMP "switch_F_In_Signal_pin" LOCATE = SITE "F25" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_RAS_n_pin" LOCATE = SITE "K2" LEVEL 1;
 COMP "config_flash_spi_SS_O_pin<0>" LOCATE = SITE "AA7" LEVEL 1;
 COMP "motor2_sensor_in_pin<0>" LOCATE = SITE "C15" LEVEL 1;
@@ -315,6 +325,7 @@ COMP "switch_B_Out_Stimulus_pin" LOCATE = SITE "B21" LEVEL 1;
 COMP "config_flash_spi_MOSI_O_pin" LOCATE = SITE "AB15" LEVEL 1;
 COMP "lcd_rs_pin" LOCATE = SITE "D18" LEVEL 1;
 COMP "lcd_rw_pin" LOCATE = SITE "B18" LEVEL 1;
+COMP "switch_R_Out_Signal_pin" LOCATE = SITE "C23" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQS_n<0>" LOCATE = SITE "W6" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQS_n<1>" LOCATE = SITE "U8" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_DQS_n<2>" LOCATE = SITE "V2" LEVEL 1;
@@ -337,6 +348,7 @@ COMP "spi_control_led_spi_addr_pin<1>" LOCATE = SITE "M18" LEVEL 1;
 COMP "spi_control_led_spi_addr_pin<2>" LOCATE = SITE "L22" LEVEL 1;
 COMP "fpga_0_DDR2_SDRAM_DDR2_CS_n_pin" LOCATE = SITE "K3" LEVEL 1;
 COMP "switch_D_In_Stimulus_pin" LOCATE = SITE "B19" LEVEL 1;
+COMP "switch_D_Out_Signal_pin" LOCATE = SITE "K20" LEVEL 1;
 COMP "user_flash_spi_MISO_I_pin" LOCATE = SITE "AF4" LEVEL 1;
 COMP "switch_D_Out_Stimulus_pin" LOCATE = SITE "D17" LEVEL 1;
 COMP "motor2_enable_pin<0>" LOCATE = SITE "E15" LEVEL 1;
@@ -441,198 +453,194 @@ COMP
         LOCATE = SITE "SLICE_X2Y12" LEVEL 1;
 MACRO "delay_calibration_chain" LOCATE = SITE "SLICE_X34Y122" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<4>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<0>"
         LOCATE = SITE "SLICE_X0Y6" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_rise<6>"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<9>"
         LOCATE = SITE "SLICE_X0Y7" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/mask_data_rise<0>"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<51>"
         LOCATE = SITE "SLICE_X0Y20" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<16>"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<48>"
         LOCATE = SITE "SLICE_X0Y21" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_rd_addr<1><1>"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<55>"
         LOCATE = SITE "SLICE_X0Y28" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<53>"
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/mask_data_fall<1>"
         LOCATE = SITE "SLICE_X0Y29" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<10>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/dqs_rst_180_r1"
         LOCATE = SITE "SLICE_X0Y38" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<30>"
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out_r<8>"
         LOCATE = SITE "SLICE_X0Y39" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<29>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<16>"
         LOCATE = SITE "SLICE_X0Y54" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_rd_addr_d_3_2"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_rd_addr_d_3_1"
         LOCATE = SITE "SLICE_X0Y55" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<12>"
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<2>"
         LOCATE = SITE "SLICE_X1Y6" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<41>"
+COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<4>"
         LOCATE = SITE "SLICE_X1Y7" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<15>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<14>"
         LOCATE = SITE "SLICE_X1Y20" LEVEL 1;
 COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_rd_addr_d_1_1"
         LOCATE = SITE "SLICE_X1Y21" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<2>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<19>"
         LOCATE = SITE "SLICE_X1Y28" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_rd_addr<1><0>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<0>"
         LOCATE = SITE "SLICE_X1Y29" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<29>"
-        LOCATE = SITE "SLICE_X1Y38" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_fall<21>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/rd_addr_rst_reg"
+        LOCATE = SITE "SLICE_X1Y38" LEVEL 1;
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<61>"
         LOCATE = SITE "SLICE_X1Y39" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_rd_addr<3><0>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_rd_addr_d_3_3"
         LOCATE = SITE "SLICE_X1Y54" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_rd_addr<3><3>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/dq_oe_90_r2_3"
         LOCATE = SITE "SLICE_X1Y55" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/gen_write_fifos[2].gen_fifos.mpmc_write_fifo_0/gen_fifo_bram.mpmc_bram_fifo_0/PushParity_r<6>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_rise<6>"
         LOCATE = SITE "SLICE_X2Y6" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<10>"
-        LOCATE = SITE "SLICE_X2Y7" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/dq_oe_90_r2_1"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_rise<8>"
+        LOCATE = SITE "SLICE_X2Y7" LEVEL 1;
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<17>"
         LOCATE = SITE "SLICE_X2Y20" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/wr_data_rise<12>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_rd_addr_d_1_3"
         LOCATE = SITE "SLICE_X2Y21" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<13>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<11>"
         LOCATE = SITE "SLICE_X2Y38" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<63>"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<28>"
         LOCATE = SITE "SLICE_X2Y39" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/first_sdr_data<2>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/mask_data_rise<3>"
         LOCATE = SITE "SLICE_X2Y54" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out_r<30>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<19>"
         LOCATE = SITE "SLICE_X2Y55" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<32>"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<41>"
         LOCATE = SITE "SLICE_X3Y6" LEVEL 1;
 COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<34>"
         LOCATE = SITE "SLICE_X3Y7" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/phy_write/dq_oe_90_r1_5"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_BE_O_i2<5>"
         LOCATE = SITE "SLICE_X3Y20" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_rd_addr_d_1_1"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<14>"
         LOCATE = SITE "SLICE_X3Y21" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_0_data_out_r<19>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out_r<11>"
         LOCATE = SITE "SLICE_X3Y38" LEVEL 1;
-COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_DQ_O_i2<62>"
+COMP "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/mpmc_data_path_0/DP_PhyIF_BE_O_i2<7>"
         LOCATE = SITE "SLICE_X3Y39" LEVEL 1;
 COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/first_sdr_data<8>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out_r<19>"
         LOCATE = SITE "SLICE_X3Y54" LEVEL 1;
-COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/data_path/data_read/fifo_1_data_out_r<31>"
-        LOCATE = SITE "SLICE_X3Y55" LEVEL 1;
+COMP "pwm/pwm/USER_LOGIC_I/dutycycle21_reg<18>" LOCATE = SITE "SLICE_X3Y55"
+        LEVEL 1;
 COMPGRP cal_ctl.SLICE = COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/trans_twoDtct"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<2>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt<2>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/phase_cnt<1>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/phase_cnt<2>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/phase_cnt<3>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<8>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<10>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt<4>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<30>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<23>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<17>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<26>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<12>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/phase_cnt<4>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<13>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<19>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<14>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<3>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<15>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<16>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<15>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<20>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<23>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<10>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<11>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<8>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<3>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<18>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<21>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<20>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<7>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<18>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<14>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<11>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<12>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<4>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<0>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<1>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/phase_cnt<4>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<28>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<28>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<26>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<26>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<27>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/reset_r"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/enb_trans_two_dtct"
-        COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<13>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<4>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<17>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<29>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<25>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<2>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<11>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<10>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<24>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<16>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<20>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<17>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<19>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<3>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<31>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<22>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<15>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<4>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt<2>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<6>"
-        COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<0>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<14>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt<1>"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<12>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<25>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/phase_cnt<2>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<6>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/phase_cnt<0>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<7>"
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<20>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<23>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<5>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<1>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<22>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<4>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt1<0>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/enb_trans_two_dtct"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/cnt_or0000"
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/Mmux__varindex0000_5_f5"
         COMP
@@ -660,7 +668,9 @@ COMPGRP cal_ctl.SLICE = COMP
         COMP
         "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tapForDqs_rl<2>"
         COMP
-        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<31>";
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/flop2_val<31>"
+        COMP
+        "DDR2_SDRAM/DDR2_SDRAM/mpmc_core_0/gen_s3_ddr2_phy.mpmc_phy_if_0/infrastructure/cal_top/cal_ctl/tap_dly_reg<9>";
 COMPGRP "cal_ctl.SLICE" LOCATE = SITE "SLICE_X34Y122:SLICE_X45Y135" LEVEL 4;
 PIN lmb_bram/lmb_bram/ramb16bwe_0_pins<28> = BEL
         "lmb_bram/lmb_bram/ramb16bwe_0" PINNAME CLKA;
@@ -11301,6 +11311,8 @@ TIMEGRP clock_generator_0_clock_generator_0_DCM1_CLK_OUT_4_ = PIN
         BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/addr_cntl_cs_0"
         BEL
+        "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/sl_rddbus_i_31"
+        BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/plb_abus_reg_29"
         BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/plb_abus_reg_28"
@@ -11349,12 +11361,6 @@ TIMEGRP clock_generator_0_clock_generator_0_DCM1_CLK_OUT_4_ = PIN
         BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/plb_be_reg_3"
         BEL
-        "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/plb_be_reg_2"
-        BEL
-        "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/plb_be_reg_1"
-        BEL
-        "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/plb_be_reg_0"
-        BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/set_sl_busy"
         BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/bus2ip_rnw_i"
@@ -11362,12 +11368,6 @@ TIMEGRP clock_generator_0_clock_generator_0_DCM1_CLK_OUT_4_ = PIN
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/data_timeout"
         BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/bus2ip_be_i_3"
-        BEL
-        "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/bus2ip_be_i_2"
-        BEL
-        "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/bus2ip_be_i_1"
-        BEL
-        "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/bus2ip_be_i_0"
         BEL
         "switch_control/switch_control/PLBV46_SLAVE_SINGLE_I/I_SLAVE_ATTACHMENT/sl_busy"
         BEL

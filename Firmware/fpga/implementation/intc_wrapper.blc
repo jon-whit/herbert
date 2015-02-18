@@ -5,8 +5,7 @@ Command Line: C:\Xilinx\10.1\ISE\bin\nt\unwrapped\ngcbuild.exe -p
 xc3s1400afg676-4 -intstyle silent -sd .. intc_wrapper.ngc ../intc_wrapper.ngc
 
 Reading NGO file
-"C:/Github/herbert/Firmware/fpga/implementation/intc_wrapper/intc_wrapper.ngc"
-...
+"C:/Git/herbert/Firmware/fpga/implementation/intc_wrapper/intc_wrapper.ngc" ...
 
 Partition Implementation Status
 -------------------------------
@@ -19,7 +18,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 108168 kilobytes
+Total memory usage is 109908 kilobytes
 
 Writing NGC file "../intc_wrapper.ngc" ...
 

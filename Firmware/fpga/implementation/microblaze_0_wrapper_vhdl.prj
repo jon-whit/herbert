@@ -83,4 +83,4 @@ vhdl microblaze_v7_10_d "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\micro
 vhdl microblaze_v7_10_d "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\microblaze_v7_10_d\hdl\vhdl\mmu_utlb.vhd"
 vhdl microblaze_v7_10_d "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\microblaze_v7_10_d\hdl\vhdl\mmu.vhd"
 vhdl microblaze_v7_10_d "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\microblaze_v7_10_d\hdl\vhdl\microblaze.vhd"
-vhdl work "C:\Github\herbert\Firmware\fpga\hdl\microblaze_0_wrapper.vhd"
+vhdl work "C:\Git\herbert\Firmware\fpga\hdl\microblaze_0_wrapper.vhd"
