@@ -3,9 +3,7 @@
 //  interrupt.c
 //
 //  Interrupt module interface
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
+
 
 #include <interrupt.h>
 #include <xintc.h>

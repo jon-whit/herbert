@@ -8,7 +8,6 @@
 //! the hardware-independent portion of the stepper motors module to
 //! interface with the hardware.
 //!
-//! Copyright (c) 2009 Idaho Technology Inc.
 //-----------------------------------------------------------------------------
 
 #include <assert.h>

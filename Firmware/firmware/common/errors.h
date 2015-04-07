@@ -6,7 +6,6 @@
 //! This file uses the "error_list.h" file to generate an enumerated type
 //! containing the error codes.
 //!
-//! Copyright (c) 2006 Idaho Technology Inc.
 //-----------------------------------------------------------------------------
 
 #ifndef _ERRORS_H_

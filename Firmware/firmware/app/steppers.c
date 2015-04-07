@@ -8,7 +8,6 @@
 //! requires a hardware-dependent module that implements the hardware
 //! interface.
 //!
-//! Copyright (c) 2009 Idaho Technology Inc.
 //-----------------------------------------------------------------------------
 
 #include <timer.h>

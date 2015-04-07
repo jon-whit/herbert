@@ -3,9 +3,7 @@
 //  main.c
 //
 //  Bootloader main
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
+
 
 #include <stdio.h>
 #include <xutil.h>

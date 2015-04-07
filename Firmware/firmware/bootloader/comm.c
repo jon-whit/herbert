@@ -4,18 +4,7 @@
 //
 //  Communication Protocol Processor
 //
-//  Copyright 2008, 2009 Idaho Technology
-//  Created by Brett Gilbert
-//
-//
-//  Commands:
-//    CMD <Alias> [params]                               - Description
-//    --------------------------------------------------------------------------------------------------------
-//    GetFirmwareVersion <RV>                            - Get firmware version
-//    FileSend [File Offset] [Data]                      - Upload firmware file portion to master or slave
-//    Upgrade  [File Size] [File CRC]                    - Upgrade firmware with uploaded image on master or slave
-//
-
+//  
 
 
 #include <comm.h>

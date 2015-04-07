@@ -3,9 +3,7 @@
 //  conversion.c
 //
 //  Conversion Utilities
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
+
 
 #include <conversion.h>
 #include <string.h>

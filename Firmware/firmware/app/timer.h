@@ -3,9 +3,6 @@
 //  timer.h
 //
 //  System Timers and Timer ISR
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef timer_h
 #define timer_h

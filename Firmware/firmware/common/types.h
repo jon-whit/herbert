@@ -4,8 +4,6 @@
 //
 //  Common type defines
 //
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef types_h
 #define types_h

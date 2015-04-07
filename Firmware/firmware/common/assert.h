@@ -3,9 +3,6 @@
 //  assert.h
 //
 //  Assert implemetation
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 
 #ifndef assert_h

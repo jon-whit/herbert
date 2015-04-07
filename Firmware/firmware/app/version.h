@@ -3,9 +3,6 @@
 //  version.h
 //
 //  Firmware Version defines
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef version_h
 #define version_h

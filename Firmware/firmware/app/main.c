@@ -3,9 +3,6 @@
 //  main.c
 //
 //  Main processing loop
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <startup.h>
 #include <assert.h>

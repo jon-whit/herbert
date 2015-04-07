@@ -3,9 +3,6 @@
 //  serial.c
 //
 //  Serial driver for the command protocol
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <serial.h>
 #include <xparameters.h>

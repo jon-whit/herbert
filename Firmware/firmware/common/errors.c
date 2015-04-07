@@ -6,7 +6,6 @@
 //! This file uses the "error_list.h" file to generate a table of strings
 //! containing the error descriptions.
 //!
-//! Copyright (c) 2006 Idaho Technology Inc.
 //-----------------------------------------------------------------------------
 
 #include "errors.h"

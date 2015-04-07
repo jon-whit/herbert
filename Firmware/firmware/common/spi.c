@@ -4,8 +4,6 @@
 //
 //  SPI Driver
 //
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <spi.h>
 #include <xparameters.h>
