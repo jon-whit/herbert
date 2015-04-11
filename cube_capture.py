@@ -97,7 +97,7 @@ if __name__ == "__main__":
       # if a frame was succesfully captured, show it
       if img_orig is not None:
           # do some image manipulation for comparison
-          img_gray = rgb_to_gray(img_orig)
+          #img_gray = rgb_to_gray(img_orig)
           (thresh, img_bw) = apply_threshold(img_orig, bw_threshold)
           cv2.imshow('video_rgb', img_orig)
           #cv2.imshow('video_gray', img_gray)
