@@ -33,7 +33,9 @@
 Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of a complex network of mechanical and electrical devices. In this project our team will be interfacing with these complex mechanical and electrical devices so as to design and create an autonomous robot that is capable of achieving record-breaking Rubik's Cube solution sequences.  This project will be an integration of various technologies including: mechanical actuators, electrical stepper motors, single-board computers, field-programmable gate arrays (FPGAs), and video cameras. 
 
 \section{Introduction}
-The purpose of this project is to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components needed in our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer, and an FPGA. The video cameras connect to the computer through standard USB 2.0 protocol \cite{USB 2.0}. The video cameras are responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer will then apply Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm will return will be in the standard notation used in Rubik's Cube discussion and theory (see \ref{sec:Kociemba}). As each solution sequence is processed, the computer will communicate through an RS232 serial connection to an FPGA board which will drive the mechanical actuation and stepper motor rotations needed to physically manipulate the cube. The FPGA will act as a system control board and will be responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in 'fig here' of section \ref{sec:Project Design}.
+The purpose of this project is to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components needed in our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer, and an FPGA. The video cameras connect to the computer through standard USB 2.0 protocol \cite{USB 2.0}. The video cameras are responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer will then apply Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm will return will be in the standard notation used in Rubik's Cube discussion and theory (see \ref{sec:Kociemba}). As each solution sequence is processed, the computer will communicate through an RS232 serial connection to an FPGA board which will drive the mechanical actuation and stepper motor rotations needed to physically manipulate the cube. The FPGA will act as a system control board and will be responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram} of section \ref{sec:Project Design}.
+
+Upon completion of the robotic Rubik's Cube solver, if time permits, we hope to take Project Herbert one step further and obtain a Guinness World Record for the fastest robot to solve a Rubik's Cube. CubeStormer3 is the current record holder \cite{GuinnessWR}. The uniqueness of this project is rooted in the optimizations that we will have to make in each component of our system, especially the electro-mechanical stepper motors and the mechanical actuators. We will have to fine-tune these mechanical components to perform physical operations quicker than the human eye in order to obtain record-breaking speed. In this process we will have to maintain the precision needed to rotate the cube. 
 
 \section{Project Design}
 \label{sec:Project Design}
@@ -46,8 +48,16 @@ The purpose of this project is to create an autonomous robotic Rubik's Cube solv
 \end{figure}
 
 \subsection{Capturing the Cube with OpenCV}
+\label{sec:opencv}
+
 \subsection{Kociemba's Algorithm and the Solution Sequence}
 \label{sec:Kociemba}
+
+\subsection{Electro-mechanical Stepper Motors}
+\label{sec:Stepper Motors}
+
+\subsection{Mechanical Actuators}
+\label{sec:Mechanical Actuators}
 
 \section{Schedule}
 \section{Required Resources}
@@ -65,6 +75,11 @@ Herbert Kociemba.
 \emph{The Two-Phase Algorithm}
 [Online]. Available: \url{http://kociemba.org/cube.htm}
 
+\bibitem{GuinnessWR}
+Guinness World Records.
+\emph{Fastest robot to solve a Rubik's Cube}
+[Online]. Available: \url{http://www.guinnessworldrecords.com/world-records/fastest-robot-to-solve-a-rubiks-cub}
 \end{thebibliography}
 \end{document}
 % end of document content
+
