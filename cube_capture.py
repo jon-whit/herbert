@@ -3,6 +3,7 @@ import sys
 import cv2
 import time
 import os
+import numpy
 import argparse
 
 def open_camera(camera_id=0, frame_h=600, frame_w=800, fps=30):
@@ -55,7 +56,6 @@ def rgb_to_gray(img):
 
     :param img: An RGB image.
     """
-    print img.shape
     return cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 def apply_threshold(img, threshold=170):
@@ -69,6 +69,29 @@ def apply_threshold(img, threshold=170):
     """
     (thresh, img_bw) = cv2.threshold(img, threshold, 255, cv2.THRESH_BINARY)
     return (thresh, img_bw)
+
+def new_rgb_image(width, height):
+    """
+    Creates a new RGB image with the specified dimensions and initializes it to
+    be all black.
+
+    :param width: The width of the new image.
+    :param height: The height of the new image.
+    """
+    image = numpy.zeros((height, width, 3), numpy.uint8)
+    return image
+
+def find_contours(img_bw):
+    """
+    Finds the outer contours of a binary image and returns shape approximation
+    of the contours.
+
+    :param img: The binary image.
+    """
+    (contours, hierarchy) = cv2.findContours(img_bw, mode=cv2.cv.CV_RETR_EXTERNAL,
+                                            method=cv2.cv.CV_CHAIN_APPROX_SIMPLE)
+    return contours
+
 
 # main entry point for this script
 if __name__ == "__main__":
@@ -99,9 +122,17 @@ if __name__ == "__main__":
           # do some image manipulation for comparison
           #img_gray = rgb_to_gray(img_orig)
           (thresh, img_bw) = apply_threshold(img_orig, bw_threshold)
+
+          # get the contours from the binary image and draw them on a new image
+          contours = find_contours(img_bw)
+          res_img = new_rgb_image(img_bw.shape[1], img_bw.shape[0])
+          cv2.drawContours(res_img, contours, -1, cv2.cv.RGB(255,0,0), 2)
+
+          # draw the images to the screen
           cv2.imshow('video_rgb', img_orig)
           #cv2.imshow('video_gray', img_gray)
           cv2.imshow('video_bw', img_bw)
+          cv2.imshow('bw_contours', res_img)
 
       # otherwise the video capture has failed.
       else:
