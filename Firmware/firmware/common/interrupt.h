@@ -3,9 +3,7 @@
 //  interrupt.h
 //
 //  Interrupt module interface
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
+
 
 
 #ifndef interrupt_h

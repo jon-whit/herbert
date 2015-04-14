@@ -5,8 +5,6 @@
 //  Function stubs for functions that are linked in but
 //  not used in the bootloader
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <stdio.h>
 #include <sys/stat.h>

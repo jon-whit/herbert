@@ -4,8 +4,6 @@
 //
 //  Conversion Utilities
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef conversion_h
 #define conversion_h

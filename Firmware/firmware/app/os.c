@@ -3,9 +3,6 @@
 //  os.c
 //
 //  Simple cooperative task scheduler/processor
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 
 #include <os.h>

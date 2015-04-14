@@ -118,4 +118,4 @@ vhdl xps_timer_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_ti
 vhdl xps_timer_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_timer_v1_00_a\hdl\vhdl\timer_control.vhd"
 vhdl xps_timer_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_timer_v1_00_a\hdl\vhdl\tc_core.vhd"
 vhdl xps_timer_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_timer_v1_00_a\hdl\vhdl\xps_timer.vhd"
-vhdl work "C:\Github\herbert\Firmware\fpga\hdl\timer_wrapper.vhd"
+vhdl work "C:\Git\herbert\Firmware\fpga\hdl\timer_wrapper.vhd"

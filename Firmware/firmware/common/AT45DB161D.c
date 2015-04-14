@@ -4,8 +4,6 @@
 //
 //  Atmel AT45DB161D Driver
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <AT45DB161D.h>
 #include <spi.h>

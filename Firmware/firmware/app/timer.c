@@ -3,9 +3,6 @@
 //  timer.c
 //
 //  System Timers and Timer ISR
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <timer.h>
 #include <xparameters.h>

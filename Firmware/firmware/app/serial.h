@@ -3,9 +3,6 @@
 //  serial.h
 //
 //  Serial driver for the command protocol
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef serial_h
 #define serial_h

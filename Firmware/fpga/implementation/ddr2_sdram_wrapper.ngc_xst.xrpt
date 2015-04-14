@@ -5,7 +5,7 @@
     The structure and the elements are likely to change over the next few releases.
     This means code written to parse this file will need to be revisited each subsequent release.-->
 
-  <application stringID="Xst" timeStamp="Mon Feb 09 09:24:53 2015">
+  <application stringID="Xst" timeStamp="Tue Feb 17 14:45:18 2015">
     <section stringID="XST_HDL_SYNTHESIS_REPORT">
       <item dataType="int" stringID="XST_ROMS" value="25"></item>
       <item dataType="int" stringID="XST_ADDERSSUBTRACTORS" value="33">
@@ -144,7 +144,7 @@
     </section>
     <section stringID="XST_DEVICE_UTILIZATION_SUMMARY">
       <item stringID="XST_SELECTED_DEVICE" value="3s1400afg676-4"/>
-      <item AVAILABLE="11264" dataType="int" stringID="XST_NUMBER_OF_SLICES" value="1690"/>
+      <item AVAILABLE="11264" dataType="int" stringID="XST_NUMBER_OF_SLICES" value="1686"/>
       <item AVAILABLE="22528" dataType="int" stringID="XST_NUMBER_OF_SLICE_FLIP_FLOPS" value="2586"/>
       <item AVAILABLE="22528" dataType="int" stringID="XST_NUMBER_OF_4_INPUT_LUTS" value="1775"/>
       <item dataType="int" stringID="XST_NUMBER_USED_AS_LOGIC" value="1371"/>

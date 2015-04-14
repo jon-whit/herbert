@@ -3,9 +3,6 @@
 //  startup.c
 //
 //  System Startup
-//
-//  Copyright 2010 Idaho Technology
-//  Created by Brett Gilbert
 
 
 #include <startup.h>

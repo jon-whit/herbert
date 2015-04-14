@@ -4,8 +4,6 @@
 //
 //  Xilinx Microblaze Processor Utilities
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 
 #ifndef processor_h

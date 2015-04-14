@@ -4,7 +4,7 @@ Copyright (c) 1995-2008 Xilinx, Inc.  All rights reserved.
 Command Line: c:\Xilinx\10.1\ISE\bin\nt\unwrapped\ngcbuild.exe ./system.ngc
 ../implementation/system.ngc
 
-Reading NGO file "c:/Github/herbert/Firmware/fpga/synthesis/system.ngc" ...
+Reading NGO file "c:/Git/herbert/Firmware/fpga/synthesis/system.ngc" ...
 
 Partition Implementation Status
 -------------------------------
@@ -17,7 +17,7 @@ NGCBUILD Design Results Summary:
   Number of errors:     0
   Number of warnings:   0
 
-Total memory usage is 112264 kilobytes
+Total memory usage is 113364 kilobytes
 
 Writing NGC file "../implementation/system.ngc" ...
 

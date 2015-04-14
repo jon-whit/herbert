@@ -3,9 +3,6 @@
 //  system.h
 //
 //  System Controller interface
-//
-//  Copyright 2010 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef system_h
 #define system_h

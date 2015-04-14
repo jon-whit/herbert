@@ -3,9 +3,6 @@
 //  initialization.c
 //
 //  System initialization
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <initialization.h>
 

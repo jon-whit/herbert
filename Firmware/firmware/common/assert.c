@@ -3,10 +3,6 @@
 //  assert.c
 //
 //  Assert implemetation
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
-
 
 #include <assert.h>
 #include <string.h>

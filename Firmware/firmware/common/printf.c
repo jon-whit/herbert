@@ -3,9 +3,6 @@
 //  printf.c
 //
 //  simple implementation of printf
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 
 #include <stdio.h>
