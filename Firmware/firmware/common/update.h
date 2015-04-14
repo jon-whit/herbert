@@ -4,8 +4,6 @@
 //
 //  Plate Cycler firmware update utility
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef update_h
 #define update_h

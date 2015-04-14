@@ -3,9 +3,6 @@
 //  spi.h
 //
 //  SPI Driver
-//
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef spi_h
 #define spi_h

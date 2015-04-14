@@ -8,7 +8,6 @@
 //! interface to the hardware that the hardware-independent portion of the
 //! stepper motors module uses.
 //!
-//! Copyright (c) 2009 Idaho Technology Inc.
 //-----------------------------------------------------------------------------
 
 #ifndef stepper_hw_h

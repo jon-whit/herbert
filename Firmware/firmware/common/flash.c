@@ -16,9 +16,6 @@
 //
 //  Note: Image Size, Entry Point, Image End & CRC are in network byte order
 //
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <flash.h>
 #include <crc32.h>

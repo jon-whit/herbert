@@ -4,8 +4,7 @@
 //
 //  System Startup
 //
-//  Copyright 2010 Idaho Technology
-//  Created by Brett Gilbert
+
 
 #ifndef startup_h
 #define startup_h

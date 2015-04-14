@@ -7,7 +7,6 @@
 //! stepper motors module controls the lid, door, and filter wheel stepper
 //! motors of the PlateCycler.
 //!
-//! Copyright (c) 2009 Idaho Technology Inc.
 //-----------------------------------------------------------------------------
 
 #ifndef steppers_h

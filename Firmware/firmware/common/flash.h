@@ -4,8 +4,6 @@
 //
 //  Flash utility functions for the Atmel AT45DB161D SPI Flash
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef flash_h
 #define flash_h

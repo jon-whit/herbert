@@ -3,9 +3,6 @@
 //  motion.c
 //
 //  High-level instrument motion control for door, lid and filters
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <limits.h>
 #include <assert.h>

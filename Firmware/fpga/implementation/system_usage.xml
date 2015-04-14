@@ -4,8 +4,8 @@
      changes made to this file may result in unpredictable
      behavior or data corruption.  It is strongly advised that
      users do not edit the contents of this file. -->
-<DeviceUsageSummary rev="2">
-<DesignStatistics TimeStamp="Mon Feb 09 09:37:32 2015"><group name="NetStatistics">
+<DeviceUsageSummary rev="3">
+<DesignStatistics TimeStamp="Tue Feb 17 15:00:30 2015"><group name="NetStatistics">
 <item name="NumNets_Active" rev="2">
 <attrib name="value" value="15797"/></item>
 <item name="NumNets_Gnd" rev="2">
@@ -98,259 +98,102 @@
 <attrib name="value" value="324"/></item>
 </group>
 <group name="MiscellaneousStatistics">
-<item name="AGG_BONDED_IO" rev="1">
-<attrib name="value" value="167"/></item>
-<item name="AGG_IO" rev="1">
-<attrib name="value" value="167"/></item>
-<item name="AGG_SLICE" rev="1">
-<attrib name="value" value="7731"/></item>
-<item name="NUM_4_INPUT_LUT" rev="1">
-<attrib name="value" value="9765"/></item>
-<item name="NUM_BONDED_DIFFMLR" rev="1">
+<item name="AGG_BONDED_IO" rev="3">
+<attrib name="value" value="179"/></item>
+<item name="AGG_IO" rev="3">
+<attrib name="value" value="179"/></item>
+<item name="AGG_SLICE" rev="3">
+<attrib name="value" value="7527"/></item>
+<item name="NUM_4_INPUT_LUT" rev="3">
+<attrib name="value" value="9785"/></item>
+<item name="NUM_BONDED_DIFFMLR" rev="3">
 <attrib name="value" value="6"/></item>
-<item name="NUM_BONDED_DIFFSLR" rev="1">
+<item name="NUM_BONDED_DIFFSLR" rev="3">
 <attrib name="value" value="6"/></item>
-<item name="NUM_BONDED_IBUF" rev="1">
-<attrib name="value" value="17"/></item>
-<item name="NUM_BONDED_IOB" rev="1">
+<item name="NUM_BONDED_IBUF" rev="3">
+<attrib name="value" value="29"/></item>
+<item name="NUM_BONDED_IOB" rev="3">
 <attrib name="value" value="80"/></item>
-<item name="NUM_BONDED_IOBLR" rev="1">
+<item name="NUM_BONDED_IOBLR" rev="3">
 <attrib name="value" value="58"/></item>
-<item name="NUM_BSCAN" rev="1">
+<item name="NUM_BSCAN" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="NUM_BUFGMUX" rev="1">
+<item name="NUM_BUFGMUX" rev="3">
 <attrib name="value" value="6"/></item>
-<item name="NUM_CYMUX" rev="1">
+<item name="NUM_CYMUX" rev="3">
 <attrib name="value" value="1389"/></item>
-<item name="NUM_DCM" rev="1">
+<item name="NUM_DCM" rev="3">
 <attrib name="value" value="2"/></item>
-<item name="NUM_DP_RAM" rev="1">
+<item name="NUM_DP_RAM" rev="3">
 <attrib name="value" value="516"/></item>
-<item name="NUM_IOB_FF" rev="1">
+<item name="NUM_IOB_FF" rev="3">
 <attrib name="value" value="61"/></item>
-<item name="NUM_LUT_RT" rev="1">
+<item name="NUM_LUT_RT" rev="3">
 <attrib name="value" value="234"/></item>
-<item name="NUM_MULT18X18SIO" rev="1">
+<item name="NUM_MULT18X18SIO" rev="3">
 <attrib name="value" value="7"/></item>
-<item name="NUM_MULTAND" rev="1">
+<item name="NUM_MULTAND" rev="3">
 <attrib name="value" value="51"/></item>
-<item name="NUM_ODDR2_NONE" rev="1">
+<item name="NUM_ODDR2_NONE" rev="3">
 <attrib name="value" value="48"/></item>
-<item name="NUM_RAMB16BWE" rev="1">
+<item name="NUM_RAMB16BWE" rev="3">
 <attrib name="value" value="31"/></item>
-<item name="NUM_RPM" rev="1">
+<item name="NUM_RPM" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="NUM_SHIFT" rev="1">
+<item name="NUM_SHIFT" rev="3">
 <attrib name="value" value="293"/></item>
-<item name="NUM_SLICEL" rev="1">
-<attrib name="value" value="7280"/></item>
-<item name="NUM_SLICEM" rev="1">
+<item name="NUM_SLICEL" rev="3">
+<attrib name="value" value="7076"/></item>
+<item name="NUM_SLICEM" rev="3">
 <attrib name="value" value="451"/></item>
-<item name="NUM_SLICE_FF" rev="1">
-<attrib name="value" value="8214"/></item>
-<item name="NUM_SLICE_LATCH" rev="1">
+<item name="NUM_SLICE_FF" rev="3">
+<attrib name="value" value="8209"/></item>
+<item name="NUM_SLICE_LATCH" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="NUM_XOR" rev="1">
-<attrib name="value" value="881"/></item>
-<item name="Xilinx Core clock_generator_v2_01_a" rev="1">
+<item name="NUM_XOR" rev="3">
+<attrib name="value" value="877"/></item>
+<item name="Xilinx Core clock_generator_v2_01_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core lcd_controller_v1_00_a" rev="1">
+<item name="Xilinx Core lcd_controller_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core lmb_bram_elaborate_v1_00_a" rev="1">
+<item name="Xilinx Core lmb_bram_elaborate_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core lmb_bram_if_cntlr_v2_10_a" rev="1">
+<item name="Xilinx Core lmb_bram_if_cntlr_v2_10_a" rev="3">
 <attrib name="value" value="2"/></item>
-<item name="Xilinx Core lmb_v10_v1_00_a" rev="1">
+<item name="Xilinx Core lmb_v10_v1_00_a" rev="3">
 <attrib name="value" value="2"/></item>
-<item name="Xilinx Core mdm_v1_00_d" rev="1">
+<item name="Xilinx Core mdm_v1_00_d" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core microblaze_v7_10_d" rev="1">
+<item name="Xilinx Core microblaze_v7_10_d" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core motor_controller_v1_00_a" rev="1">
+<item name="Xilinx Core motor_controller_v1_00_a" rev="3">
 <attrib name="value" value="2"/></item>
-<item name="Xilinx Core mpmc_v4_03_a" rev="1">
+<item name="Xilinx Core mpmc_v4_03_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core plb_v46_v1_03_a" rev="1">
+<item name="Xilinx Core plb_v46_v1_03_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core proc_sys_reset_v2_00_a" rev="1">
+<item name="Xilinx Core proc_sys_reset_v2_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core pwm_controller_v1_00_a" rev="1">
+<item name="Xilinx Core pwm_controller_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core relay_controller_v1_00_a" rev="1">
+<item name="Xilinx Core relay_controller_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core spi_controller_v1_00_a" rev="1">
+<item name="Xilinx Core spi_controller_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core switch_controller_v1_00_a" rev="1">
+<item name="Xilinx Core switch_controller_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core system_controller_v1_00_a" rev="1">
+<item name="Xilinx Core system_controller_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core xps_intc_v1_00_a" rev="1">
+<item name="Xilinx Core xps_intc_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core xps_spi_v2_00_b" rev="1">
+<item name="Xilinx Core xps_spi_v2_00_b" rev="3">
 <attrib name="value" value="4"/></item>
-<item name="Xilinx Core xps_timer_v1_00_a" rev="1">
+<item name="Xilinx Core xps_timer_v1_00_a" rev="3">
 <attrib name="value" value="1"/></item>
-<item name="Xilinx Core xps_uartlite_v1_00_a" rev="1">
+<item name="Xilinx Core xps_uartlite_v1_00_a" rev="3">
 <attrib name="value" value="2"/></item>
 </group>
 </DesignStatistics>
-<DeviceUsage TimeStamp="Mon Feb 09 09:37:32 2015"><group name="SiteSummary">
-<item name="BSCAN" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="1"/></item>
-<item name="BSCAN_BSCAN_BLACKBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="1"/></item>
-<item name="BUFGMUX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="BUFGMUX_GCLKMUX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="BUFGMUX_GCLK_BUFFER" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DCM" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="2"/></item>
-<item name="DCM_DCM" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="2"/></item>
-<item name="DIFFMLR" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFMLR_DELAY_ADJ_BBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="4"/></item>
-<item name="DIFFMLR_INBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="4"/></item>
-<item name="DIFFMLR_OFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFMLR_OFF2" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFMLR_OFFDDRBLACKBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFMLR_OUTBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFMLR_PAD" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFMLR_TFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="4"/></item>
-<item name="DIFFSLR" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFSLR_OFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFSLR_OFF2" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFSLR_OFFDDRBLACKBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFSLR_OUTBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFSLR_PAD" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="6"/></item>
-<item name="DIFFSLR_PADOUT_USED" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="4"/></item>
-<item name="DIFFSLR_TFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="4"/></item>
-<item name="IBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="17"/></item>
-<item name="IBUF_DELAY_ADJ_BBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="17"/></item>
-<item name="IBUF_IFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="2"/></item>
-<item name="IBUF_INBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="17"/></item>
-<item name="IBUF_PAD" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="17"/></item>
-<item name="IOB" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="80"/></item>
-<item name="IOBLR" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="58"/></item>
-<item name="IOBLR_DELAY_ADJ_BBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="32"/></item>
-<item name="IOBLR_INBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="32"/></item>
-<item name="IOBLR_OFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="57"/></item>
-<item name="IOBLR_OFF2" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="36"/></item>
-<item name="IOBLR_OFFDDRBLACKBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="36"/></item>
-<item name="IOBLR_OUTBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="58"/></item>
-<item name="IOBLR_PAD" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="58"/></item>
-<item name="IOBLR_TFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="32"/></item>
-<item name="IOB_DELAY_ADJ_BBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="8"/></item>
-<item name="IOB_INBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="8"/></item>
-<item name="IOB_OFF1" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="38"/></item>
-<item name="IOB_OUTBUF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="80"/></item>
-<item name="IOB_PAD" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="80"/></item>
-<item name="MULT18X18SIO" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="7"/></item>
-<item name="MULT18X18SIO_MULT18X18SIO" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="7"/></item>
-<item name="RAMB16BWE" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="31"/></item>
-<item name="RAMB16BWE_RAMB16BWE" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="31"/></item>
-<item name="SLICEL" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="7280"/></item>
-<item name="SLICEL_C1VDD" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="269"/></item>
-<item name="SLICEL_C2VDD" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="191"/></item>
-<item name="SLICEL_CYMUXF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="745"/></item>
-<item name="SLICEL_CYMUXG" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="644"/></item>
-<item name="SLICEL_F" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="4199"/></item>
-<item name="SLICEL_F5MUX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="605"/></item>
-<item name="SLICEL_F6MUX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="7"/></item>
-<item name="SLICEL_FAND" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="25"/></item>
-<item name="SLICEL_FFX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="2882"/></item>
-<item name="SLICEL_FFY" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="5177"/></item>
-<item name="SLICEL_G" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="4690"/></item>
-<item name="SLICEL_GAND" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="26"/></item>
-<item name="SLICEL_GNDF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="261"/></item>
-<item name="SLICEL_GNDG" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="238"/></item>
-<item name="SLICEL_VDDF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="1"/></item>
-<item name="SLICEL_VDDG" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="25"/></item>
-<item name="SLICEL_XORF" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="452"/></item>
-<item name="SLICEL_XORG" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="429"/></item>
-<item name="SLICEM" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="451"/></item>
-<item name="SLICEM_F" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="426"/></item>
-<item name="SLICEM_F5MUX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="8"/></item>
-<item name="SLICEM_F6MUX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="8"/></item>
-<item name="SLICEM_FFX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="54"/></item>
-<item name="SLICEM_FFY" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="102"/></item>
-<item name="SLICEM_FMC15_BLACKBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="3"/></item>
-<item name="SLICEM_G" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="450"/></item>
-<item name="SLICEM_GMC15_BLACKBOX" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="5"/></item>
-<item name="SLICEM_WSGEN" rev="2">
-<attrib name="total" value="1000000"/><attrib name="used" value="424"/></item>
-</group>
-</DeviceUsage>
 <ReportConfigData TimeStamp="Mon Feb 09 09:37:32 2015"><group name="IBUF_PAD">
 <item name="IOATTRBOX" rev="2">
 <attrib name="LVCMOS33" value="16"/><attrib name="SSTL18_II" value="1"/></item>
@@ -2298,6 +2141,14 @@
 <item name="SR" rev="2">
 <attrib name="value" value="6"/></item>
 </group>
+<group name="DIFFSLR_OFFDDRBLACKBOX">
+<item name="OFF1" rev="2">
+<attrib name="value" value="6"/></item>
+<item name="OFF2" rev="2">
+<attrib name="value" value="6"/></item>
+<item name="OFFDDR" rev="2">
+<attrib name="value" value="6"/></item>
+</group>
 <group name="IOB">
 <item name="I" rev="2">
 <attrib name="value" value="8"/></item>
@@ -2313,14 +2164,6 @@
 <attrib name="value" value="38"/></item>
 <item name="T1" rev="2">
 <attrib name="value" value="8"/></item>
-</group>
-<group name="DIFFSLR_OFFDDRBLACKBOX">
-<item name="OFF1" rev="2">
-<attrib name="value" value="6"/></item>
-<item name="OFF2" rev="2">
-<attrib name="value" value="6"/></item>
-<item name="OFFDDR" rev="2">
-<attrib name="value" value="6"/></item>
 </group>
 <group name="DCM_DCM">
 <item name="CLK0" rev="2">
@@ -2428,12 +2271,6 @@
 <item name="OUT" rev="2">
 <attrib name="value" value="6"/></item>
 </group>
-<group name="SLICEM_FMC15_BLACKBOX">
-<item name="MC15" rev="2">
-<attrib name="value" value="3"/></item>
-<item name="WS2" rev="2">
-<attrib name="value" value="3"/></item>
-</group>
 <group name="DIFFMLR_OUTBUF">
 <item name="IN" rev="2">
 <attrib name="value" value="6"/></item>
@@ -2442,6 +2279,12 @@
 <item name="TRI" rev="2">
 <attrib name="value" value="4"/></item>
 </group>
+<group name="SLICEM_FMC15_BLACKBOX">
+<item name="MC15" rev="2">
+<attrib name="value" value="3"/></item>
+<item name="WS2" rev="2">
+<attrib name="value" value="3"/></item>
+</group>
 <group name="IOBLR_TFF1">
 <item name="CK" rev="2">
 <attrib name="value" value="32"/></item>
@@ -2449,16 +2292,6 @@
 <attrib name="value" value="32"/></item>
 <item name="Q" rev="2">
 <attrib name="value" value="32"/></item>
-</group>
-<group name="SLICEL_F5MUX">
-<item name="F" rev="2">
-<attrib name="value" value="605"/></item>
-<item name="G" rev="2">
-<attrib name="value" value="605"/></item>
-<item name="OUT" rev="2">
-<attrib name="value" value="605"/></item>
-<item name="S0" rev="2">
-<attrib name="value" value="605"/></item>
 </group>
 <group name="SLICEL_F">
 <item name="A1" rev="2">
@@ -2471,6 +2304,16 @@
 <attrib name="value" value="2066"/></item>
 <item name="D" rev="2">
 <attrib name="value" value="4199"/></item>
+</group>
+<group name="SLICEL_F5MUX">
+<item name="F" rev="2">
+<attrib name="value" value="605"/></item>
+<item name="G" rev="2">
+<attrib name="value" value="605"/></item>
+<item name="OUT" rev="2">
+<attrib name="value" value="605"/></item>
+<item name="S0" rev="2">
+<attrib name="value" value="605"/></item>
 </group>
 <group name="SLICEL_G">
 <item name="A1" rev="2">

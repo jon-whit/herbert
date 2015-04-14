@@ -4,8 +4,6 @@
 //
 //  Xilinx Spartan-3A FPGA Starter Kit LCD Driver
 //
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef lcd_h
 #define lcd_h

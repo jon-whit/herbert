@@ -16,7 +16,6 @@
 //! that the packet handling code can use to send error descriptions to the
 //! host.
 //!
-//! Copyright (c) 2009 Idaho Technology Inc.
 //-----------------------------------------------------------------------------
 
 //-------- Name ------------------------------------- Description -------------------------------------- Code

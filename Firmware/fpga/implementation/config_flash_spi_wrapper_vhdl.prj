@@ -177,4 +177,4 @@ vhdl xps_spi_v2_00_b "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_spi_
 vhdl xps_spi_v2_00_b "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_spi_v2_00_b\hdl\vhdl\spi_fifo_ifmodule.vhd"
 vhdl xps_spi_v2_00_b "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_spi_v2_00_b\hdl\vhdl\spi_module.vhd"
 vhdl xps_spi_v2_00_b "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_spi_v2_00_b\hdl\vhdl\xps_spi.vhd"
-vhdl work "C:\Github\herbert\Firmware\fpga\hdl\config_flash_spi_wrapper.vhd"
+vhdl work "C:\Git\herbert\Firmware\fpga\hdl\config_flash_spi_wrapper.vhd"

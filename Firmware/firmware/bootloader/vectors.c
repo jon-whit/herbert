@@ -3,9 +3,6 @@
 //  vectors.c
 //
 //  Exception Vectors utility functions
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <vectors.h>
 #include <types.h>

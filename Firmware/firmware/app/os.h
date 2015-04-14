@@ -4,9 +4,6 @@
 //
 //  Simple cooperative task scheduler/processor
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
-//
 //
 //  Task functions take a void* as a parameter and
 //  return a bool - true = run again, false - don't run again.

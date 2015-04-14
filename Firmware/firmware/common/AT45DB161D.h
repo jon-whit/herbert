@@ -3,9 +3,6 @@
 //  AT45DB161D.h
 //
 //  Atmel AT45DB161D Driver
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef AT45DB161D_h
 #define AT45DB161D_h

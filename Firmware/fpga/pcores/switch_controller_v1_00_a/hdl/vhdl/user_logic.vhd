@@ -241,11 +241,9 @@ begin
           --    end if;
           --  end loop;
           when "010000000000000000000000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
+            if ( Bus2IP_BE(3) = '1' ) then
               switch_L_In_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            end if;
           -- read-only signal
           --when "001000000000000000000000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -254,11 +252,9 @@ begin
           --    end if;
           --  end loop;
           when "000100000000000000000000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_L_Out_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_L_Out_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000010000000000000000000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -268,7 +264,7 @@ begin
           --  end loop;
           when "000001000000000000000000" =>
             for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
+              if ( Bus2IP_BE(3) = '1' ) then
                 switch_F_In_Stimulus_reg <= Bus2IP_Data(31);
               end if;
             end loop;
@@ -281,7 +277,7 @@ begin
           --  end loop;
           when "000000010000000000000000" =>
             for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
+              if ( Bus2IP_BE(3) = '1' ) then
                 switch_F_Out_Stimulus_reg <= Bus2IP_Data(31);
               end if;
             end loop;
@@ -293,11 +289,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000100000000000000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_R_In_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_R_In_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000000000010000000000000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -306,11 +300,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000001000000000000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_R_Out_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_R_Out_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000000000000100000000000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -319,11 +311,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000000010000000000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_B_In_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_B_In_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000000000000001000000000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -332,11 +322,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000000000100000000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_B_Out_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_B_Out_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000000000000000010000000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -345,11 +333,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000000000001000000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_U_In_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_U_In_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000000000000000000100000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -358,11 +344,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000000000000010000" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_U_Out_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_U_Out_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000000000000000000001000" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -371,11 +355,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000000000000000100" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_D_In_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_D_In_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           -- read-only signal
           --when "000000000000000000000010" =>
           --  for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
@@ -384,11 +366,9 @@ begin
           --    end if;
           --  end loop;
           when "000000000000000000000001" =>
-            for byte_index in 0 to (C_SLV_DWIDTH/8)-1 loop
-              if ( Bus2IP_BE(byte_index) = '1' ) then
-                switch_D_Out_Stimulus_reg <= Bus2IP_Data(31);
-              end if;
-            end loop;
+            if ( Bus2IP_BE(3) = '1' ) then
+              switch_D_Out_Stimulus_reg <= Bus2IP_Data(31);
+            end if;
           when others => null;
         end case;
       end if;
@@ -398,18 +378,18 @@ begin
 
   -- implement slave model software accessible register(s) read mux
     with slv_reg_read_sel select
-    slv_ip2bus_data <=  "0000000000000000000000000000000" & switch_L_In_Signal_reg  when "100000000000000000000000",
-                        "0000000000000000000000000000000" & switch_L_Out_Signal_reg when "001000000000000000000000",
-                        "0000000000000000000000000000000" & switch_F_In_Signal_reg  when "000010000000000000000000",
-                        "0000000000000000000000000000000" & switch_F_Out_Signal_reg when "000000100000000000000000",
-                        "0000000000000000000000000000000" & switch_R_In_Signal_reg  when "000000001000000000000000",
-                        "0000000000000000000000000000000" & switch_R_Out_Signal_reg when "000000000010000000000000",
-                        "0000000000000000000000000000000" & switch_B_In_Signal_reg  when "000000000000100000000000",
-                        "0000000000000000000000000000000" & switch_B_Out_Signal_reg when "000000000000001000000000",
-                        "0000000000000000000000000000000" & switch_U_In_Signal_reg  when "000000000000000010000000",
-                        "0000000000000000000000000000000" & switch_U_Out_Signal_reg when "000000000000000000100000",
-                        "0000000000000000000000000000000" & switch_D_In_Signal_reg  when "000000000000000000001000",
-                        "0000000000000000000000000000000" & switch_D_Out_Signal_reg when "000000000000000000000010",
+    slv_ip2bus_data <=  "000000000000000000000000000000" & switch_L_In_Signal_reg  when "100000000000000000000000",
+                        "000000000000000000000000000000" & switch_L_Out_Signal_reg when "001000000000000000000000",
+                        "000000000000000000000000000000" & switch_F_In_Signal_reg  when "000010000000000000000000",
+                        "000000000000000000000000000000" & switch_F_Out_Signal_reg when "000000100000000000000000",
+                        "000000000000000000000000000000" & switch_R_In_Signal_reg  when "000000001000000000000000",
+                        "000000000000000000000000000000" & switch_R_Out_Signal_reg when "000000000010000000000000",
+                        "000000000000000000000000000000" & switch_B_In_Signal_reg  when "000000000000100000000000",
+                        "000000000000000000000000000000" & switch_B_Out_Signal_reg when "000000000000001000000000",
+                        "000000000000000000000000000000" & switch_U_In_Signal_reg  when "000000000000000010000000",
+                        "000000000000000000000000000000" & switch_U_Out_Signal_reg when "000000000000000000100000",
+                        "000000000000000000000000000000" & switch_D_In_Signal_reg  when "000000000000000000001000",
+                        "000000000000000000000000000000" & switch_D_Out_Signal_reg when "000000000000000000000010",
                         (others => '0') when others;
 
   ------------------------------------------
@@ -437,5 +417,18 @@ begin
   switch_U_Out_Stimulus <= switch_U_Out_Stimulus_reg;
   switch_D_In_Stimulus  <= switch_D_In_Stimulus_reg;
   switch_D_Out_Stimulus <= switch_D_Out_Stimulus_reg;
+
+  switch_L_In_Signal_reg  <= switch_L_In_Signal;
+  switch_L_Out_Signal_reg <= switch_L_Out_Signal;
+  switch_F_In_Signal_reg  <= switch_F_In_Signal;
+  switch_F_Out_Signal_reg <= switch_F_Out_Signal;
+  switch_R_In_Signal_reg  <= switch_R_In_Signal;
+  switch_R_Out_Signal_reg <= switch_R_Out_Signal;
+  switch_B_In_Signal_reg  <= switch_B_In_Signal;
+  switch_B_Out_Signal_reg <= switch_B_Out_Signal;
+  switch_U_In_Signal_reg  <= switch_U_In_Signal;
+  switch_U_Out_Signal_reg <= switch_U_Out_Signal;
+  switch_D_In_Signal_reg  <= switch_D_In_Signal;
+  switch_D_Out_Signal_reg <= switch_D_Out_Signal;
 
 end IMP;

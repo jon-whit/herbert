@@ -118,4 +118,4 @@ vhdl xps_uartlite_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps
 vhdl xps_uartlite_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_uartlite_v1_00_a\hdl\vhdl\uartlite_tx.vhd"
 vhdl xps_uartlite_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_uartlite_v1_00_a\hdl\vhdl\uartlite_core.vhd"
 vhdl xps_uartlite_v1_00_a "C:\Xilinx\10.1\EDK\hw\XilinxProcessorIPLib\pcores\xps_uartlite_v1_00_a\hdl\vhdl\xps_uartlite.vhd"
-vhdl work "C:\Github\herbert\Firmware\fpga\hdl\sbc_uart_wrapper.vhd"
+vhdl work "C:\Git\herbert\Firmware\fpga\hdl\sbc_uart_wrapper.vhd"
