@@ -74,7 +74,7 @@ Capturing the faces of a cube requires three primary operations:
  Canny edge detection is a multi-stage algorithm used to detect a wide range of edges in an image \cite{Canny Edge Detection}. We will be using OpenCV's \textit{Canny} function \cite{OpenCV Canny} to identify the edges of the Rubik's Cube, which, when combined with contour filtering, will allow us to dynamically identify the planes in the frame that represent the three faces of the cube.
 
   \item \textbf{Contour filtering} -
- Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cublets on each of the three faces of the cube.
+ Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cubelets on each of the three faces of the cube.
 
 \end{enumerate}
 
@@ -148,7 +148,7 @@ Joseph Converse.
 \end{thebibliography}
 
 \appendix
-\section{Rubik's Cube Notation}
+\section{Rubik's Cube Notation and Terminology}
 \label{sec:Appendix A}
 In order to solve a cube, it is standard to define the terminology and orientation layout used in Rubik's Cube theory and analysis. This section describes the basic notation that is used throughout this document.
 
@@ -158,7 +158,7 @@ A Rubik's Cube is composed of six faces: right (\textbf{R}), left (\textbf{L}), 
 \begin{figure}[!ht]
 \centering
 \includegraphics{"Cube Orientation".png}
-\caption{Cube Orientation}
+\caption{Cube orientation}
 \label{fig:Cube Orientation}
 \end{figure}
 
@@ -182,6 +182,27 @@ For each of the fundamental moves above, there are modifiers that can be appende
 \item \textbf{L'} - Indicates a 90-degree counter-clockwise rotation of the left face such that the side on top rotates towards the back (opposite direction as that defined above).
 \item \textbf{L2} - Indicates a 180-degree rotation of the left face (two rotations).
 \end{itemize}
+
+\subsection{Cubelets}
+A cubelet refers to a particular piece on the cube. Cubelets are categorized based on their position. There are three types of cubelets: center cubelets, edge cubelets, and corner cubelets (see Fig. \ref{fig:cubelet_categories}). A center cubelet is unique. All other cubelets revolve around the center cubelets, they never move (go ahead, try and move the center piece). Edge cubelets connect two face pieces together at an edge. A corner cubelet connects three pieces together at the corner of the cube.
+
+\begin{figure}[!htb]
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{"Center cubelets".png}
+  \label{fig:center_cubelets}
+\endminipage\hfill
+\minipage{0.32\textwidth}
+  \includegraphics[width=\linewidth]{"Edge cubelets".png}
+  \label{fig:edge_cubelets}
+\endminipage\hfill
+\minipage{0.32\textwidth}%
+  \includegraphics[width=\linewidth]{"Corner cubelets".png}
+  \label{fig:corner_cubelets}
+\endminipage
+\caption{Cubelet categories}
+\label{fig:cubelet_categories}
+\end{figure}
+
 
 
 \end{document}
