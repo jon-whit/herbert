@@ -1,10 +1,22 @@
 % pre-amble section
 \documentclass[11pt,english]{article}
 \usepackage[utf8]{inputenc}
+\usepackage{geometry}
 \usepackage{babel}
 \usepackage{hyperref}
 \usepackage{graphicx}
 \usepackage{appendix}
+\usepackage{listings}
+\usepackage{caption}
+\usepackage{xcolor}
+
+\geometry{legalpaper, margin=1.25in}
+
+\lstdefinestyle{DOS}
+{
+    backgroundcolor=\color{black},
+    basicstyle=\scriptsize\color{white}\ttfamily
+}
 
 \title{Herbert\\Autonomous Robotic Rubik's Cube Solver}
 \author{
@@ -75,13 +87,92 @@ Capturing the faces of a cube requires three primary operations:
 
   \item \textbf{Contour filtering} -
  Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cubelets on each of the three faces of the cube.
-
 \end{enumerate}
 
+After the individual cubelets have been identified within the image, a matrix model like that shown in Fig. \ref{fig:matrix layout} will be generated. Each individual position (U1, U2, F1, F2, etc.) can be represented as a single ASCII character indicating the color at that cubelet position. Table \ref{table:cubelet representation} defines the mapping scheme we will employ for the Rubik's Cube matrix model. Once this matrix model has been generated for the cube, we will pass it on to an application known as \textit{Kcube}. Kcube will process the cube permutation (see \ref{sec:Kcube}), apply Kociemba's algorithm, and generate a solution sequence.
+
+\begin{figure}[!ht]
+\centering
+\begin{verbatim}
+             |************|
+             |*U1**U2**U3*|
+             |************|
+             |*U4**U5**U6*|
+             |************|
+             |*U7**U8**U9*|
+             |************|
+|************|************|************|************|
+|*L1**L2**L3*|*F1**F2**F3*|*R1**R2**F3*|*B1**B2**B3*|
+|************|************|************|************|
+|*L4**L5**L6*|*F4**F5**F6*|*R4**R5**R6*|*B4**B5**B6*|
+|************|************|************|************|
+|*L7**L8**L9*|*F7**F8**F9*|*R7**R8**R9*|*B7**B8**B9*|
+|************|************|************|************|
+             |************|
+             |*D1**D2**D3*|
+             |************|
+             |*D4**D5**D6*|
+             |************|
+             |*D7**D8**D9*|
+             |************|
+\end{verbatim}
+\caption{Rubik's Cube matrix representation}
+\label{fig:matrix layout}
+\end{figure}
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{COLOR} & \textbf{CHARACTER} \\ \hline
+WHITE          & 'W'              \\ \hline
+RED            & 'R'              \\ \hline
+BLUE           & 'B'              \\ \hline
+GREEN          & 'G'              \\ \hline
+ORANGE         & 'O'              \\ \hline
+YELLOW         & 'Y'              \\ \hline
+\end{tabular}
+\caption{Cubelet color to ASCII character mapping}
+\label{table:cubelet representation}
+\end{table}
+
+\subsection{Kcube and the Solution Sequence}
+\label{sec:Kcube}
+Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{The Two-Phase Algorithm}. The Kcube application will be used to generate the solution sequence needed to solve the Rubik's Cube that was captured during the image processing phase. The matrix model generated from the image processing phase will allow us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you would invoke Kcube with the following command:
+
+\begin{lstlisting}[style=DOS]
+Microsoft Windows [Version X.X.XXX]
+Copyright (c) 2015 Microsoft Corporation. All rights reserved.
+
+c:>kcube L:GGWWOWBRB F:GWGBGYWBO U:YOOOWYROY D:ORGWYYYRB R:OGBBRYWRR B:YBROBGWGR
+\end{lstlisting}
+
+Kcube will then process the input parameters and generate a sequence of twenty-three or less moves (see \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move will be mapped to a unique integer value (see Table \ref{table:moves table}), and these values will be transmitted sequentially over an RS232 serial connection to the FPGA control board, at which point the control board will take responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
 
 
-\subsection{Kociemba's Algorithm and the Solution Sequence}
-\label{sec:Kociemba}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=1.25]{"Scrambled Cube".jpg}
+\caption[]{}
+\label{fig:scrambled cube}
+\end{figure}
+
+\begin{table}[!ht]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{MOVE} & \textbf{VALUE} & \textbf{MOVE} & \textbf{VALUE} & \textbf{MOVE} & \textbf{VALUE} \\ \hline
+F             & 1              & R             & 7              & D             & 13             \\ \hline
+F'            & 2              & R'            & 8              & D'            & 14             \\ \hline
+F2            & 3              & R2            & 9              & D2            & 15             \\ \hline
+L             & 4              & U             & 10             & B             & 16             \\ \hline
+L'            & 5              & U'            & 11             & B'            & 17             \\ \hline
+L2            & 6              & U2            & 12             & B2            & 18             \\ \hline
+\end{tabular}
+\caption{Cube moves to integer mapping}
+\label{table:moves table}
+\end{table}
+
 
 \subsection{Electro-mechanical Stepper Motors}
 \label{sec:Stepper Motors}
@@ -169,6 +260,11 @@ OpenCV Developers Team.
 Joseph Converse.
 \emph{Basic Notation}
 [Online]. Available: \url{http://astro.berkeley.edu/~converse/rubiks.php?id1=basics&id2=notation}
+
+\bibitem{The Two-Phase Algorithm}
+Herbert Kociemba
+\emph{The Two-Phase Algorithm}
+[Online]. Available: \url{http://kociemba.org/twophase.htm}
 \end{thebibliography}
 
 \appendix
@@ -187,6 +283,7 @@ A Rubik's Cube is composed of six faces: right (\textbf{R}), left (\textbf{L}), 
 \end{figure}
 
 \subsection{Fundamental Moves}
+\label{sec:fundamental moves}
 The most fundamental moves are 90-degree clock-wise rotations for each of the faces outlined above. These moves are outlined below \cite{Basic Cube Notation}:
 
 \begin{itemize}
