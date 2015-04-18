@@ -179,6 +179,36 @@ L2            & 6              & U2            & 12             & B2            
 
 \subsection{Mechanical Actuators}
 \label{sec:Mechanical Actuators}
+In order to achieve a six arm design, each arm must actuate in and out to make
+room for the other arms. This actuation process is a time critical component of
+the design, and therefore needs to be as fast as possible.  Initially the
+implementation of the arm actuation was using motors.  Testing showed that using
+motors to convert rotary motion into linear motion, or using a linear motor
+actuator were too slow  and or too expensive to obtain the desired result.
+Pneumatic actuation was the solution to this problem.  Each of the arms will
+be attach to a double action pneumatic air cylinder as show in
+figure \ref{fig:Pneumatic Air Cylinder}.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.25]{AirCylinder.png}
+\caption{Pneumatic Air Cylinder}
+\label{fig:Pneumatic Air Cylinder}
+\end{figure}. 
+
+The actuation distance is fixed, and the speed of each actuation is very fast.
+Using controls from the FPGA, a relay switch controls coaxial pairs of air
+cylinders.  As the relay switches coaxial pairs of arms will either be in the
+extended or retracted position. Potential algorithm optimizations and more
+stable cube manipulations  are obtained by simultaneously extending and
+retracting coaxial arms.The linear actuation motion gives the ability for the
+arms to extend encasing two sides of the cube in the sockets of the arms, after
+which the stepper motor will spin the arm performing the given move of the
+solution for the cube. Each air cylinder will be provided approximately
+80-100 psi supplied from an air compressor or air tank. To protect against any
+collisions, and damages to our project, only one pair of arms will be allowed
+to be in the extended position at any given time.
+
 
 \section{Schedule}
 \section{Required Resources}
