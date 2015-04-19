@@ -24,7 +24,7 @@
     \textt{jon.whitaker@utah.edu}
     \and
     Dylan Lytle\\
-    \textt{dylanmlytle@gmail.com}
+    \textt{dylan.lytle@utah.edu}
     \and
     Matt Frandsen\\
     \textt{matt.frandsen@utah.edu}
@@ -176,17 +176,6 @@ L2            & 6              & U2            & 12             & B2            
 
 \subsection{Electro-mechanical Stepper Motors}
 \label{sec:Stepper Motors}
-Once the solution sequence has been acquired it is necessary the perform those moves with actuation and rotation motions.  The rotations will be performed by stepper motors.  A square axle will be fastened to the motors which will twist arms pieces in order to spin the faces of the Rubik's Cube as shown in figure \ref{fig:Stepper Motor Arm}.
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.25]{StepperMotorArm.png}
-\caption{Stepper Motor Arm}
-\label{fig:Stepper Motor Arm}
-\end{figure}. 
-
-In order to interface with the stepper motors we have motor control boards, FPGA modules, as well as firmware running on the softcore Microblaze processor.  The motor control boards contain a motor driver chips for each stepper motor.  The FPGA modules contain the logic for interfacing the motor control boards with the firmware.  The firmware will control moving through the solution sequence and controlling the timing of which motors will move and when.
-
 
 \subsection{Mechanical Actuators}
 \label{sec:Mechanical Actuators}
