@@ -210,6 +210,35 @@ Each stepper motor will be driven by a motor control board which will be control
 
 
 \section{Schedule}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.45]{"Gantt chart".png}
+\caption{Project Herbert Gantt Chart}
+\label{fig:gantt}
+\end{figure}
+
+\subsection{Milestones}
+\begin{itemize}
+  \item {\bf Computer Vision for Cube Capture} \hfill \\
+  The goal of this milestone is to output the current state of the cube in a predefined data representation  using multiple cameras. As shown in Fig.~\ref{fig:gantt}, this milestone will be completed in approximately 
+  49 days from April 29, 2015 and will require knowledge of the OpenCV library and complete control of camera drivers\cite{OpenCV}.
+  \item {\bf Rubik’s Cube Solver Algorithm} \hfill \\
+  A well defined and quick algorithm for solving the cube should be identified and implemented by the end of     this milestone. When given the state of the cube in some defined data representation, the algorithm should be   able to output an optimal solution for solving the cube. In Fig.~\ref{fig:gantt}, the work for this milestone will span from June 3, 2015 to August 12, 2015 and will consists of investigating, implementing and optimizing solving algorithms. 
+  \item {\bf Transmission of Solution} \hfill \\
+  A robust communication channel between the cube state capturing device and cube solution generator should be implemented upon completing this milestone. This milestone will range from August 28, 2015 to November 11, 2015 as scheduled in Fig.~\ref{fig:gantt}.
+  \item {\bf Mechanical Operation} \hfill \\
+  By the end of this milestone, all the firmwares should be created and tested. When given a solution from the   solver algorithm, the solver robot will be able to carry out the operations needed to solve the cube. Because   of this completing this milestone involves a significant amount of mechanical components, it is given 126    
+  days in Fig.~\ref{fig:gantt} starting from April 29, 2015.
+  \item {\bf Testing and Integration} \hfill \\
+  Every part should be integrated together and tested for robustness and speed by the end of this milestone.     If there are any errors or optimizations needed then they are done upon completing this milestone as well. In   Fig.~\ref{fig:gantt}, this milestone is scheduled after every other milestone is completed and will span from   November 11, 2015 to December 9, 2015. 
+\end{itemize}
+
+\section{Required Resources}
+
+\section{Risk Assessment}
+
+The main risk of this project is the likelihood of error when capturing the initial cube state with multiple cameras. Capturing the cube orientation is error-prone because illumination changes and equipment noises can heavily interfere with the performance of detection algorithms. Additionally, detection algorithm presents a steep learning curve and interfacing with camera drivers can further increase the complexity. The OpenCV library provides a variety of these detection algorithms, and it is likely that a robust algorithm suitable for identifying the orientation of the cube can be found within the library. However, until a robust algorithm can be identified, this remains a high risk because capturing the initial cube state is a core component of this project. A medium risk of this project is the high cost of hardware parts. There is a chance that the mechanical parts of the project may fail during development and testing. If this happens, the entire project may be jeopardized. In order to mitigate this risk, we have made sure that spare hardware parts can be obtained quickly. Because of the community sponsors, our team has access to various 3D printing equipment and electronic parts. These community sponsors will help mitigate the risk associated with hardware failure. Finally, another medium risk is time. Because of the complexity of this project, it will require careful planning and creative implementation to be completed. With limited time, there is the possibility all the goals of the project will not be met. To prevent deadline from being an issue, as a team we have committed ourselves to dedicate time each week to work on the project. Additionally, as seen in this document we have laid out well defined schedule for the entire project. With these preparation, problems due to procrastination or unexpected problems can be mitigated.
 \section{Required Resources}
 \section{Summary}
 \section{Acknowledgements}
