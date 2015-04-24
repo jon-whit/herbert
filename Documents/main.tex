@@ -187,7 +187,7 @@ actuator is too costly. Our design requires high speed and affordable cost. We b
 \includegraphics[scale=0.5]{AirCylinder.jpg}
 \caption{Pneumatic Air Cylinder}
 \label{fig:Pneumatic Air Cylinder}
-\end{figure}.
+\end{figure}
 
 The FPGA control board will be responsible for controlling a relay control board (see Fig. \ref{fig:System Block Diagram}) which will control coaxial pairs of air cylinders. The actuation distance for each control arm will be fixed. The relay switches coaxial pairs of arms will either be in an extended or retracted position. Potential optimizations and more stable cube manipulations  are obtained by simultaneously extending and retracting coaxial pairs of arms. The linear actuation motion allows two coaxial pairs of
 arms to extend, thus encasing two sides of the cube in the sockets of the arms. After a pair of arms extend,
@@ -282,6 +282,17 @@ The main risk associated with this project is the image processing. The likeliho
 Another high risk component of project Herbert is the chance of mechanical failure. There are various mechanical components that could cause total system failure if they were to break. If mechanical failures occur, the entire project may be jeopardized. In order to mitigate this risk, we have made sure that spare hardware parts can be obtained quickly from our industry sponsors.
 
 \section{Summary}
+
+Project Herbert is a project that integrates various technologies and domains of engineering into one complete package. It will be broken down into three primary parts: cube detection, solution generation, and the physical manipulation of the cube using mechanical components. Each of these
+will present their own set of challenges. Implementing the cube detection application will require a lot of research in the field of image processing/computer vision, especially if we attempt to operate the system under various lighting conditions. The mechanical
+aspect of this project will require a fundamental understanding of mechatronics and robotics. The mechanical aspect of this proejct will also pose the greatest limitations. We will have to optimize the mechanical components by reducing frictional effects so as to ensure operation timings that are
+within the window of time needed to solve a cube in record breaking time.
+
+The workload associated with this project is ambitious. As a result of this, the workload will be distributed and worked on in parallel over the upcoming summer
+and Fall 2015 term. Working in parallel over the summer will allow us to get the bulk of the individual components implemented before Fall term, which will allow us to focus on integration, testing, and
+optimizations over the Fall semester. Thanks to many industry sponsors we are confident that the risks associated with our project will be mitigated in the case of component failure. This will allow
+us to focus the majority of our time on design, integration, and testing.
+
 \section{Acknowledgements}
 Our team would like to thank BioFire Defense LLC, Point Grey Research Inc., and Futura Industries for all the support and resources they have provided us. Your contributions are greatly appreciated.
 
