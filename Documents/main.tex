@@ -210,36 +210,77 @@ Each stepper motor will be driven by a motor control board which will be control
 
 
 \section{Schedule}
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.45]{"Gantt chart".png}
-\caption{Project Herbert Gantt Chart}
-\label{fig:gantt}
-\end{figure}
+Our work will be distributed over the upcoming summer months and Fall 2015 semester, spanning May 13-December 2015. Table \ref{table:herbert timeline} outlines the milestones we hope to have completed by the end of this upcoming summer. A brief description of each one of these milestones is presented in Section \ref{sec:Milestones}. Comes Fall semester 2015, we hope to be integrating each component and testing the robustness of our system.
+\begin{table}[!ht]
+\resizebox{\textwidth}{!}{\begin{tabular}{|l|c|c|c|}
+\hline
+\multicolumn{1}{|c|}{\textbf{Tasks}}      & \textbf{Start} & \textbf{Finish} & \textbf{Milestone}                 \\ \hline
+\textbf{}                                 & 2015-05-13     & 2015-05-20      & OpenCV Setup                       \\ \hline
+Setup Windows Embedded VM using Vagrant   &                &                 &                                    \\ \hline
+Install Camera Drivers and Interfaces     &                &                 &                                    \\ \hline
+Download and Install OpenCV               &                &                 &                                    \\ \hline
+\textbf{}                                 & 2015-05-20     & 2015-06-19      & Basic Cube Capture                 \\ \hline
+Research Object Detection Algorithms      &                &                 &                                    \\ \hline
+Experiment with Canny Edge Detection      &                &                 &                                    \\ \hline
+Experiment with Contour Identification    &                &                 &                                    \\ \hline
+                                          & 2015-06-19     & 2015-07-02      & Finalize Object Detection Software \\ \hline
+Implement Object Detection Algorithm      &                &                 &                                    \\ \hline
+Generate Output Representation of Cube    &                &                 &                                    \\ \hline
+\textbf{}                                 & 2015-05-13     & 2015-05-26      & Mechanical Tasks                   \\ \hline
+Build The Herbert Frame                   &                &                 &                                    \\ \hline
+Determine fastener hardware               &                &                 &                                    \\ \hline
+Gather Hardware                           &                &                 &                                    \\ \hline
+Print 3D Arms                             &                &                 &                                    \\ \hline
+Attach Hardware to Frame                  &                &                 &                                    \\ \hline
+\textbf{}                                 & 2015-05-13     & 2015-06-12      & Firmware for Solution Sequence     \\ \hline
+Implement firmware for solution execution &                &                 &                                    \\ \hline
+Create Offline Command in comm.c          &                &                 &                                    \\ \hline
+\textbf{}                                 & 2015-06-15     & 2015-07-10      & Herbert Test Application           \\ \hline
+Add tab for Basic Movements               &                &                 &                                    \\ \hline
+Add tab for Manual Solution Input         &                &                 &                                    \\ \hline
+Add tab for testing motors and sensors    &                &                 &                                    \\ \hline
+                                          & 2015-12-16     & 2015-07-11      & Integration and Testing            \\ \hline
+T.B.D.                                    &                &                 &                                    \\ \hline
+\end{tabular}}
+\caption{Herbert itemized timeline}
+\label{table:herbert timeline}
+\end{table}
 
 \subsection{Milestones}
+\label{sec:Milestones}
 \begin{itemize}
-  \item {\bf Computer Vision for Cube Capture} \hfill \\
-  The goal of this milestone is to output the current state of the cube in a predefined data representation  using multiple cameras. As shown in Fig.~\ref{fig:gantt}, this milestone will be completed in approximately 
-  49 days from April 29, 2015 and will require knowledge of the OpenCV library and complete control of camera drivers\cite{OpenCV}.
-  \item {\bf Rubik’s Cube Solver Algorithm} \hfill \\
-  A well defined and quick algorithm for solving the cube should be identified and implemented by the end of     this milestone. When given the state of the cube in some defined data representation, the algorithm should be   able to output an optimal solution for solving the cube. In Fig.~\ref{fig:gantt}, the work for this milestone will span from June 3, 2015 to August 12, 2015 and will consists of investigating, implementing and optimizing solving algorithms. 
-  \item {\bf Transmission of Solution} \hfill \\
-  A robust communication channel between the cube state capturing device and cube solution generator should be implemented upon completing this milestone. This milestone will range from August 28, 2015 to November 11, 2015 as scheduled in Fig.~\ref{fig:gantt}.
-  \item {\bf Mechanical Operation} \hfill \\
-  By the end of this milestone, all the firmwares should be created and tested. When given a solution from the   solver algorithm, the solver robot will be able to carry out the operations needed to solve the cube. Because   of this completing this milestone involves a significant amount of mechanical components, it is given 126    
-  days in Fig.~\ref{fig:gantt} starting from April 29, 2015.
-  \item {\bf Testing and Integration} \hfill \\
-  Every part should be integrated together and tested for robustness and speed by the end of this milestone.     If there are any errors or optimizations needed then they are done upon completing this milestone as well. In   Fig.~\ref{fig:gantt}, this milestone is scheduled after every other milestone is completed and will span from   November 11, 2015 to December 9, 2015. 
+  \item {\bf OpenCV Setup} \hfill \\
+  In this milestone we will configure a stable development environment for OpenCV, which will include setting up a development box, installing camera device drivers, and installing and configuring OpenCV.
+
+  \item {\bf Basic Cube Capture} \hfill \\
+  In this milestone we will familiarize ourselves with the OpenCV technologies and experiment with Canny edge detection and contour identification algorithms. This will give us the background we need to implement our cube capture application.
+  \item {\bf Kcube and the Solution Sequence} \hfill \\
+  By the end of this milestone we will be able to capture a cube, process it using the Kcube application, and generate a solution sequence that can be passed on to the FPGA control board for further processing.
+
+  \item {\bf Mechanical Tasks} \hfill \\
+  This milestone is dedicated to getting all of the mechanical parts integrated. This includes fastening the electro-mechanical stepper motors to the actuating arms and connecting the arms to the main chassis. Upon completion of this milestone we should have functioning mechanical components and a  working robot skeleton that can be operated by the FPGA control board.
+
+  \item {\bf Firmware for Solution Execution} \hfill \\
+  By the end of this milestone all FPGA control board firmware should be finalized and tested. When given a solution from Kcube, Herbert should be able to carry out the operations needed to solve the cube.
+
+  \item {\bf Herbert Test Application} \hfill \\
+  This goal of this milestone is to create a test application that allows us to interact with the mechancial components through a software interfaces communicating through the firmware on the FPGA control board. At the end of this milestone we should be able to manually control the rotation and actuation of the mechanical arms.
+
+  \item {\bf Integration and Testing} \hfill \\
+  Every part should be integrated together and tested for robustness and speed by the end of this milestone. If there are any errors or optimizations needed, then they are done upon completing this milestone as well. This milestone is tentatively scheduled after every other milestone is completed.
 \end{itemize}
+
+
+We believe that parallelizing these tasks by distributing them across our team will allow us to design this system in a time efficient manner. We hope to stay close to the timeline we present above, however the timeline is tentative, and will likely change over the course of summer and Fall semester.
 
 \section{Required Resources}
 
 \section{Risk Assessment}
 
-The main risk of this project is the likelihood of error when capturing the initial cube state with multiple cameras. Capturing the cube orientation is error-prone because illumination changes and equipment noises can heavily interfere with the performance of detection algorithms. Additionally, detection algorithm presents a steep learning curve and interfacing with camera drivers can further increase the complexity. The OpenCV library provides a variety of these detection algorithms, and it is likely that a robust algorithm suitable for identifying the orientation of the cube can be found within the library. However, until a robust algorithm can be identified, this remains a high risk because capturing the initial cube state is a core component of this project. A medium risk of this project is the high cost of hardware parts. There is a chance that the mechanical parts of the project may fail during development and testing. If this happens, the entire project may be jeopardized. In order to mitigate this risk, we have made sure that spare hardware parts can be obtained quickly. Because of the community sponsors, our team has access to various 3D printing equipment and electronic parts. These community sponsors will help mitigate the risk associated with hardware failure. Finally, another medium risk is time. Because of the complexity of this project, it will require careful planning and creative implementation to be completed. With limited time, there is the possibility all the goals of the project will not be met. To prevent deadline from being an issue, as a team we have committed ourselves to dedicate time each week to work on the project. Additionally, as seen in this document we have laid out well defined schedule for the entire project. With these preparation, problems due to procrastination or unexpected problems can be mitigated.
-\section{Required Resources}
+The main risk associated with this project is the image processing. The likelihood of error in the cube capture phase is high. Capturing the cube orientation is error-prone because of changes in environmental lighting conditions. Object detection algorithms present a steep learning curve. Likewise, interfacing with camera device parameters to aid in eliminating changes in ambient lighting can further increase the complexity of obtaining the initial cube configuration. Capturing the initial cube state is a core component of this project. Without accurate cube capture, the autonomous aspect of our project is void. As a result of this, we will put a large emphasis on accurate cube capture. If adapting to various lighting conditions proves too difficult and becomes too time costly, we will design our system under ideal lighting conditions to eliminate this risk altogether.
+
+Another high risk component of project Herbert is the chance of mechanical failure. There are various mechanical components that could cause total system failure if they were to break. If mechanical failures occur, the entire project may be jeopardized. In order to mitigate this risk, we have made sure that spare hardware parts can be obtained quickly from our industry sponsors.
+
 \section{Summary}
 \section{Acknowledgements}
 Our team would like to thank BioFire Defense LLC, Point Grey Research Inc., and Futura Industries for all the support and resources they have provided us. Your contributions are greatly appreciated.
