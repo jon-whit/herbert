@@ -274,6 +274,28 @@ T.B.D.                                    &                &                 &  
 We believe that parallelizing these tasks by distributing them across our team will allow us to design this system in a time efficient manner. We hope to stay close to the timeline we present above, however the timeline is tentative, and will likely change over the course of summer and Fall semester.
 
 \section{Required Resources}
+Herbert system diagram shown in figure \ref{fig:System Block Diagram}, outlines some of the main system components of project Herbert.
+These components are crucial to the design and success of this project. Each component and its main functionality is as follows.
+Cameras which are used to acquire the data.
+Single board computer to process the data.
+FPGA, motor control boards, relay board, and sensors to control the system.
+Stepper motors, 3D printed materials, pneumatic air cylinders, and solenoid valves to perform the work.
+Below in table \ref{table:main component bom} is a BOM for these items
+\begin{table}[!ht]
+\begin{tabular}{|c|c|c|c|c|}
+\hline
+\textbf{Part Description} & \textbf{Quantity} & \textbf{Vendor}     & \textbf{Vendor PN} & \textbf{Price/Unit} \\ \hline
+Stepper Motor             & 6                 & BioFire Scrap       & NA                 & 0.00                \\ \hline
+Air Cylinder              & 6                 & Amico               & a12030500ux0057    & 7.86                \\ \hline
+Solenoid Valve            & 6                 & Uxcell              & a11102700ux0130    & 10.31               \\ \hline
+System Control Board      & 1                 & BioFire Scrap       & NA                 & 0.00                \\ \hline
+Motor Control Board       & 2                 & BioFire Scrap       & NA                 & 0.00                \\ \hline
+Relay Board               & 1                 & SainSmart           & 20-018-102         & 11.99               \\ \hline
+Camera                    & 2                 & Point Grey Research & Chameleon 3        & 0.00                \\ \hline
+\end{tabular}
+\caption{Main Component BOM}
+\label{table:main component bom}
+\end{table}
 
 \section{Risk Assessment}
 
