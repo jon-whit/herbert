@@ -1,16 +1,17 @@
 % pre-amble section
-\documentclass[11pt,english]{article}
+\documentclass[letterpaper, 10 pt, conference, onecolumn]{IEEEtran}
+
+\overrideIEEEmargins
+% See the \addtolength command later in the file to balance the column lengths
+% on the last page of the document
+
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
-\usepackage{babel}
 \usepackage{hyperref}
 \usepackage{graphicx}
-\usepackage{appendix}
 \usepackage{listings}
-\usepackage{caption}
 \usepackage{xcolor}
-
-\geometry{legalpaper, margin=1.25in}
+\usepackage{fancyvrb}
 
 \lstdefinestyle{DOS}
 {
@@ -20,18 +21,10 @@
 
 \title{Herbert\\Autonomous Robotic Rubik's Cube Solver}
 \author{
-    Jonathan Whitaker\\
-    \textt{jon.whitaker@utah.edu}
-    \and
-    Dylan Lytle\\
-    \textt{dylan.lytle@utah.edu}
-    \and
-    Matt Frandsen\\
-    \textt{matt.frandsen@utah.edu}
-    \and
-    Li Lao\\
-    \textt{li.lao@utah.edu}
+    Jonathan Whitaker, Dylan Lytle, Matt Frandsen, Li Lao\\
+    \textit{Dept. of Electrical and Computer Engineering, University of Utah}\\
 }
+
 \date{April 2015}
 % end of pre-amble
 
@@ -40,13 +33,13 @@
 
 \maketitle
 
-\tableofcontents
-
-\section{Abstract}
-Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of a complex network of mechanical and electrical devices. In this project our team will be interfacing with these complex mechanical and electrical devices so as to design and create an autonomous robot that is capable of achieving record-breaking Rubik's Cube solution sequences.  This project will be an integration of various technologies including: mechanical actuators, electrical stepper motors, single-board computers, field-programmable gate arrays (FPGAs), and video cameras.
+\begin{abstract}
+Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of a complex network of mechanical and electrical devices. In this project our team will be interfacing with these complex mechanical and electrical devices so as to design and create an autonomous robot that is capable of achieving record-breaking Rubik's Cube solution sequences.  This project will be an integration of various technologies including: mechanical actuators, electrical stepper motors, single-board computers, field-programmable gate arrays, and video cameras.
+\end{abstract}
 
 \section{Introduction}
-The purpose of this project is to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components needed in our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and an FPGA. The video cameras connect to the computer through standard USB 2.0 protocol \cite{USB 2.0}. The video cameras are responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer will then apply Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm will return will be in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer will communicate through an RS232 serial connection to an FPGA board which will drive the mechanical actuation and stepper motor rotations needed to physically manipulate the cube. The FPGA will act as a system control board and will be responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram} of section \ref{sec:Project Design}.
+\label{sec:intro}
+The purpose of this project is to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components needed in our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). The video cameras connect to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB 2.0}. The video cameras are responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer will then apply Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm will return will be in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer will communicate through an RS232 serial connection to an FPGA board which will drive the mechanical actuation and stepper motor rotations needed to physically manipulate the cube. The FPGA will act as a system control board and will be responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram} of section \ref{sec:Project Design}.
 
 Upon completion of the robotic Rubik's Cube solver, if time permits, we hope to take Project Herbert one step further and obtain a Guinness World Record for the fastest robot to solve a Rubik's Cube. CubeStormer3 is the current record holder \cite{GuinnessWR}. The uniqueness of this project is rooted in the optimizations that we will have to make in each component of our system, especially the electro-mechanical stepper motors and the mechanical actuators. We will have to fine-tune these mechanical components to perform physical operations quicker than the human eye in order to obtain record-breaking speed. In this process we will have to maintain the precision needed to rotate the cube.
 
@@ -79,7 +72,7 @@ OpenCV is an open source computer vision and machine learning software library \
 
 Capturing the faces of a cube requires three primary operations:
 
-\begin{enumerate}
+\begin{itemize}
   \item \textbf{Grayscale conversion} -
  A video frame will be captured and converted to Grayscale using OpenCV's \textit{cvtColor} function \cite{cvtColor}. Grayscale conversion transforms RGB pixel values into black and white intensity values \cite{Grayscale}. Converting to Grayscale allows an easy transformation to a binary (black and white) image, which is used to filter out features that are not important.
   \item  \textbf{Canny edge detection} -
@@ -87,13 +80,12 @@ Capturing the faces of a cube requires three primary operations:
 
   \item \textbf{Contour filtering} -
  Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cubelets on each of the three faces of the cube.
-\end{enumerate}
+\end{itemize}
 
-After the individual cubelets have been identified within the image, a matrix model like that shown in Fig. \ref{fig:matrix layout} will be generated. Each individual position (U1, U2, F1, F2, etc.) can be represented as a single ASCII character indicating the color at that cubelet position. Table \ref{table:cubelet representation} defines the mapping scheme we will employ for the Rubik's Cube matrix model. Once this matrix model has been generated for the cube, we will pass it on to an application known as \textit{Kcube}. Kcube will process the cube permutation (see \ref{sec:Kcube}), apply Kociemba's algorithm, and generate a solution sequence.
-
+After the individual cubelets have been identified within the image, a matrix model like that shown in Fig. \ref{fig:matrix layout} will be generated. Each individual position (U1, U2, F1, F2, etc.) can be represented as a single ASCII character indicating the color at that cubelet position. Table \ref{table:cubelet representation} defines the mapping scheme we will employ for the Rubik's Cube matrix model. Once this matrix model has been generated for the cube, we will pass it on to an application written by Greg Schmidt known as \textit{Kcube} \cite{The Two-Phase Algorithm}. Kcube will process the cube permutation (see \ref{sec:Kcube}), apply Kociemba's algorithm, and generate a solution sequence.
 \begin{figure}[!ht]
-\centering
-\begin{verbatim}
+\begin{center}
+\begin{BVerbatim}
              |************|
              |*U1**U2**U3*|
              |************|
@@ -115,12 +107,15 @@ After the individual cubelets have been identified within the image, a matrix mo
              |************|
              |*D7**D8**D9*|
              |************|
-\end{verbatim}
+\end{BVerbatim}
+\end{center}
 \caption{Rubik's Cube matrix representation}
 \label{fig:matrix layout}
 \end{figure}
 
 \begin{table}[!ht]
+\caption{Cubelet color to ASCII character mapping}
+\label{table:cubelet representation}
 \centering
 \begin{tabular}{|c|c|}
 \hline
@@ -132,8 +127,6 @@ GREEN          & 'G'              \\ \hline
 ORANGE         & 'O'              \\ \hline
 YELLOW         & 'Y'              \\ \hline
 \end{tabular}
-\caption{Cubelet color to ASCII character mapping}
-\label{table:cubelet representation}
 \end{table}
 
 \subsection{Kcube and the Solution Sequence}
@@ -141,9 +134,6 @@ YELLOW         & 'Y'              \\ \hline
 Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{The Two-Phase Algorithm}. The Kcube application will be used to generate the solution sequence needed to solve the Rubik's Cube that was captured during the image processing phase. The matrix model generated from the image processing phase will allow us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you would invoke Kcube with the following command:
 
 \begin{lstlisting}[style=DOS]
-Microsoft Windows [Version X.X.XXX]
-Copyright (c) 2015 Microsoft Corporation. All rights reserved.
-
 c:>kcube L:GGWWOWBRB F:GWGBGYWBO U:YOOOWYROY D:ORGWYYYRB R:OGBBRYWRR B:YBROBGWGR
 \end{lstlisting}
 
@@ -153,11 +143,13 @@ Kcube will then process the input parameters and generate a sequence of twenty-t
 \begin{figure}[!ht]
 \centering
 \includegraphics[scale=1.25]{"Scrambled Cube".jpg}
-\caption[]{}
+\caption{A scrambled cube}
 \label{fig:scrambled cube}
 \end{figure}
 
 \begin{table}[!ht]
+\caption{Cube moves to integer mapping}
+\label{table:moves table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
@@ -169,8 +161,6 @@ L             & 4              & U             & 10             & B             
 L'            & 5              & U'            & 11             & B'            & 17             \\ \hline
 L2            & 6              & U2            & 12             & B2            & 18             \\ \hline
 \end{tabular}
-\caption{Cube moves to integer mapping}
-\label{table:moves table}
 \end{table}
 
 \subsection{Mechanical Actuators}
@@ -210,8 +200,10 @@ Each stepper motor will be driven by a motor control board which will be control
 
 
 \section{Schedule}
-Our work will be distributed over the upcoming summer months and Fall 2015 semester, spanning May 13-December 2015. Table \ref{table:herbert timeline} outlines the milestones we hope to have completed by the end of this upcoming summer. A brief description of each one of these milestones is presented in Section \ref{sec:Milestones}. Comes Fall semester 2015, we hope to be integrating each component and testing the robustness of our system.
+Our work will be distributed over the upcoming summer months and Fall 2015 semester, spanning May 13-December 2015. Table \ref{table:herbert timeline} outlines the milestones we hope to have completed by the end of this upcoming summer. A brief description of each one of these milestones is presented in Section \ref{sec:Milestones}. Come Fall semester 2015, we hope to be integrating each component and testing the robustness of our system.
 \begin{table}[!ht]
+\caption{Herbert itemized timeline}
+\label{table:herbert timeline}
 \resizebox{\textwidth}{!}{\begin{tabular}{|l|c|c|c|}
 \hline
 \multicolumn{1}{|c|}{\textbf{Tasks}}      & \textbf{Start} & \textbf{Finish} & \textbf{Milestone}                 \\ \hline
@@ -242,8 +234,6 @@ Add tab for testing motors and sensors    &                &                 &  
                                           & 2015-12-16     & 2015-07-11      & Integration and Testing            \\ \hline
 T.B.D.                                    &                &                 &                                    \\ \hline
 \end{tabular}}
-\caption{Herbert itemized timeline}
-\label{table:herbert timeline}
 \end{table}
 
 \subsection{Milestones}
@@ -274,16 +264,18 @@ T.B.D.                                    &                &                 &  
 We believe that parallelizing these tasks by distributing them across our team will allow us to design this system in a time efficient manner. We hope to stay close to the timeline we present above, however the timeline is tentative, and will likely change over the course of summer and Fall semester.
 
 \section{Required Resources}
-Table \ref{table:BOM} is the Bill of Materials (BOM) needed to realize this project. This BOM defines the main materials needed to realize the system as outlined in Fig. \ref{fig:System Block Diagram}.
+Table \ref{table:BOM} is the bill of materials (BOM) needed to realize this project. This BOM defines the main materials needed to realize the system as outlined in Fig. \ref{fig:System Block Diagram}.
 Many of the components that we will be using are being donated to us by industry sponsors. The components being donated to us include: the stepper motors, FPGA system control board, the
-motor control boards, and the Chameleon USB2.0 cameras. The stepper motors, motor control boards, and the FPGA system control board are "in-house" proprietary boards developed by BioFire Defense Systems.
+motor control boards, and the Chameleon USB2.0 cameras. The stepper motors, motor control boards, and the FPGA system control board are ``in-house" proprietary boards developed by BioFire Defense Systems.
 The FPGA board embeds a Xilinx Spartan3 with a softcore Microblaze processor. The Chameleon USB2.0 cameras donated to us by Point Grey Research are 1.3 megapixel cameras with a Sony ICX445 CCD, 1/3", 3.75 micron sensor.
 
 As a team we will be distributing the cost of the pneumatic air cylinders, pneumatic solenoid valves, the 8 channel relay board needed to drive the valves, and any other unforseen costs
-that may arise. We are aware that additional costs may arise for standard industrial items such as screws, wiring, etc.. We hope to minimize these additional costs by utilizing the resources
+that may arise. We are aware that additional costs may arise for standard industrial items such as screws and wiring. We hope to minimize these additional costs by utilizing the resources
 available to us as students in the ECE department at the University of Utah.
 
 \begin{table}[!ht]
+\caption{Main component BOM}
+\label{table:BOM}
 \resizebox{\textwidth}{!}{\begin{tabular}{|l|c|c|c|c|}
 \hline
 \textbf{Part Description} & \textbf{Quantity} & \textbf{Vendor}     & \textbf{Vendor PN} & \textbf{Price/Unit (dollars)} \\ \hline
@@ -295,8 +287,6 @@ Motor Control Board       & 2                 & BioFire Defense       & NA      
 8 Channel 5V Relay Board               & 1                 & SainSmart           & 20-018-102         & 11.99               \\ \hline
 Chameleon USB2.0 Camera                    & 2                 & Point Grey Research & CMLN-13S2C-CS      & DONATED                \\ \hline
 \end{tabular}}
-\caption{Main component BOM}
-\label{table:BOM}
 \end{table}
 
 \section{Risk Assessment}
@@ -340,6 +330,7 @@ BioFire Defense has given us the various control boards and mechanical component
 We'd also like to thank Vladimir Tucakov of Point Grey Research. He has provided our team with their Chameleon CMLN-13S2M-CS camera which we will use for precise and fast image acquisition. Vladimir has also discussed our project and ideas with his colleagues at Point Grey, and they have mentioned featuring our project in their newsletter.
 
 We couldn't put all these components together without a nice chassis to house them all. For this, we would like to thank Futura Industries. They have helped us in the design and construction of the aluminum frame we will use to build Herbert. Another special thanks goes out to Futura's Kenton Frandsen (Mechanical/Manufacturing Engineer) who has assisted in the mechanical design of the arm and frame of our project.
+
 
 \begin{thebibliography}{9}
 \bibliographystyle{IEEEtran}
@@ -407,7 +398,7 @@ In order to solve a cube, it is standard to define the terminology and orientati
 \subsection{Faces}
 A Rubik's Cube is composed of six faces: right (\textbf{R}), left (\textbf{L}), up (\textbf{U}), down (\textbf{D}), front (\textbf{F}), and back (\textbf{B}) (see Fig. \ref{fig:Cube Orientation}). The exact color of each face is relative to the orientation in which you are holding the cube. For example, if you align the blue face towards you then the blue face is defined as the front face. Each face can be rotated in two different directions: \textit{clockwise} or \textit{counter-clockwise}. These rotations are defined as the direction of rotation when looking directly at that face.
 
-\begin{figure}[!ht]
+\begin{figure}[!hb]
 \centering
 \includegraphics{"Cube Orientation".png}
 \caption{Cube orientation}
@@ -455,8 +446,6 @@ A cubelet refers to a particular piece on the cube. Cubelets are categorized bas
 \caption{Cubelet categories}
 \label{fig:cubelet_categories}
 \end{figure}
-
-
 
 \end{document}
 % end of document content
