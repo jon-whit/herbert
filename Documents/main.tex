@@ -1,5 +1,5 @@
 % pre-amble section
-\documentclass[letterpaper, 10 pt, conference, onecolumn]{IEEEtran}
+\documentclass[final, letterpaper, 10 pt, conference, onecolumn]{IEEEtran}
 
 \overrideIEEEmargins
 % See the \addtolength command later in the file to balance the column lengths
@@ -76,10 +76,10 @@ Capturing the faces of a cube requires three primary operations:
   \item \textbf{Grayscale conversion} -
  A video frame will be captured and converted to Grayscale using OpenCV's \textit{cvtColor} function \cite{cvtColor}. Grayscale conversion transforms RGB pixel values into black and white intensity values \cite{Grayscale}. Converting to Grayscale allows an easy transformation to a binary (black and white) image, which is used to filter out features that are not important.
   \item  \textbf{Canny edge detection} -
- Canny edge detection is a multi-stage algorithm used to detect a wide range of edges in an image \cite{Canny Edge Detection}. We will be using OpenCV's \textit{Canny} function \cite{OpenCV Canny} to identify the edges of the Rubik's Cube, which, when combined with contour filtering, will allow us to dynamically identify the planes in the frame that represent the three faces of the cube.
+ Canny edge detection is a multi-stage algorithm used to detect a wide range of edges in an image \cite{Canny Edge Detection, Moeslund Edge Detection}. We will be using OpenCV's \textit{Canny} function \cite{OpenCV Canny} to identify the edges of the Rubik's Cube, which, when combined with contour filtering, will allow us to dynamically identify the planes in the frame that represent the three faces of the cube.
 
   \item \textbf{Contour filtering} -
- Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cubelets on each of the three faces of the cube.
+ Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours, Suzuki85} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cubelets on each of the three faces of the cube.
 \end{itemize}
 
 After the individual cubelets have been identified within the image, a matrix model like that shown in Fig. \ref{fig:matrix layout} will be generated. Each individual position (U1, U2, F1, F2, etc.) can be represented as a single ASCII character indicating the color at that cubelet position. Table \ref{table:cubelet representation} defines the mapping scheme we will employ for the Rubik's Cube matrix model. Once this matrix model has been generated for the cube, we will pass it on to an application written by Greg Schmidt known as \textit{Kcube} \cite{The Two-Phase Algorithm}. Kcube will process the cube permutation (see \ref{sec:Kcube}), apply Kociemba's algorithm, and generate a solution sequence.
@@ -369,6 +369,11 @@ Wikipedia contributors.
 \emph{Canny edge detector}
 [Online]. Available: \url{http://en.wikipedia.org/w/index.php?title=Canny_edge_detector&oldid=655662708}
 
+\bibitem{Moeslund Edge Detection}
+Thomas Moeslund.
+\emph{Canny Edge Detection}
+[Online]. Available: \url{http://www.cse.iitd.ernet.in/~pkalra/csl783/canny.pdf}
+
 \bibitem{OpenCV Canny}
 OpenCV Developers Team.
 \emph{Feature Detection}
@@ -378,6 +383,11 @@ OpenCV Developers Team.
 OpenCV Developers Team.
 \emph{Structural Analysis and Shape Descriptors}
 [Online]. Available: \url{http://docs.opencv.org/modules/imgproc/doc/structural_analysis_and_shape_descriptors.html?highlight=findcontours#findcontours}
+
+\bibitem{Suzuki85}
+S. Suzuki and K. Abe.
+\emph{Topological Structural Analysis of Digitized Binary Images by Border Following},
+pp. 473-480, 1985
 
 \bibitem{Basic Cube Notation}
 Joseph Converse.
