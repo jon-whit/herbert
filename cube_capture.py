@@ -120,8 +120,8 @@ if __name__ == "__main__":
       # if a frame was succesfully captured, show it
       if img_orig is not None:
           # do some image manipulation for comparison
-          #img_gray = rgb_to_gray(img_orig)
-          (thresh, img_bw) = apply_threshold(img_orig, bw_threshold)
+          img_gray = rgb_to_gray(img_orig)
+          (thresh, img_bw) = apply_threshold(img_gray, bw_threshold)
 
           # get the contours from the binary image and draw them on a new image
           contours = find_contours(img_bw)
@@ -130,7 +130,7 @@ if __name__ == "__main__":
 
           # draw the images to the screen
           cv2.imshow('video_rgb', img_orig)
-          #cv2.imshow('video_gray', img_gray)
+          cv2.imshow('video_gray', img_gray)
           cv2.imshow('video_bw', img_bw)
           cv2.imshow('bw_contours', res_img)
 
