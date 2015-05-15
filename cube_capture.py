@@ -88,9 +88,9 @@ def find_contours(img_bw):
 
     :param img: The binary image.
     """
-    (contours, hierarchy) = cv2.findContours(img_bw, mode=cv2.cv.CV_RETR_EXTERNAL,
+    (contours, hierarchy) = cv2.findContours(img_bw, mode=cv2.cv.CV_RETR_TREE,
                                             method=cv2.cv.CV_CHAIN_APPROX_SIMPLE)
-    return contours
+    return (contours, hierarchy)
 
 
 # main entry point for this script
@@ -124,7 +124,7 @@ if __name__ == "__main__":
           (thresh, img_bw) = apply_threshold(img_gray, bw_threshold)
 
           # get the contours from the binary image and draw them on a new image
-          contours = find_contours(img_bw)
+          contours, hierarchy = find_contours(img_bw)
           res_img = new_rgb_image(img_bw.shape[1], img_bw.shape[0])
           cv2.drawContours(res_img, contours, -1, cv2.cv.RGB(255,0,0), 2)
 
@@ -139,7 +139,7 @@ if __name__ == "__main__":
           break
 
       # terminate the loop on a KeyboardInterrupt
-      if (cv2.waitKey(2) >= 0):
+      if (cv2.waitKey(0) >= 0):
           break
 
   # close the video device and any active windows
