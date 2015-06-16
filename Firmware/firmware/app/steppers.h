@@ -24,14 +24,13 @@ typedef enum
     //stepperD,
     //stepperB,
     //stepperL,
-    numSteppers 
+    numSteppers, 
 } StepperMotor;
 
 enum StepperConstants
 {
     stepperHome = INT_MAX, /*!< This value is reserved for home requests. */
-  
-    // These values need to be tested to see what frequencies work best  
+
     defaultFastFrequency    = 1500,
     defaultSlowFrequency    = 100,
     defaultRampSteps        = 10,
@@ -44,9 +43,6 @@ typedef enum
     stepperRampSteps,
     stepperMaxSteps 
 } StepperParameter;
-
-
-
 
 void stepper_init( void );
 void stepper_abort( void );
@@ -66,5 +62,6 @@ bool stepper_is_at_home_position( StepperMotor stepper );
 bool stepper_is_at_alt_position( StepperMotor stepper );
 int  get_stepper_position( StepperMotor stepper );
 
+bool isSensorBeamBroken(StepperMotor stepper);
 
-#endif //...#ifndef steppers_h
+#endif 

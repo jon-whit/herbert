@@ -19,8 +19,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-
 typedef struct
 {
     int position;
@@ -44,8 +42,6 @@ typedef struct
     bool ( *alt_sensor_break_hook )( int );
 } stepper_instance;
 
-
-
 struct
 {
     stepper_instance steppers[ numSteppers ];
@@ -59,39 +55,37 @@ struct
     int increment;
 } stepper_data;
 
-
-
 enum stepper_hardware_constants
 {
-    max_lid_steps                 = 20000,
-    max_door_steps                = 35000,
-    max_filter_steps              = 35000,
+    max_lid_steps            = 20000,
+    max_door_steps           = 35000,
+    max_filter_steps         = 35000,
 
-    lid_home_pin_location         = 50,
-    door_home_pin_location        = 20,
-    filter_home_pin_location      = 0,
+    lid_home_pin_location    = 50,
+    door_home_pin_location   = 20,
+    filter_home_pin_location = 0,
 
-    lid_home_position             = 0,
-    door_home_position            = 0,
-    filter_home_position          = 0,
+    lid_home_position        = 0,
+    door_home_position       = 0,
+    filter_home_position     = 0,
 
-    lid_hw_enable_mask            = 0x04,
-    lid_hw_address                = 0x01,
-    filter_hw_enable_mask         = 0x02,
-    filter_hw_address             = 0x03,
-    door_hw_enable_mask           = 0x01,
-    door_hw_address               = 0x00,
+    lid_hw_enable_mask       = 0x04,
+    lid_hw_address           = 0x01,
+    filter_hw_enable_mask    = 0x02,
+    filter_hw_address        = 0x03,
+    door_hw_enable_mask      = 0x01,
+    door_hw_address          = 0x00,
+
+    rSensorAddressMask       = 0x03,
+    fSensorAddressMask       = 0x03,
+    uSensorAddressMask       = 0x02,
+
 };
-
-
 
 static void stepper_init_instance( stepper_instance *stepper, StepperMotor id );
 static void stepper_motor_callback( void );
 static int  stepper_find_ramp_freq_adjust( stepper_instance *stepper );
 static void stepper_disable( stepper_instance * moving_stepper );
-
-
-
 
 //------------------------------------------------------------------------------
 //! Initialize the stepper motor module.
@@ -113,8 +107,6 @@ void stepper_init( void )
     InitStepperHW_UFR(stepper_motor_callback);
     InitStepperHW_DBL(stepper_motor_callback);
 }
-
-
 
 //------------------------------------------------------------------------------
 void stepper_abort( void )
@@ -153,8 +145,6 @@ void stepper_abort( void )
     }
     exitCriticalRegion(crdata);
 }
-
-
 
 //------------------------------------------------------------------------------
 //! Function to set the various stepper parameters.
@@ -375,7 +365,6 @@ bool stepper_is_at_alt_position( StepperMotor stepper )
     return stepper_get_alt_sensor_hw( &stepper_data.steppers[ stepper ] );
 }
 
-
 //------------------------------------------------------------------------------
 int get_stepper_position( StepperMotor stepper )
 {
@@ -383,6 +372,37 @@ int get_stepper_position( StepperMotor stepper )
     return stepper_data.steppers[ stepper ].position;
 }
 
+bool isSensorBeamBroken(StepperMotor stepper)
+{
+    switch(stepper)
+    {
+    case stepperU:
+        stepper_set_address_hw(uSensorAddressMask);
+        return stepper_get_alt_sensor_hw();
+        break;
+    case stepperF:
+        stepper_set_address_hw(fSensorAddressMask);
+        return stepper_get_alt_sensor_hw();
+        break;
+    case stepperR:
+        stepper_set_address_hw(rSensorAddressMask);
+        return stepper_get_alt_sensor_hw();
+        break;
+    // case stepperD:
+    //     stepper_set_address_hw(uSensorAddressMask);
+    //     stepper_get_alt_sensor_hw();
+    //     break;
+    // case stepperB:
+    //     stepper_set_address_hw(uSensorAddressMask);
+    //     stepper_get_alt_sensor_hw();
+    //     break;
+    // case stepperL:
+    //     stepper_set_address_hw(uSensorAddressMask);
+    //     stepper_get_alt_sensor_hw();
+    //     break;
+    }
+    return 0;
+}
 
 //------------------------------------------------------------------------------
 //! Stepper motor ISR callback.

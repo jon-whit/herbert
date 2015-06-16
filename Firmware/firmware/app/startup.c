@@ -77,6 +77,7 @@ void systemStartup()
     serialInit();
     commInit();
     initializationInit();
+    motionInit();
 
     // Enable interrupts
     enableInterrupts();
@@ -88,6 +89,7 @@ void systemStartup()
 
     // Schedule Tasks
     scheduleTask(commProcess, NULL, false);
+    printf("Motion Task Scheduled\n");
     scheduleTask(motionProcess, NULL, false);
 
     // Start Systems
