@@ -65,3 +65,5 @@ Firmware/fpga/implementation/system.drc
 Firmware/fpga/hdl/ddr2_sdram_wrapper.v
 *.prj
 *.xrpt
+Firmware/firmware/app.dmp
+*.svg
