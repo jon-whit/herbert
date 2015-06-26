@@ -4,14 +4,11 @@
 //
 //  High-level instrument motion control for door, lid and filters
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #ifndef motion_h
 #define motion_h
 
 #include <comm.h>
-#include <steppers.h>
 
 typedef enum
 {

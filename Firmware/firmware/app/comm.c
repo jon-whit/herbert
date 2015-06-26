@@ -3,32 +3,49 @@
 //  comm.c
 //
 //  Communication Protocol Processor
+//
+//  Available Commands
+//
+//  Abort
+//  DisableCommWatchdog
+//  DisableMotors
+//  ExecuteMove[Move]
+//  FileSend[FileSize][FileData]
+//  GetActiveState
+//  GetFirmwareVersion
+//  GetFPGAVersion
+//  GetStatus
+//  GoToIdle
+//  InitSystem
+//  MoveRelative[Motor][Steps]
+//  Reboot
+//  Reset
+//  SendErrorMessage<msg..>
+//  SendLogMessage<msg..>
+//  TestGetSensors
+//  TestGetSwitch
+//  Upgrade[FileSize][FileCRC]
+//  UpgradeFPGA[FileSize][FileCRC]
 
 #include <comm.h>
-#include <stdlib.h>
+
 #include <ctype.h>
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
-#include <assert.h>
 #include <crc16.h>
+
 #include <timer.h>
 #include <serial.h>
-#include <lcd.h>
 #include <update.h>
 #include <version.h>
 #include <motion.h>
-#include <errors.h>
 #include <steppers.h>
-#include <initialization.h>
 #include <system.h>
 #include <reboot.h>
 #include <startup.h>
-#include <flash.h>
-#include <relay.h>
 #include <stepper_hw.h>
 #include <switch.h>
-
 
 ///////////////////////////////////////////////////
 // Options
@@ -36,11 +53,9 @@
 #define DISPLAY_CMD_PKTS     0
 #define DISPLAY_RX_TX        0
 
-
 //Define out the static keyword to stop the link errors
 //we are getting.
 #define static
-
 
 ///////////////////////////////////////////////////
 // Constants
@@ -49,7 +64,6 @@ enum CommDelimiters
 {
     paramDelimiter = ' ',
 };
-
 
 #define MIN_RSP_PARAM_COUNT           4
 
@@ -78,6 +92,9 @@ enum CommDelimiters
 #define U_MOTOR_KEY                   "U"
 #define F_MOTOR_KEY                   "F"
 #define R_MOTOR_KEY                   "R"
+// #define D_MOTOR_KEY                   "D"
+// #define B_MOTOR_KEY                   "B"
+// #define L_MOTOR_KEY                   "L"
 
 #define FAST_STEPPER_KEY              "FAST"
 #define SLOW_STEPPER_KEY              "SLOW"
@@ -105,8 +122,6 @@ const char* OfflineCommandNames[] =
     "InitializingSystem",
 };
 
-
-
 ///////////////////////////////////////////////////
 // Local types and macros
 
@@ -122,8 +137,6 @@ typedef struct
     char*    crc;
 } CmdPkt;
 
-
-
 typedef struct
 {
     unsigned bufByteCount;
@@ -136,8 +149,6 @@ typedef struct
     char*    payload;
 } RspPkt;
 
-
-
 typedef struct
 {
     char* cmd;
@@ -145,16 +156,12 @@ typedef struct
     void  (*cmdHandler)(CmdPkt* cmdPkt);
 } CommCommand;
 
-
-
 typedef struct
 {
     bool active;
     char seqNum[OFFLINE_COMMAND_SEQ_NUM_BUF_SIZE];
     char cmd[OFFLINE_COMMAND_CMD_BUF_SIZE];
 } PendingCommand;
-
-
 
 typedef struct
 {
@@ -167,8 +174,9 @@ typedef struct
     PendingCommand pendingCommands[OfflineCommand_count];
 
     bool           commWatchdogDisabled;
-} CommData;
 
+    int            moveCount;
+} CommData;
 
 ///////////////////////////////////////////////////
 // Local function prototypes
@@ -205,7 +213,6 @@ static void registerAndSendRspPending(uint32 offlineCmdIndex, CmdPkt* cmdPkt);
 static void sendRspPending(CmdPkt* cmdPkt);
 /*static*/ void sendRspError(CmdPkt* cmdPkt, ErrorCodes errorCode, const char* errorDesc);
 
-static void sendRspStatusOutOfRange(CmdPkt* cmdPkt, const char* min, const char* max, const char* value);
 static void sendRspStatusIntOutOfRange(CmdPkt* cmdPkt, int min, int max, int value);
 static void sendRspStatusHexOutOfRange(CmdPkt* cmdPkt, uint32 min, uint32 max, uint32 value);
 static void sendRspStatusInvalidParameter(CmdPkt* cmdPkt);
@@ -226,110 +233,59 @@ static bool validateUnsignedValue(CmdPkt* cmdPkt, const char* str, uint32* value
 static bool validateHexValue(CmdPkt* cmdPkt, const char* str, uint32* value);
 
 static bool validateIntParameterRange(CmdPkt* cmdPkt, int paramIndex, int minValue, int maxValue, int* value);
-static bool validateHexParameterRange(CmdPkt* cmdPkt, int paramIndex, uint32 minValue, uint32 maxValue, uint32* value);
 static bool validateMotorParameter(CmdPkt* cmdPkt, int paramIndex, StepperMotor *motor);
-static bool validateStepperParameter(CmdPkt* cmdPkt, int paramIndex, StepperParameter *stepperParam);
-
 
 // Handler helpers
 static void systemAbort();
 
 // Command Handlers
-static void chGetStatus(CmdPkt* cmdPkt);
-static void chGetActiveState(CmdPkt* cmdPkt);
 
 static void chAbort(CmdPkt* cmdPkt);
-static void chGoToIdle(CmdPkt* cmdPkt);
-static void chReset(CmdPkt* cmdPkt);
-
-static void chGetMotorPositions(CmdPkt* cmdPkt);
-
-static void chInitSystem(CmdPkt* cmdPkt);
-
+static void chDisableCommWatchdog(CmdPkt* cmdPkt);
+static void chDisableMotors(CmdPkt* cmdPkt);
+static void chExecuteMove(CmdPkt* cmdPkt);
 static void chFileSend(CmdPkt* cmdPkt);
-static void chUpgradeFirmware(CmdPkt* cmdPkt);
-static void chUpgradeFPGA(CmdPkt* cmdPkt);
-
-static void chFirmwareVersion(CmdPkt* cmdPkt);
-static void chFPGAVersion(CmdPkt* cmdPkt);
-
-
+static void chGetActiveState(CmdPkt* cmdPkt);
+static void chGetFirmwareVersion(CmdPkt* cmdPkt);
+static void chGetFPGAVersion(CmdPkt* cmdPkt);
+static void chGetStatus(CmdPkt* cmdPkt);
+static void chGoToIdle(CmdPkt* cmdPkt);
+static void chInitSystem(CmdPkt* cmdPkt);
 static void chMoveRelative(CmdPkt* cmdPkt);
-
 static void chReboot(CmdPkt* cmdPkt);
-static void chRestoreDefaults(CmdPkt* cmdPkt);
-
+static void chReset(CmdPkt* cmdPkt);
 static void chSendErrorMessage(CmdPkt* cmdPkt);
 static void chSendLogMessage(CmdPkt* cmdPkt);
-
-static void chDisableCommWatchdog(CmdPkt* cmdPkt);
-
-static void chExecuteMove(CmdPkt* cmdPkt);
-
-static void chDisableMotors(CmdPkt* cmdPkt);
-
-static void chTimingTest(CmdPkt* cmdPkt);
-
-static void chTestGetSwitch(CmdPkt* cmdPkt);
 static void chTestGetSensors(CmdPkt* cmdPkt);
-
-// -------------------------- Test & Dianostic Commands --------------------------
-
-// static void chGetStepperParameter(CmdPkt* cmdPkt);
-// static void chSetStepperParameter(CmdPkt* cmdPkt);
-
-
+static void chTestGetSwitch(CmdPkt* cmdPkt);
+static void chUpgradeFirmware(CmdPkt* cmdPkt);
+static void chUpgradeFPGA(CmdPkt* cmdPkt);
 
 ///////////////////////////////////////////////////
 // Local data
 
 static const CommCommand commCommands[] =
-{   // Cmd,                                 Param Count,     Cmd Handler,
-    { "ExecuteMove",                        1,               chExecuteMove,                        },
-
-    { "DisableMotors",                      0,               chDisableMotors,                      },
-
-    { "TimingTest",                         0,               chTimingTest,                         },
-
-    { "GetStatus",                          0,               chGetStatus,                          },
-    { "GetActiveState",                     0,               chGetActiveState,                     },
-
-    { "Abort",                              0,               chAbort,                              },
-
-    { "GoToIdle",                           0,               chGoToIdle,                           },
-
-    { "Reset",                              0,               chReset,                              },
-
-    { "GetFirmwareVersion",                 0,               chFirmwareVersion,                    },
-    { "GetFPGAVersion",                     0,               chFPGAVersion,                        },
-
-    { "GetMotorPositions",                  0,               chGetMotorPositions,                  },
-
-    { "InitSystem",                         0,               chInitSystem,                         },
-
-    { "FileSend",                           2,               chFileSend,                           },
-    { "Upgrade",                            2,               chUpgradeFirmware,                    },
-    { "UpgradeFPGA",                        2,               chUpgradeFPGA,                        },
-
-    { "MoveRelative",                       2,               chMoveRelative,                       },
-    { "MR",                                 2,               chMoveRelative,                       },
-
-    { "Reboot",                             0,               chReboot,                             },
-    { "RestoreDefaults",                    0,               chRestoreDefaults,                    },
-
-    { "SendErrorMessage",                   VAR_PARAM_COUNT, chSendErrorMessage,                   },
-    { "SendLogMessage",                     VAR_PARAM_COUNT, chSendLogMessage,                     },
-
-    { "DisableCommWatchdog",                0,               chDisableCommWatchdog,                },
-
-    { "TestGetSwitch",                      0,               chTestGetSwitch,                      },
-    { "TestGetSensors",                     0,               chTestGetSensors,                     },
-
-    // -------------------------- Test & Dianostic Commands --------------------------
-
-    // { "GetStepperParam",                    2,               chGetStepperParameter,                },
-    // { "SetStepperParam",                    3,               chSetStepperParameter,                },
-
+{   // Cmd,                  Param Count,     Cmd Handler,
+    { "Abort",               0,               chAbort,               },
+    { "DisableCommWatchdog", 0,               chDisableCommWatchdog, },
+    { "DisableMotors",       0,               chDisableMotors,       },
+    { "ExecuteMove",         1,               chExecuteMove,         },
+    { "FileSend",            2,               chFileSend,            },
+    { "GetActiveState",      0,               chGetActiveState,      },
+    { "GetFirmwareVersion",  0,               chGetFirmwareVersion,  },
+    { "GetFPGAVersion",      0,               chGetFPGAVersion,      },
+    { "GetStatus",           0,               chGetStatus,           },
+    { "GoToIdle",            0,               chGoToIdle,            },
+    { "InitSystem",          0,               chInitSystem,          },
+    { "MoveRelative",        2,               chMoveRelative,        },
+    { "Reboot",              0,               chReboot,              },
+    { "Reset",               0,               chReset,               },
+    { "SendErrorMessage",    VAR_PARAM_COUNT, chSendErrorMessage,    },
+    { "SendLogMessage",      VAR_PARAM_COUNT, chSendLogMessage,      },
+    { "TestGetSensors",      0,               chTestGetSensors,      },
+    { "TestGetSwitch",       0,               chTestGetSwitch,       },
+    { "Upgrade",             2,               chUpgradeFirmware,     },
+    { "UpgradeFPGA",         2,               chUpgradeFPGA,         },
     // End of table marker
     { NULL, 0, NULL }
 };
@@ -345,6 +301,8 @@ void commInit()
 
     commData.monitoringConnection = false;
     commData.commWatchdogDisabled = false;
+
+    commData.moveCount = 0;
 
     setSerialPortRxSignal(HOST_INTERFACE_PORT, &commData.serialInterfaceRxSignal);
     startTimer(&commData.serialInterfaceTimer, MSEC_TO_TICKS(COMM_PROCESS_HOST_PERIOD_ms));
@@ -426,6 +384,12 @@ static void signalOfflineTaskCompleteCallback(int offlineTask, ErrorCodes error,
 {
     ASSERT(offlineTask >= 0 && offlineTask < OfflineCommand_count);
     ASSERT(error >= 0 && error < num_errors);
+    commData.moveCount++;
+
+    if(offlineTask == OfflineCommand_executingMove && commData.moveCount == 2)
+    {
+        
+    }
 
     if(error == err_noError)
     {
@@ -880,21 +844,6 @@ void sendRspError(CmdPkt* cmdPkt, ErrorCodes errorCode, const char* errorDesc)
     sendRspPkt(&rspPkt);
 }
 
-static void sendRspStatusOutOfRange(CmdPkt* cmdPkt, const char* min, const char* max, const char* value)
-{
-    ASSERT(min);
-    ASSERT(max);
-    ASSERT(value);
-
-    RspPkt rspPkt;
-
-    initErrorRspPkt(&rspPkt, cmdPkt, err_parameterOutOfRange);
-
-    addParamToRspPkt(&rspPkt, "%s to %s, value %s", min, max, value);
-
-    sendRspPkt(&rspPkt);
-}
-
 static void sendRspStatusIntOutOfRange(CmdPkt* cmdPkt, int min, int max, int value)
 {
     RspPkt rspPkt;
@@ -1050,26 +999,6 @@ static bool validateIntParameterRange(CmdPkt* cmdPkt, int paramIndex, int minVal
     return true;
 }
 
-static bool validateHexParameterRange(CmdPkt* cmdPkt, int paramIndex, uint32 minValue, uint32 maxValue, uint32* value)
-{
-    ASSERT(cmdPkt);
-    ASSERT(value);
-    ASSERT(paramIndex < (int)cmdPkt->paramCount && paramIndex >= 0);
-
-    if(!(validateHexValue(cmdPkt, cmdPkt->params[paramIndex], value)))
-    {
-        return false;
-    }
-
-    if(*value < minValue || *value > maxValue)
-    {
-        sendRspStatusHexOutOfRange(cmdPkt, minValue, maxValue, *value);
-        return false;
-    }
-
-    return true;
-}
-
 static bool validateMotorParameter(CmdPkt* cmdPkt, int paramIndex, StepperMotor *motor)
 {
     if(strcmp(U_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
@@ -1083,28 +1012,6 @@ static bool validateMotorParameter(CmdPkt* cmdPkt, int paramIndex, StepperMotor 
     else if(strcmp(R_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
     {
         *motor = stepperR;
-    }
-    else
-    {
-        sendRspStatusInvalidParameter(cmdPkt);
-        return false;
-    }
-    return true;
-}
-
-static bool validateStepperParameter(CmdPkt* cmdPkt, int paramIndex, StepperParameter *stepperParam)
-{
-    if(strcmp(FAST_STEPPER_KEY, cmdPkt->params[paramIndex]) == 0)
-    {
-        *stepperParam = stepperFastFrequency;
-    }
-    else if(strcmp(SLOW_STEPPER_KEY, cmdPkt->params[paramIndex]) == 0)
-    {
-        *stepperParam = stepperSlowFrequency;
-    }
-    else if(strcmp(RAMP_STEPS_STEPPER_KEY, cmdPkt->params[paramIndex]) == 0)
-    {
-        *stepperParam = stepperRampSteps;
     }
     else
     {
@@ -1134,89 +1041,53 @@ static void systemAbort()
 ///////////////////////////////////////////////////
 // Command handler functions
 
-static void chGetStatus(CmdPkt* cmdPkt)
-{
-    RspPkt rspPkt;
-    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-
-
-    int i;
-
-    for(i = 0; i < OfflineCommand_count; i++)
-    {
-        if(commData.pendingCommands[i].active)
-        {
-            addStringParamToRspPkt(&rspPkt, OfflineCommandNames[i]);
-        }
-    }
-
-    if(rspPkt.paramCount == MIN_RSP_PARAM_COUNT)
-    {
-        addStringParamToRspPkt(&rspPkt, "Idle");
-    }
-
-    sendRspPkt(&rspPkt);
-}
-
-
-static void chGetActiveState(CmdPkt* cmdPkt)
-{
-    RspPkt rspPkt;
-    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-
-    int i;
-
-    for(i = 0; i < OfflineCommand_count; i++)
-    {
-        if(commData.pendingCommands[i].active)
-        {
-            addStringParamToRspPkt(&rspPkt, OfflineCommandNames[i]);
-        }
-    }
-
-    if(rspPkt.paramCount == MIN_RSP_PARAM_COUNT)
-    {
-        addStringParamToRspPkt(&rspPkt, "Idle");
-    }
-
-    sendRspPkt(&rspPkt);
-}
-
 static void chAbort(CmdPkt* cmdPkt)
 {
     sendRspOk(cmdPkt);
     systemAbort();
 }
 
-static void chGoToIdle(CmdPkt* cmdPkt)
+static void chDisableCommWatchdog(CmdPkt* cmdPkt)
 {
+    commData.commWatchdogDisabled = true;
     sendRspOk(cmdPkt);
 }
 
-static void chReset(CmdPkt* cmdPkt)
+static void chDisableMotors(CmdPkt* cmdPkt)
 {
+    disableMotors();
     sendRspOk(cmdPkt);
 }
 
-static void chGetMotorPositions(CmdPkt* cmdPkt)
+static void chExecuteMove(CmdPkt* cmdPkt)
 {
-    RspPkt rspPkt;
+    if(!checkPendingCmds(cmdPkt, OfflineCommand_executingMove, 0)) return;
 
-    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
+    registerAndSendRspPending(OfflineCommand_executingMove, cmdPkt);
 
-    // addDoorPositionParameter(&rspPkt);
-    // addLidPositionParameter(&rspPkt);
-    // addFilterPositionParameter(&rspPkt);
-
-    sendRspPkt(&rspPkt);
-}
-
-static void chInitSystem(CmdPkt* cmdPkt)
-{
-    if(!checkPendingCmds(cmdPkt, OfflineCommand_InitializeSystem, 0)) return;
-
-    registerAndSendRspPending(OfflineCommand_InitializeSystem, cmdPkt);
-    initSystem(signalOfflineTaskCompleteCallback, OfflineCommand_InitializeSystem);
+    printf("Executing Command %s\n", cmdPkt->params[0]);
+    if      (strcmp("R",  cmdPkt->params[0]) == 0) {executeMove(move_RClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("Rb", cmdPkt->params[0]) == 0) {executeMove(move_RCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("R2", cmdPkt->params[0]) == 0) {executeMove(move_R2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("F",  cmdPkt->params[0]) == 0) {executeMove(move_FClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("Fb", cmdPkt->params[0]) == 0) {executeMove(move_FCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("F2", cmdPkt->params[0]) == 0) {executeMove(move_F2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("U",  cmdPkt->params[0]) == 0) {executeMove(move_UClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("Ub", cmdPkt->params[0]) == 0) {executeMove(move_UCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("U2", cmdPkt->params[0]) == 0) {executeMove(move_U2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("L",  cmdPkt->params[0]) == 0) {executeMove(move_LClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("Lb", cmdPkt->params[0]) == 0) {executeMove(move_LCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("L2", cmdPkt->params[0]) == 0) {executeMove(move_L2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("B",  cmdPkt->params[0]) == 0) {executeMove(move_BClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("Bb", cmdPkt->params[0]) == 0) {executeMove(move_BCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("B2", cmdPkt->params[0]) == 0) {executeMove(move_B2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("D",  cmdPkt->params[0]) == 0) {executeMove(move_DClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("Db", cmdPkt->params[0]) == 0) {executeMove(move_DCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else if (strcmp("D2", cmdPkt->params[0]) == 0) {executeMove(move_D2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
+    else
+    {
+        printf("Invalid Move\n");
+    }
 }
 
 static void chFileSend(CmdPkt* cmdPkt)
@@ -1269,86 +1140,30 @@ static void chFileSend(CmdPkt* cmdPkt)
     sendRspOk(cmdPkt);
 }
 
-
-
-static void chUpgradeFirmware(CmdPkt* cmdPkt)
+static void chGetActiveState(CmdPkt* cmdPkt)
 {
-    uint32 fileSize;
-    uint32 fileCRC;
+    RspPkt rspPkt;
+    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
 
-    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[0], &fileSize))
+    int i;
+
+    for(i = 0; i < OfflineCommand_count; i++)
     {
-        return;
+        if(commData.pendingCommands[i].active)
+        {
+            addStringParamToRspPkt(&rspPkt, OfflineCommandNames[i]);
+        }
     }
 
-    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[1], &fileCRC))
+    if(rspPkt.paramCount == MIN_RSP_PARAM_COUNT)
     {
-        return;
+        addStringParamToRspPkt(&rspPkt, "Idle");
     }
 
-
-    // Stop system Processing
-    systemStop();
-
-
-    // Verify image and upgrade
-    if(verifyFirmwareImage(fileSize, fileCRC))
-    {
-        sendRspOk(cmdPkt);
-        mdelay(1000);
-        updateFirmware(fileSize, fileCRC);
-    }
-    else
-    {
-        sendRspStatusInvalidImage(cmdPkt, NULL);
-    }
-
-
-    // Restart system processing - if upgrade failed
-    systemStart();
+    sendRspPkt(&rspPkt);
 }
 
-
-
-static void chUpgradeFPGA(CmdPkt* cmdPkt)
-{
-    uint32 fileSize;
-    uint32 fileCRC;
-
-    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[0], &fileSize))
-    {
-        return;
-    }
-
-    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[1], &fileCRC))
-    {
-        return;
-    }
-
-
-    // Stop system Processing
-    systemStop();
-
-
-    // Verify image and upgrade
-    if(verifyFPGAImage(fileSize, fileCRC))
-    {
-        sendRspOk(cmdPkt);
-        mdelay(1000);
-        updateFPGA(fileSize, fileCRC);
-    }
-    else
-    {
-        sendRspStatusInvalidImage(cmdPkt, NULL);
-    }
-
-
-    // Restart system processing - if upgrade failed
-    systemStart();
-}
-
-
-static void chFirmwareVersion(CmdPkt* cmdPkt)
+static void chGetFirmwareVersion(CmdPkt* cmdPkt)
 {
     RspPkt rspPkt;
 
@@ -1359,9 +1174,7 @@ static void chFirmwareVersion(CmdPkt* cmdPkt)
     sendRspPkt(&rspPkt);
 }
 
-
-
-static void chFPGAVersion(CmdPkt* cmdPkt)
+static void chGetFPGAVersion(CmdPkt* cmdPkt)
 {
     RspPkt rspPkt;
 
@@ -1370,6 +1183,40 @@ static void chFPGAVersion(CmdPkt* cmdPkt)
     sendRspPkt(&rspPkt);
 }
 
+static void chGetStatus(CmdPkt* cmdPkt)
+{
+    RspPkt rspPkt;
+    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
+    int i;
+
+    for(i = 0; i < OfflineCommand_count; i++)
+    {
+        if(commData.pendingCommands[i].active)
+        {
+            addStringParamToRspPkt(&rspPkt, OfflineCommandNames[i]);
+        }
+    }
+
+    if(rspPkt.paramCount == MIN_RSP_PARAM_COUNT)
+    {
+        addStringParamToRspPkt(&rspPkt, "Idle");
+    }
+
+    sendRspPkt(&rspPkt);
+}
+
+static void chGoToIdle(CmdPkt* cmdPkt)
+{
+    sendRspOk(cmdPkt);
+}
+
+static void chInitSystem(CmdPkt* cmdPkt)
+{
+    if(!checkPendingCmds(cmdPkt, OfflineCommand_InitializeSystem, 0)) return;
+
+    registerAndSendRspPending(OfflineCommand_InitializeSystem, cmdPkt);
+    initSystem(signalOfflineTaskCompleteCallback, OfflineCommand_InitializeSystem);
+}
 
 static void chMoveRelative(CmdPkt* cmdPkt)
 {
@@ -1401,13 +1248,10 @@ static void chReboot(CmdPkt* cmdPkt)
     reboot();
 }
 
-
-static void chRestoreDefaults(CmdPkt* cmdPkt)
+static void chReset(CmdPkt* cmdPkt)
 {
-    resetSystemToDefaults();
     sendRspOk(cmdPkt);
 }
-
 
 static void chSendErrorMessage(CmdPkt* cmdPkt)
 {
@@ -1455,52 +1299,24 @@ static void chSendLogMessage(CmdPkt* cmdPkt)
     sendRspPkt(&logPkt);
 }
 
-static void chDisableCommWatchdog(CmdPkt* cmdPkt)
+static void chTestGetSensors(CmdPkt* cmdPkt)
 {
-    commData.commWatchdogDisabled = true;
-    sendRspOk(cmdPkt);
-}
+    printf("----------Sensor readings----------\n");
+    stepper_set_address_hw_UFR(0);
+    printf("00 - Home Sensor - %d Alt Sensor  - %d\n",
+           stepper_get_home_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
 
-static void chExecuteMove(CmdPkt* cmdPkt)
-{
-    if(!checkPendingCmds(cmdPkt, OfflineCommand_executingMove, 0)) return;
+    stepper_set_address_hw_UFR(1);
+    printf("01 - Home Sensor - %d Alt Sensor  - %d\n",
+           stepper_get_home_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
 
-    registerAndSendRspPending(OfflineCommand_executingMove, cmdPkt);
+    stepper_set_address_hw_UFR(2);
+    printf("10 - Home Sensor - %d Alt Sensor  - %d\n",
+           stepper_get_home_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
 
-    printf("Executing Command %s\n", cmdPkt->params[0]);
-    if      (strcmp("R",  cmdPkt->params[0]) == 0) {executeMove(move_RClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("Rb", cmdPkt->params[0]) == 0) {executeMove(move_RCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("R2", cmdPkt->params[0]) == 0) {executeMove(move_R2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("F",  cmdPkt->params[0]) == 0) {executeMove(move_FClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("Fb", cmdPkt->params[0]) == 0) {executeMove(move_FCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("F2", cmdPkt->params[0]) == 0) {executeMove(move_F2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("U",  cmdPkt->params[0]) == 0) {executeMove(move_UClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("Ub", cmdPkt->params[0]) == 0) {executeMove(move_UCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("U2", cmdPkt->params[0]) == 0) {executeMove(move_U2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("L",  cmdPkt->params[0]) == 0) {executeMove(move_LClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("Lb", cmdPkt->params[0]) == 0) {executeMove(move_LCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("L2", cmdPkt->params[0]) == 0) {executeMove(move_L2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("B",  cmdPkt->params[0]) == 0) {executeMove(move_BClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("Bb", cmdPkt->params[0]) == 0) {executeMove(move_BCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("B2", cmdPkt->params[0]) == 0) {executeMove(move_B2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("D",  cmdPkt->params[0]) == 0) {executeMove(move_DClockwise,        signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("Db", cmdPkt->params[0]) == 0) {executeMove(move_DCounterClockwise, signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else if (strcmp("D2", cmdPkt->params[0]) == 0) {executeMove(move_D2,                signalOfflineTaskCompleteCallback, OfflineCommand_executingMove);} 
-    else
-    {
-        printf("Uh Oh\n");
-        // Do Nothing
-    }
-}
-
-static void chDisableMotors(CmdPkt* cmdPkt)
-{
-    disableMotors();
-    sendRspOk(cmdPkt);
-}
-
-static void chTimingTest(CmdPkt* cmdPkt)
-{
+    stepper_set_address_hw_UFR(3);
+    printf("11 - Home Sensor - %d Alt Sensor  - %d\n\n",
+           stepper_get_home_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
     sendRspOk(cmdPkt);
 }
 
@@ -1522,25 +1338,60 @@ static void chTestGetSwitch(CmdPkt* cmdPkt)
     sendRspOk(cmdPkt);
 }
 
-static void chTestGetSensors(CmdPkt* cmdPkt)
+static void chUpgradeFirmware(CmdPkt* cmdPkt)
 {
-    printf("----------Sensor readings----------\n");
-    stepper_set_address_hw(0);
-    printf("00 - Home Sensor - %d Alt Sensor  - %d\n",
-           stepper_get_home_sensor_hw(), stepper_get_alt_sensor_hw());
+    uint32 fileSize;
+    uint32 fileCRC;
 
-    stepper_set_address_hw(1);
-    printf("01 - Home Sensor - %d Alt Sensor  - %d\n",
-           stepper_get_home_sensor_hw(), stepper_get_alt_sensor_hw());
+    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[0], &fileSize))
+    {
+        return;
+    }
 
-    stepper_set_address_hw(2);
-    printf("10 - Home Sensor - %d Alt Sensor  - %d\n",
-           stepper_get_home_sensor_hw(), stepper_get_alt_sensor_hw());
+    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[1], &fileCRC))
+    {
+        return;
+    }
 
-    stepper_set_address_hw(3);
-    printf("11 - Home Sensor - %d Alt Sensor  - %d\n\n",
-           stepper_get_home_sensor_hw(), stepper_get_alt_sensor_hw());
-    sendRspOk(cmdPkt);
+    // Verify image and upgrade
+    if(verifyFirmwareImage(fileSize, fileCRC))
+    {
+        sendRspOk(cmdPkt);
+        mdelay(1000);
+        updateFirmware(fileSize, fileCRC);
+    }
+    else
+    {
+        sendRspStatusInvalidImage(cmdPkt, NULL);
+    }
+}
+
+static void chUpgradeFPGA(CmdPkt* cmdPkt)
+{
+    uint32 fileSize;
+    uint32 fileCRC;
+
+    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[0], &fileSize))
+    {
+        return;
+    }
+
+    if(!validateUnsignedValue(cmdPkt, cmdPkt->params[1], &fileCRC))
+    {
+        return;
+    }
+
+    // Verify image and upgrade
+    if(verifyFPGAImage(fileSize, fileCRC))
+    {
+        sendRspOk(cmdPkt);
+        mdelay(1000);
+        updateFPGA(fileSize, fileCRC);
+    }
+    else
+    {
+        sendRspStatusInvalidImage(cmdPkt, NULL);
+    }
 }
 
 // EOF

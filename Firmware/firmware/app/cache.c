@@ -4,14 +4,11 @@
 //
 //  Processor cache interface
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <cache.h>
+
 #include <xparameters.h>
 #include <mb_interface.h>
-
-
 
 void cacheInit()
 {
@@ -23,7 +20,5 @@ void cacheInit()
     microblaze_init_dcache_range(XPAR_MICROBLAZE_DCACHE_BASEADDR, XPAR_MICROBLAZE_0_DCACHE_BYTE_SIZE);
     microblaze_enable_dcache();
 }
-
-
 
 // EOF

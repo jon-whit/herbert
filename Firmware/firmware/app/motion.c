@@ -2,20 +2,18 @@
 //
 //  motion.c
 //
-//  High-level instrument motion control for door, lid and filters
-//
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
-#include <limits.h>
-#include <assert.h>
-#include <timer.h>
 #include <motion.h>
+
 #include <string.h>
 #include <stdio.h>
+
+#include <timer.h>
 #include <comm.h>
 #include <os.h>
-#include <flash.h>
+
+#include <steppers.h>
+#include <stepper_hw.h>
 #include <relay.h>
 #include <switch.h>
 
@@ -26,9 +24,9 @@
 
 enum ArmMotionConstants
 {
-    halfTurnSteps                    = 200,
-    quarterTurnStepsClockwise        = 100,
-    quarterTurnStepsCounterClockwise = -100,
+    halfTurnSteps                    = 100, 
+    quarterTurnStepsClockwise        = 50,
+    quarterTurnStepsCounterClockwise = -50,
 };
 
 ///////////////////////////////////////////////////
@@ -92,6 +90,9 @@ typedef struct
     Rotation rotation;
     int      correctionSteps;
     bool     isCorrectionDirectionForward;
+    int      fullTime;
+    int      armFinishedActuatingInTime;
+    int      armFinishSpinningTime;
 } MoveData;
 
 typedef struct
@@ -109,14 +110,13 @@ typedef struct
 ///////////////////////////////////////////////////
 // Local function prototypes
 
-static void finishMotorMove(ErrorCodes error, const char* errorDesc);
-
 static bool initProcess();
+
+static void spinArm(void);
+static void finishMotorMove(ErrorCodes error, const char* errorDesc);
 
 static bool areArmDataEqual(ArmData armData1, ArmData armData2);
 static void setArmDataEqual(ArmData* armData1, ArmData* armData2);
-
-static void spinArm(void);
 
 ///////////////////////////////////////////////////
 // Local data
@@ -131,6 +131,8 @@ static struct MotionData
     ArmData            arm_L;
     ArmData            arm_B;
     ArmData            arm_D;
+
+    // int                moveCount;
 
     MoveData           moveData;
     Timer              timer;
@@ -148,7 +150,7 @@ void motionInit()
     memset(&motionData, 0, sizeof(motionData));
 
     motionData.init.state = initState_ActuateArmsOut;
-    motionData.state = state_initializing;
+    motionData.state      = state_initializing;
 
     printf("\nMotion Init...\n");
 
@@ -187,21 +189,21 @@ void motionRestoreDefaults(void)
     motionData.arm_U.inSwitch                = UInSwitch;
     motionData.arm_U.outSwitch               = UOutSwitch;
 
-    //motionData.arm_L.motorData.motor         = stepperL;
+    motionData.arm_L.motorData.motor         = stepperL;
     motionData.arm_L.motorData.slowFrequency = defaultSlowFrequency;
     motionData.arm_L.motorData.fastFrequency = defaultFastFrequency;
     motionData.arm_L.motorData.rampSteps     = defaultRampSteps;
     motionData.arm_L.inSwitch                = LInSwitch;
     motionData.arm_L.outSwitch               = LOutSwitch;
 
-    //motionData.arm_B.motorData.motor         = stepperB;
+    motionData.arm_B.motorData.motor         = stepperB;
     motionData.arm_B.motorData.slowFrequency = defaultSlowFrequency;
     motionData.arm_B.motorData.fastFrequency = defaultFastFrequency;
     motionData.arm_B.motorData.rampSteps     = defaultRampSteps;
     motionData.arm_B.inSwitch                = BInSwitch;
     motionData.arm_B.outSwitch               = BOutSwitch;
 
-    //motionData.arm_D.motorData.motor         = stepperD;
+    motionData.arm_D.motorData.motor         = stepperD;
     motionData.arm_D.motorData.slowFrequency = defaultSlowFrequency;
     motionData.arm_D.motorData.fastFrequency = defaultFastFrequency;
     motionData.arm_D.motorData.rampSteps     = defaultRampSteps;
@@ -217,16 +219,18 @@ void motionAbort()
 
 void initSystem(OfflineTaskCompleteCallback callbackFunc, int callbackRef)
 {
-    motionData.state = state_initializing;
+    motionData.state              = state_initializing;
     motionData.callback.function  = callbackFunc;
     motionData.callback.reference = callbackRef;
 }
 
 void executeMove(Move move, OfflineTaskCompleteCallback callbackFunc, int callbackRef)
 {
-    motionData.moveData.move = move;
-    motionData.moveData.correctionSteps = 0;
+    motionData.moveData.move                         = move;
+    motionData.moveData.correctionSteps              = 0;
     motionData.moveData.isCorrectionDirectionForward = true;
+    // motionData.moveCount                             = 0;
+
     switch(move)
     {
     case move_RClockwise:        setArmDataEqual(&motionData.moveData.armData, &motionData.arm_R); motionData.moveData.rotation = rotation_clockwise;        break;
@@ -258,7 +262,7 @@ void executeMove(Move move, OfflineTaskCompleteCallback callbackFunc, int callba
 
     if(!motionData.moveData.armData.motorData.initialized)
     {
-        snprintf(errorDesc, ERROR_DESC_SIZE, "Door can't open.  Door not initialized.");
+        snprintf(errorDesc, ERROR_DESC_SIZE, "Can't Execute Move. Arm Not Initialized.");
         callbackFunc(callbackRef, err_doorNotInitialized, errorDesc);
         printf("%s\n", errorDesc);
         return;
@@ -272,14 +276,16 @@ void executeMove(Move move, OfflineTaskCompleteCallback callbackFunc, int callba
     {
         motionData.callback.function  = callbackFunc;
         motionData.callback.reference = callbackRef;
-        motionData.state = state_actuatingArmIn;
+        motionData.state              = state_actuatingArmIn;
 
-        if     (areArmDataEqual(motionData.moveData.armData, motionData.arm_R)) { ActuateArmIn('R'); }
-        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_F)) { ActuateArmIn('F'); }
-        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_U)) { ActuateArmIn('U'); }
-        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_L)) { ActuateArmIn('L'); }
-        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_B)) { ActuateArmIn('B'); }
-        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_D)) { ActuateArmIn('D'); }
+        startTimer(&motionData.timer,          MSEC_TO_TICKS(0));
+
+        if     (areArmDataEqual(motionData.moveData.armData, motionData.arm_R)) { actuateArmIn('R'); }
+        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_F)) { actuateArmIn('F'); }
+        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_U)) { actuateArmIn('U'); }
+        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_L)) { actuateArmIn('L'); }
+        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_B)) { actuateArmIn('B'); }
+        else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_D)) { actuateArmIn('D'); }
     }
     else
     {
@@ -290,7 +296,6 @@ void executeMove(Move move, OfflineTaskCompleteCallback callbackFunc, int callba
 
 bool motionProcess(void* unused)
 {
-    
     switch(motionData.state)
     {
     case state_idle:
@@ -312,8 +317,10 @@ bool motionProcess(void* unused)
         break;
 
     case state_actuatingArmIn:
-        if(IsSwitchTriggered(motionData.moveData.armData.inSwitch))
+        if(IsSwitchTriggered(motionData.moveData.armData.inSwitch) && !IsSwitchTriggered(motionData.moveData.armData.outSwitch))
         {
+            motionData.moveData.correctionSteps = 0;
+            motionData.moveData.armFinishedActuatingInTime = getTimer_ms(&motionData.timer);
             motionData.state = state_armActuatedIn;
         }
         break;
@@ -327,6 +334,7 @@ bool motionProcess(void* unused)
         {
             if(!isSensorBeamBroken(stepperR))
             {
+                motionData.moveData.armFinishSpinningTime = getTimer_ms(&motionData.timer);
                 motionData.state = state_armDoneSpinning;
             }
             else
@@ -341,6 +349,7 @@ bool motionProcess(void* unused)
         {
             stepper_move_relative(motionData.moveData.armData.motorData.motor, motionData.moveData.correctionSteps);
             motionData.moveData.isCorrectionDirectionForward = false;
+            motionData.moveData.correctionSteps += 1;
         }
         else
         {
@@ -353,15 +362,41 @@ bool motionProcess(void* unused)
 
     case state_armDoneSpinning:
         stepper_abort();
-        ActuateArmsOut();
+        actuateAllArmsOut();
         motionData.state = state_actuatingArmOut;
         break;            
 
     case state_actuatingArmOut:
-        if(IsSwitchTriggered(motionData.moveData.armData.outSwitch))
+        if(IsSwitchTriggered(motionData.moveData.armData.outSwitch) && !IsSwitchTriggered(motionData.moveData.armData.inSwitch))
         {
-            disableMotors();
-            motionData.state = state_finishMove;
+            // motionData.moveCount += 1;
+            // if(motionData.moveCount <= 1)
+            // {
+            //     if     (areArmDataEqual(motionData.moveData.armData, motionData.arm_R)) { actuateArmIn('R'); }
+            //     else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_F)) { actuateArmIn('F'); }
+            //     else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_U)) { actuateArmIn('U'); }
+            //     else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_L)) { actuateArmIn('L'); }
+            //     else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_B)) { actuateArmIn('B'); }
+            //     else if(areArmDataEqual(motionData.moveData.armData, motionData.arm_D)) { actuateArmIn('D'); }
+            //     motionData.state = state_actuatingArmIn;
+            // }
+            // else
+            // {
+                motionData.moveData.fullTime = getTimer_ms(&motionData.timer);
+                printf("Arm Timing\n"
+                       "\tFull Time              - %d\n"
+                       "\tArm Actuating In Time  - %d\n"
+                       "\tArm Spinning Time      - %d\n"
+                       "\tArm Actuating Out Time - %d\n", 
+                       motionData.moveData.fullTime, 
+                       motionData.moveData.armFinishedActuatingInTime,
+                       motionData.moveData.armFinishSpinningTime - motionData.moveData.armFinishedActuatingInTime,
+                       motionData.moveData.fullTime - motionData.moveData.armFinishSpinningTime);
+
+                disableMotors();
+
+                motionData.state = state_finishMove;
+            // }
         }
         break;
 
@@ -371,7 +406,7 @@ bool motionProcess(void* unused)
         break;
 
     default:
-        ;
+        motionData.state = state_idle;
     }
 
     return true;
@@ -397,7 +432,7 @@ static bool initProcess()
             return true;
 
         case initState_ActuateArmsOut:
-            ActuateArmsOut();
+            actuateAllArmsOut();
             if(IsSwitchTriggered(motionData.arm_B.outSwitch) /*&& IsSwitchTriggered(motionData.arm_F.outSwitch) && IsSwitchTriggered(motionData.arm_U.outSwitch) && 
                IsSwitchTriggered(motionData.arm_L.outSwitch) && IsSwitchTriggered(motionData.arm_B.outSwitch) && IsSwitchTriggered(motionData.arm_D.outSwitch)*/)
             {
@@ -425,6 +460,11 @@ static bool initProcess()
             printf("Arms Initialized\n");
 
             motionData.arm_R.motorData.initialized = true;
+            // motionData.arm_F.motorData.initialized = true;
+            // motionData.arm_U.motorData.initialized = true;
+            // motionData.arm_L.motorData.initialized = true;
+            // motionData.arm_B.motorData.initialized = true;
+            // motionData.arm_D.motorData.initialized = true;
 
             if(motionData.callback.function)
             {
@@ -442,12 +482,18 @@ static bool initProcess()
 
 static void spinArm(void)
 {
-    if     (motionData.moveData.rotation == rotation_clockwise)
+    if(motionData.moveData.rotation == rotation_clockwise)
+    {
         stepper_move_relative(motionData.moveData.armData.motorData.motor, quarterTurnStepsClockwise);
+    }
     else if(motionData.moveData.rotation == rotation_counterClockwise)
+    {
         stepper_move_relative(motionData.moveData.armData.motorData.motor, quarterTurnStepsCounterClockwise);
+    }
     else if(motionData.moveData.rotation == rotation_180)
+    {
         stepper_move_relative(motionData.moveData.armData.motorData.motor, halfTurnSteps);
+    }
 
     motionData.state = state_armSpinning;
 }

@@ -4,23 +4,16 @@
 //
 //  Simple cooperative task scheduler/processor
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
-
 
 #include <os.h>
 #include <assert.h>
 #include <stdio.h>
 #include <processor.h>
 
-
-
 ///////////////////////////////////////////////////
 // Constants
 
 #define MAX_TASKS 40
-
-
 
 ///////////////////////////////////////////////////
 // Local types and macros
@@ -34,14 +27,12 @@ struct TaskContext
     TaskContext* next;
 };
 
-
 typedef struct
 {
     TaskContext* first;
     TaskContext* last;
     unsigned     count;
 } TaskQueue;
-
 
 typedef struct
 {
@@ -51,8 +42,6 @@ typedef struct
     bool      runTaskProcessor;
 } OsData;
 
-
-
 ///////////////////////////////////////////////////
 // Local function prototypes
 
@@ -60,16 +49,12 @@ static void         osTaskProcessor();
 static TaskContext* dequeueTaskContext(TaskQueue* taskQueue);
 static void         enqueueTaskContext(TaskQueue* taskQueue, TaskContext* taskContext);
 
-
-
 ///////////////////////////////////////////////////
 // Local data
 
 static TaskContext staticTaskContexts[MAX_TASKS];
 
 static OsData osData;
-
-
 
 ///////////////////////////////////////////////////
 // Interface functions
@@ -98,14 +83,10 @@ void osInit()
     }
 }
 
-
-
 void osStart()
 {
     osTaskProcessor();
 }
-
-
 
 bool scheduleTask(Task task, void* reference, bool high)
 {
@@ -130,8 +111,6 @@ bool scheduleTask(Task task, void* reference, bool high)
         return false;
     }
 }
-
-
 
 ///////////////////////////////////////////////////
 // Local functions
@@ -169,8 +148,6 @@ static void osTaskProcessor()
     }
 }
 
-
-
 static TaskContext* dequeueTaskContext(TaskQueue* taskQueue)
 {
     ASSERT(taskQueue);
@@ -198,8 +175,6 @@ static TaskContext* dequeueTaskContext(TaskQueue* taskQueue)
     return taskContext;
 }
 
-
-
 static void enqueueTaskContext(TaskQueue* taskQueue, TaskContext* taskContext)
 {
     ASSERT(taskQueue);
@@ -224,6 +199,5 @@ static void enqueueTaskContext(TaskQueue* taskQueue, TaskContext* taskContext)
     }
     exitCriticalRegion(crdata);
 }
-
 
 // EOF

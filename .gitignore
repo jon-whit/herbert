@@ -63,3 +63,5 @@ Firmware/fpga/implementation/system.xpi
 Firmware/fpga/implementation/system.drc
 *.vhd
 Firmware/fpga/hdl/ddr2_sdram_wrapper.v
+*.prj
+*.xrpt

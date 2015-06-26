@@ -26,24 +26,19 @@ typedef struct
 
 #define RELAY (*((RelayRegs*)XPAR_RELAY_BASEADDR))
 
+
 ///////////////////////////////////////////////////
 // Interface functions
 
-
-void InitializeAirCylinders()
+void initializeAirCylinders()
 {
-	RELAY.relay_U = OFF;
-	RELAY.relay_F = OFF;
-	RELAY.relay_R = OFF;
-	RELAY.relay_D = OFF;
-	RELAY.relay_B = OFF;
-	RELAY.relay_L = OFF;
+	actuateAllArmsOut();
 }
 
-void ActuateArmIn(char armFace)
+void actuateArmIn(char armFace)
 {
-	InitializeAirCylinders();
-	if(armFace == 'U')      { RELAY.relay_U = ON; ;}
+	actuateAllArmsOut(); // Currently forcing all other relays off when a relay is turned on but opposite arm is safe to actuate concurrently
+	if(armFace == 'U')      { RELAY.relay_U = ON; }
 	else if(armFace == 'F') { RELAY.relay_F = ON; }
 	else if(armFace == 'R') { RELAY.relay_R = ON; }
 	else if(armFace == 'D') { RELAY.relay_D = ON; }
@@ -53,9 +48,25 @@ void ActuateArmIn(char armFace)
 
 }
 
-void ActuateArmsOut()
+void actuateArmOut(char armFace)
 {
-	InitializeAirCylinders();
+    if(armFace == 'U')      { RELAY.relay_U = OFF; }
+    else if(armFace == 'F') { RELAY.relay_F = OFF; }
+    else if(armFace == 'R') { RELAY.relay_R = OFF; }
+    else if(armFace == 'D') { RELAY.relay_D = OFF; }
+    else if(armFace == 'B') { RELAY.relay_B = OFF; }
+    else if(armFace == 'L') { RELAY.relay_L = OFF; }
+    else {/*Do Nothing*/}
+}
+
+void actuateAllArmsOut()
+{
+    RELAY.relay_U = OFF;
+    RELAY.relay_F = OFF;
+    RELAY.relay_R = OFF;
+    RELAY.relay_D = OFF;
+    RELAY.relay_B = OFF;
+    RELAY.relay_L = OFF;
 }
 
 // EOF

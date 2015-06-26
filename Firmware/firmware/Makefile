@@ -21,9 +21,6 @@ help :
 	@echo "make app_clean                               - Cleans app files"
 	@echo ""
 
-
-
-
 ##########################
 ##########################
 ##                      ##
@@ -137,7 +134,6 @@ $(BOOTLOADER_OBJ_DIR)/$(1)/%.o : $(1)/%.c
 
 endef
 
-
 # Call 'generate_app_build_rule' for each source directory
 $(foreach source_dir,$(BOOTLOADER_SOURCE_DIRS),$(eval $(call generate_bootloader_build_rule,$(source_dir))))
 
@@ -165,9 +161,6 @@ $(BOOTLOADER_MAP_FILE) : $(BOOTLOADER_ELF_FILE)
 	@echo "Generating Map File '$@'"
 	@$(BOOTLOADER_LD) $(BOOTLOADER_ELF_FILE) -o $@
 	@echo ""
-
-
-
 
 ###################
 ###################
@@ -219,7 +212,6 @@ APP_OTHER_CC_FLAGS :=               \
 APP_SOURCES :=                  \
     app/cache.c                 \
     app/comm.c                  \
-    app/initialization.c        \
     app/main.c                  \
     app/motion.c                \
     app/os.c                    \
@@ -262,11 +254,7 @@ APP_LIBRARY_PATHS :=                        \
 # Internal Scaffolding
 ########################
 
-ifeq ($(OFFICIAL_BUILD),1)
-    APP_VERSION := $(shell cat $(APP_VERSION_INPUT_FILE))
-else
-    APP_VERSION := X.X.ENG_$(shell whoami):$(shell hostname)_$(shell date +'%D_%R')
-endif
+APP_VERSION := $(shell cat $(APP_VERSION_INPUT_FILE))
 
 ifneq ($(BUILD_NOTES),)
     APP_VERSION := $(APP_VERSION) - $(BUILD_NOTES)
@@ -275,7 +263,6 @@ endif
 # Add the version define to the list
 APP_DEFINES :=                          \
     $(APP_DEFINES)                      \
-    -DFW_VER_APP=\""$(APP_VERSION)"\"
 
 # Determine the list of source directories.  The patsubst function
 # removes the '/filename' part of each source file, and the sort
@@ -308,7 +295,6 @@ $(APP_OBJ_DIR)/$(1)/%.o : $(1)/%.c
 
 endef
 
-
 # Call 'generate_app_build_rule' for each source directory
 $(foreach source_dir,$(APP_SOURCE_DIRS),$(eval $(call generate_app_build_rule,$(source_dir))))
 
@@ -338,9 +324,6 @@ $(APP_MAP_FILE) : $(APP_ELF_FILE)
 	@echo "Generating Map File '$@'"
 	@$(APP_LD) $(APP_ELF_FILE) -o $@
 	@echo ""
-
-
-
 
 #################
 # Other Targets

@@ -7,9 +7,10 @@
 #ifndef relay_h
 #define relay_h
 
-void InitializeAirCylinders();
+void initializeAirCylinders();
 
-void ActuateArmIn(char armFace);
-void ActuateArmsOut();
+void actuateArmIn(char armFace);
+void actuateArmOut(char armFace);
+void actuateAllArmsOut();
 
 #endif

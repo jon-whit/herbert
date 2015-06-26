@@ -4,8 +4,6 @@
 //
 //  Serial driver for the command protocol
 //
-//  Copyright 2008 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <serial.h>
 #include <xparameters.h>
@@ -19,8 +17,6 @@
 #include <stdio.h>
 #include <processor.h>
 #include <signal.h>
-
-
 
 ///////////////////////////////////////////////////
 // Constants

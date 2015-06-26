@@ -8,14 +8,10 @@
 //  Similar in functionality to a semaphore in a threaded system,
 //  but the calls are not blocking and must be polled.
 //
-//  Copyright 2009 Idaho Technology
-//  Created by Brett Gilbert
 
 #include <signal.h>
 #include <processor.h>
 #include <assert.h>
-
-
 
 ///////////////////////////////////////////////////
 // Interface functions

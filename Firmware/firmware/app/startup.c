@@ -4,50 +4,23 @@
 //
 //  System Startup
 //
-//  Copyright 2010 Idaho Technology
-//  Created by Brett Gilbert
-
 
 #include <startup.h>
+
 #include <stdio.h>
-#include <types.h>
 #include <interrupt.h>
-#include <lcd.h>
-#include <timer.h>
-#include <processor.h>
 #include <assert.h>
 #include <serial.h>
-#include <comm.h>
 #include <version.h>
+#include <lcd.h>
+#include <timer.h>
 #include <cache.h>
 #include <AT45DB161D.h>
-#include <motion.h>
 #include <os.h>
 #include <system.h>
-#include <initialization.h>
 #include <motion.h>
-
-
-
-///////////////////////////////////////////////////
-// Constants
-
-
-
-///////////////////////////////////////////////////
-// Local types and macros
-
-
-
-///////////////////////////////////////////////////
-// Local function prototypes
-
-
-
-///////////////////////////////////////////////////
-// Local data
-
-
+#include <relay.h>
+#include <comm.h>
 
 ///////////////////////////////////////////////////
 // Interface functions
@@ -76,7 +49,6 @@ void systemStartup()
     lcdInit();
     serialInit();
     commInit();
-    initializationInit();
     motionInit();
 
     // Enable interrupts
@@ -85,15 +57,13 @@ void systemStartup()
     // Post-interrupt initialization
     serialFlashInit();
     motionInit();
-    InitializeAirCylinders();
+    initializeAirCylinders();
 
     // Schedule Tasks
     scheduleTask(commProcess, NULL, false);
-    printf("Motion Task Scheduled\n");
+    printf("Comm Task Scheduled\n");
     scheduleTask(motionProcess, NULL, false);
-
-    // Start Systems
-    systemStart();
+    printf("Motion Task Scheduled\n");
 
     printf("System Ready.\n");
 
@@ -102,27 +72,5 @@ void systemStartup()
     // Start task processor - never returns
     osStart();
 }
-
-
-
-void systemStart()
-{
-
-}
-
-
-
-void systemStop()
-{
-
-}
-
-
-
-
-///////////////////////////////////////////////////
-// Local functions
-
-
 
 // EOF
