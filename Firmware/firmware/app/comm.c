@@ -1982,12 +1982,12 @@ static void chTimingTest(CmdPkt* cmdPkt)
 
 static void chTestGetSwitch(CmdPkt* cmdPkt)
 {
-    printf("L In - %d L Out %d\n
-    	    F In - %d F Out %d\n
-    	    R In - %d R Out %d\n
-    	    B In - %d B Out %d\n
-    	    U In - %d U Out %d\n
-    	    D In - %d D Out %d\n", 
+    printf("L In - %d L Out %d\n",
+    	   "F In - %d F Out %d\n",
+    	   "R In - %d R Out %d\n",
+    	   "B In - %d B Out %d\n",
+    	   "U In - %d U Out %d\n",
+    	   "D In - %d D Out %d\n", 
     	   IsSwitchTriggered(LInSwitch), 
     	   IsSwitchTriggered(LOutSwitch), 
     	   IsSwitchTriggered(FInSwitch), 
