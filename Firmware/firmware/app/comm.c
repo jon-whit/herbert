@@ -79,6 +79,9 @@ enum CommDelimiters
 #define U_MOTOR_KEY                   "U"
 #define F_MOTOR_KEY                   "F"
 #define R_MOTOR_KEY                   "R"
+#define D_MOTOR_KEY                   "D"
+#define B_MOTOR_KEY                   "B"
+#define L_MOTOR_KEY                   "L"
 
 #define FAST_STEPPER_KEY              "FAST"
 #define SLOW_STEPPER_KEY              "SLOW"
@@ -1219,6 +1222,18 @@ static bool validateMotorParameter(CmdPkt* cmdPkt, int paramIndex, StepperMotor 
     else if(strcmp(R_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
     {
         *motor = stepperR;
+    }
+    else if(strcmp(D_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
+    {
+        *motor = stepperD;
+    }
+    else if(strcmp(B_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
+    {
+        *motor = stepperB;
+    }
+    else if(strcmp(L_MOTOR_KEY, cmdPkt->params[paramIndex]) == 0)
+    {
+        *motor = stepperL;
     }
     else
     {

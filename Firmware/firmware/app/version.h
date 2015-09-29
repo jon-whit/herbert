@@ -11,8 +11,6 @@
 #define EXPECTED_FPGA_MAJOR_VER  2
 #define EXPECTED_FPGA_MINOR_VER  2
 
-
-
 #define FW_VER_APP "0.03"
 
 
