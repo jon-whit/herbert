@@ -251,25 +251,7 @@ static void chReset(CmdPkt* cmdPkt);
 
 static void chGetMotorPositions(CmdPkt* cmdPkt);
 
-// static void chGetFilter(CmdPkt* cmdPkt);
-// static void chSetFilter(CmdPkt* cmdPkt);
-
-// static void chGetDoorPosition(CmdPkt* cmdPkt);
-// static void chOpenDoor(CmdPkt* cmdPkt);
-// static void chCloseDoor(CmdPkt* cmdPkt);
-// static void chDisableDoor(CmdPkt* cmdPkt);
-
-// static void chGetLidPosition(CmdPkt* cmdPkt);
-// static void chRaiseLid(CmdPkt* cmdPkt);
-// static void chLowerLid(CmdPkt* cmdPkt);
-
-// static void chOpenCavity(CmdPkt* cmdPkt);
-// static void chCloseCavity(CmdPkt* cmdPkt);
-
 static void chInitSystem(CmdPkt* cmdPkt);
-// static void chInitFilter(CmdPkt* cmdPkt);
-// static void chInitLid(CmdPkt* cmdPkt);
-// static void chInitDoor(CmdPkt* cmdPkt);
 
 static void chFileSend(CmdPkt* cmdPkt);
 static void chUpgradeFirmware(CmdPkt* cmdPkt);
@@ -280,9 +262,6 @@ static void chFPGAVersion(CmdPkt* cmdPkt);
 
 
 static void chMoveRelative(CmdPkt* cmdPkt);
-// static void chSetMotorCalibration(CmdPkt* cmdPkt);
-// static void chGetMotorCalibration(CmdPkt* cmdPkt);
-// static void chGetMotorSensors(CmdPkt* cmdPkt);
 
 static void chReboot(CmdPkt* cmdPkt);
 static void chRestoreDefaults(CmdPkt* cmdPkt);
@@ -298,14 +277,13 @@ static void chDisableMotors(CmdPkt* cmdPkt);
 
 static void chTimingTest(CmdPkt* cmdPkt);
 
-static void chTestGetSwitch(CmdPkt* cmdPkt);
+static void chGetRawSwitches(CmdPkt* cmdPkt);
+static void chGetRawSensors(CmdPkt* cmdPkt);
+
+static void chGetSwitch(CmdPkt* cmdPkt);
+static void chGetSensor(CmdPkt* cmdPkt);
 
 // -------------------------- Test & Dianostic Commands --------------------------
-
-// static void chGetDoorControlValues(CmdPkt* cmdPkt);
-// static void chGetLidControlValues(CmdPkt* cmdPkt);
-// static void chGetStepperParameter(CmdPkt* cmdPkt);
-// static void chSetStepperParameter(CmdPkt* cmdPkt);
 
 
 
@@ -334,25 +312,7 @@ static const CommCommand commCommands[] =
 
     { "GetMotorPositions",                  0,               chGetMotorPositions,                  },
 
-    // { "GetFilterPosition",                  0,               chGetFilter,                          },
-    // { "SetFilter",                          1,               chSetFilter,                          },
-
-    // { "GetDoorPosition",                    0,               chGetDoorPosition,                    },
-    // { "OpenDoor",                           0,               chOpenDoor,                           },
-    // { "CloseDoor",                          0,               chCloseDoor,                          },
-    // { "DisableDoor",                        0,               chDisableDoor,                        },
-
-    // { "GetLidPosition",                     0,               chGetLidPosition,                     },
-    // { "RaiseLid",                           0,               chRaiseLid,                           },
-    // { "LowerLid",                           0,               chLowerLid,                           },
-
-    // { "OpenCavity",                         0,               chOpenCavity,                         },
-    // { "CloseCavity",                        0,               chCloseCavity,                        },
-
     { "InitSystem",                         0,               chInitSystem,                         },
-    // { "InitFilter",                         0,               chInitFilter,                         },
-    // { "InitLid",                            0,               chInitLid,                            },
-    // { "InitDoor",                           0,               chInitDoor,                           },
 
     { "FileSend",                           2,               chFileSend,                           },
     { "Upgrade",                            2,               chUpgradeFirmware,                    },
@@ -360,9 +320,6 @@ static const CommCommand commCommands[] =
 
     { "MoveRelative",                       2,               chMoveRelative,                       },
     { "MR",                                 2,               chMoveRelative,                       },
-    // { "SetMotorCalibration",                VAR_PARAM_COUNT, chSetMotorCalibration,                },
-    // { "GetMotorCalibration",                1,               chGetMotorCalibration,                },
-    // { "GetMotorSensors",                    0,               chGetMotorSensors,                    },
 
     { "Reboot",                             0,               chReboot,                             },
     { "RestoreDefaults",                    0,               chRestoreDefaults,                    },
@@ -372,15 +329,13 @@ static const CommCommand commCommands[] =
 
     { "DisableCommWatchdog",                0,               chDisableCommWatchdog,                },
 
-    { "TestGetSwitch",                      0,               chTestGetSwitch,                      },
+    { "GetRawSwitches",                     0,               chGetRawSwitches,                     },
+    { "GetRawSensors",                      0,               chGetRawSensors,                      },
+
+    { "GetSwitch",                          1,               chGetSwitch,                          },
+    { "GetSensor",                          1,               chGetSensor,                          },
 
     // -------------------------- Test & Dianostic Commands --------------------------
-    // { "GetDoorControlValues",               0,               chGetDoorControlValues,               },
-    // { "GetLidControlValues",                0,               chGetLidControlValues,                },
-
-    // { "GetStepperParam",                    2,               chGetStepperParameter,                },
-    // { "SetStepperParam",                    3,               chSetStepperParameter,                },
-
 
 
     // End of table marker
@@ -1266,44 +1221,6 @@ static bool validateStepperParameter(CmdPkt* cmdPkt, int paramIndex, StepperPara
     return true;
 }
 
-
-
-
-
-
-
-// static void addLidPositionParameter(RspPkt* rspPkt)
-// {
-//     ASSERT(rspPkt);
-
-//     switch(getLidPosition())
-//     {
-//         case lid_raised:
-//             addStringParamToRspPkt(rspPkt, "Raised");
-//             break;
-
-//         case lid_lowered:
-//             addStringParamToRspPkt(rspPkt, "Lowered");
-//             break;
-
-//         case lid_raising:
-//             addStringParamToRspPkt(rspPkt, "Raising");
-//             break;
-
-//         case lid_lowering:
-//             addStringParamToRspPkt(rspPkt, "Lowering");
-//             break;
-
-//         case lid_unknownPosition:
-//             addStringParamToRspPkt(rspPkt, "Unknown");
-//             break;
-
-//         default:
-//             ASSERT(false);
-//     }
-// }
-
-
 static void systemAbort()
 {
     commData.monitoringConnection = false;
@@ -1407,171 +1324,6 @@ static void chGetMotorPositions(CmdPkt* cmdPkt)
 }
 
 
-
-// static void chGetFilter(CmdPkt* cmdPkt)
-// {
-//     RspPkt rspPkt;
-
-//     initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-
-//     addFilterPositionParameter(&rspPkt);
-
-//     sendRspPkt(&rspPkt);
-// }
-
-
-
-// static void chSetFilter(CmdPkt* cmdPkt)
-// {
-//     Filters filter;
-
-//     if(strcmp("CL", cmdPkt->params[0]) == 0)
-//     {
-//         filter = filter_clear;
-//     }
-//     else if(strcmp("B", cmdPkt->params[0]) == 0)
-//     {
-//         filter = filter_blue;
-//     }
-//     else if(strcmp("G", cmdPkt->params[0]) == 0)
-//     {
-//         filter = filter_green;
-//     }
-//     else if(strcmp("O", cmdPkt->params[0]) == 0)
-//     {
-//         filter = filter_orange;
-//     }
-//     else if(strcmp("R", cmdPkt->params[0]) == 0)
-//     {
-//         filter = filter_red;
-//     }
-//     else if(strcmp("C", cmdPkt->params[0]) == 0)
-//     {
-//         filter = filter_crimson;
-//     }
-//     else
-//     {
-//         sendRspStatusInvalidParameter(cmdPkt);
-//         return;
-//     }
-
-
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_SetFilter,
-//                          SET_TEMPERATURE_OFFLINE_CMD_MASK   |
-//                          SET_ILLUMINATION_OFFLINE_CMD_MASK)) return;
-
-//     registerAndSendRspPending(OfflineCommand_SetFilter, cmdPkt);
-//     setFilter(filter, signalOfflineTaskCompleteCallback, OfflineCommand_SetFilter);
-// }
-
-
-
-// static void chGetDoorPosition(CmdPkt* cmdPkt)
-// {
-//     RspPkt rspPkt;
-
-//     initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-
-//     addDoorPositionParameter(&rspPkt);
-
-//     sendRspPkt(&rspPkt);
-// }
-
-
-
-// static void chOpenDoor(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_OpenDoor,
-//                          SET_TEMPERATURE_OFFLINE_CMD_MASK   |
-//                          SET_ILLUMINATION_OFFLINE_CMD_MASK)) return;
-
-//     registerAndSendRspPending(OfflineCommand_OpenDoor, cmdPkt);
-//     openDoor(signalOfflineTaskCompleteCallback, OfflineCommand_OpenDoor);
-// }
-
-
-
-// static void chCloseDoor(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_CloseDoor,
-//                          SET_TEMPERATURE_OFFLINE_CMD_MASK   |
-//                          SET_ILLUMINATION_OFFLINE_CMD_MASK)) return;
-
-//     registerAndSendRspPending(OfflineCommand_CloseDoor, cmdPkt);
-//     closeDoor(signalOfflineTaskCompleteCallback, OfflineCommand_CloseDoor);
-// }
-
-
-
-// static void chDisableDoor(CmdPkt* cmdPkt)
-// {
-//     disableDoor();
-//     sendRspOk(cmdPkt);
-// }
-
-
-
-// static void chGetLidPosition(CmdPkt* cmdPkt)
-// {
-//     RspPkt rspPkt;
-
-//     initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-
-//     addLidPositionParameter(&rspPkt);
-
-//     sendRspPkt(&rspPkt);
-// }
-
-
-
-// static void chRaiseLid(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_RaiseLid,
-//                          SET_TEMPERATURE_OFFLINE_CMD_MASK   |
-//                          SET_ILLUMINATION_OFFLINE_CMD_MASK)) return;
-
-//     registerAndSendRspPending(OfflineCommand_RaiseLid, cmdPkt);
-//     raiseLid(signalOfflineTaskCompleteCallback, OfflineCommand_RaiseLid);
-// }
-
-
-
-// static void chLowerLid(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_LowerLid,
-//                          SET_TEMPERATURE_OFFLINE_CMD_MASK   |
-//                          SET_ILLUMINATION_OFFLINE_CMD_MASK)) return;
-
-//     registerAndSendRspPending(OfflineCommand_LowerLid, cmdPkt);
-//     lowerLid(signalOfflineTaskCompleteCallback, OfflineCommand_LowerLid);
-// }
-
-
-
-// static void chOpenCavity(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_OpenCavity,
-//                          SET_TEMPERATURE_OFFLINE_CMD_MASK   |
-//                          SET_ILLUMINATION_OFFLINE_CMD_MASK)) return;
-
-//     registerAndSendRspPending(OfflineCommand_OpenCavity, cmdPkt);
-//     openCavity(signalOfflineTaskCompleteCallback, OfflineCommand_OpenCavity);
-// }
-
-
-
-// static void chCloseCavity(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_CloseCavity,
-//                          SET_TEMPERATURE_OFFLINE_CMD_MASK   |
-//                          SET_ILLUMINATION_OFFLINE_CMD_MASK)) return;
-
-//     registerAndSendRspPending(OfflineCommand_CloseCavity, cmdPkt);
-//     closeCavity(signalOfflineTaskCompleteCallback, OfflineCommand_CloseCavity);
-// }
-
-
-
 static void chInitSystem(CmdPkt* cmdPkt)
 {
     if(!checkPendingCmds(cmdPkt, OfflineCommand_InitializeSystem, 0)) return;
@@ -1579,38 +1331,6 @@ static void chInitSystem(CmdPkt* cmdPkt)
     registerAndSendRspPending(OfflineCommand_InitializeSystem, cmdPkt);
     startSystemInitialization(signalOfflineTaskCompleteCallback, NULL, OfflineCommand_InitializeSystem, true);
 }
-
-
-
-// static void chInitFilter(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_InitializeFilter, 0)) return;
-
-//     registerAndSendRspPending(OfflineCommand_InitializeFilter, cmdPkt);
-//     startFilterInitialization(signalOfflineTaskCompleteCallback, OfflineCommand_InitializeFilter);
-// }
-
-
-
-// static void chInitLid(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_InitializeLid, 0)) return;
-
-//     registerAndSendRspPending(OfflineCommand_InitializeLid, cmdPkt);
-//     startLidInitialization(signalOfflineTaskCompleteCallback, OfflineCommand_InitializeLid);
-// }
-
-
-
-// static void chInitDoor(CmdPkt* cmdPkt)
-// {
-//     if(!checkPendingCmds(cmdPkt, OfflineCommand_InitializeDoor, 0)) return;
-
-//     registerAndSendRspPending(OfflineCommand_InitializeDoor, cmdPkt);
-//     startDoorInitialization(signalOfflineTaskCompleteCallback, OfflineCommand_InitializeDoor);
-// }
-
-
 
 static void chFileSend(CmdPkt* cmdPkt)
 {
@@ -1661,7 +1381,6 @@ static void chFileSend(CmdPkt* cmdPkt)
 
     sendRspOk(cmdPkt);
 }
-
 
 
 static void chUpgradeFirmware(CmdPkt* cmdPkt)
@@ -1786,115 +1505,6 @@ static void chMoveRelative(CmdPkt* cmdPkt)
     sendRspOk(cmdPkt);
 }
 
-
-
-// static void chSetMotorCalibration(CmdPkt* cmdPkt)
-// {
-//     if(cmdPkt->paramCount == 1)
-//     {
-//         if(strcmp("DOOR_CLOSED", cmdPkt->params[0]) == 0)
-//         {
-//             setCurrentDoorClosedPosition();
-//         }
-//         else if(strcmp("LID_LOWERED", cmdPkt->params[0]) == 0)
-//         {
-//             setCurrentLidLoweredPosition();
-//         }
-//         else
-//         {
-//             sendRspStatusInvalidParameter(cmdPkt);
-//             return;
-//         }
-
-//         sendRspOk(cmdPkt);
-//     }
-//     else if(cmdPkt->paramCount == 2)
-//     {
-//         int position;
-
-//         if(!validateIntValue(cmdPkt, cmdPkt->params[1], &position)) return;
-
-//         if(strcmp("DOOR_CLOSED", cmdPkt->params[0]) == 0)
-//         {
-//             setDoorClosedPosition(position);
-//         }
-//         else if(strcmp("LID_LOWERED", cmdPkt->params[0]) == 0)
-//         {
-//             setLidLoweredPosition(position);
-//         }
-//         else
-//         {
-//             sendRspStatusInvalidParameter(cmdPkt);
-//             return;
-//         }
-
-//         sendRspOk(cmdPkt);
-//     }
-//     else
-//     {
-//         sendRspStatusInvalidParameterCount(cmdPkt, 1, 2);
-//     }
-
-// }
-
-
-
-// static void chGetMotorCalibration(CmdPkt* cmdPkt)
-// {
-//     int position;
-//     bool error;
-
-//     if(strcmp("DOOR_CLOSED", cmdPkt->params[0]) == 0)
-//     {
-//         error = !getDoorClosedPosition(&position);
-//     }
-//     else if(strcmp("LID_LOWERED", cmdPkt->params[0]) == 0)
-//     {
-//         error = !getLidLoweredPosition(&position);
-//     }
-//     else
-//     {
-//         sendRspStatusInvalidParameter(cmdPkt);
-//         return;
-//     }
-
-//     RspPkt rspPkt;
-
-//     if(!error)
-//     {
-//         initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-//     }
-//     else
-//     {
-//         initErrorRspPkt(&rspPkt, cmdPkt, err_motorNotCalibrated);
-//         addStringParamToRspPkt(&rspPkt, "- using default:");
-//     }
-
-//     addParamToRspPkt(&rspPkt, "%d", position);
-//     sendRspPkt(&rspPkt);
-// }
-
-
-
-// static void chGetMotorSensors(CmdPkt* cmdPkt)
-// {
-//     RspPkt rspPkt;
-//     initRspPkt(&rspPkt, cmdPkt, RSP_OK);
-
-//     addParamToRspPkt(&rspPkt, "Door-Home %d", stepper_is_at_home_position(stepperF));
-//     addParamToRspPkt(&rspPkt, "Door-Alt %d", stepper_is_at_alt_position(stepperF));
-
-//     addParamToRspPkt(&rspPkt, "Lid-Home %d", stepper_is_at_home_position(stepperU));
-//     addParamToRspPkt(&rspPkt, "Lid-Alt %d", stepper_is_at_alt_position(stepperU));
-
-//     addParamToRspPkt(&rspPkt, "Filter-Home %d", stepper_is_at_home_position(stepperR));
-//     addParamToRspPkt(&rspPkt, "Filter-Alt %d", stepper_is_at_alt_position(stepperR));
-
-//     sendRspPkt(&rspPkt);
-// }
-
-
-
 static void chReboot(CmdPkt* cmdPkt)
 {
     sendRspOk(cmdPkt);
@@ -1975,8 +1585,8 @@ static void chActuateArm(CmdPkt* cmdPkt)
     else if (strcmp("L", cmdPkt->params[0]) == 0) {ActuateArmIn('L');} 
     else
     {
-        printf("Uh Oh\n");
-        // Do Nothing
+        sendRspStatusInvalidParameter(cmdPkt);
+        return;
     }
 
     sendRspOk(cmdPkt);
@@ -1991,31 +1601,92 @@ static void chDisableMotors(CmdPkt* cmdPkt)
 
 static void chTimingTest(CmdPkt* cmdPkt)
 {
-    RotateArm(stepperR, rotation_clockwise, turn_half, 22);
+    RotateArm(stepperR, rotation_clockwise, turn_half, 1);
     sendRspOk(cmdPkt);
 }
 
-static void chTestGetSwitch(CmdPkt* cmdPkt)
+static void chGetRawSwitches(CmdPkt* cmdPkt)
 {
-    printf("L In - %d L Out %d\n",
-    	   "F In - %d F Out %d\n",
-    	   "R In - %d R Out %d\n",
-    	   "B In - %d B Out %d\n",
-    	   "U In - %d U Out %d\n",
+    printf("L In - %d L Out %d\n"
+    	   "F In - %d F Out %d\n"
+    	   "R In - %d R Out %d\n"
+    	   "B In - %d B Out %d\n"
+    	   "U In - %d U Out %d\n"
     	   "D In - %d D Out %d\n", 
-    	   IsSwitchTriggered(LInSwitch), 
-    	   IsSwitchTriggered(LOutSwitch), 
-    	   IsSwitchTriggered(FInSwitch), 
-    	   IsSwitchTriggered(FOutSwitch), 
-    	   IsSwitchTriggered(RInSwitch), 
-    	   IsSwitchTriggered(ROutSwitch), 
-    	   IsSwitchTriggered(BInSwitch), 
-    	   IsSwitchTriggered(BOutSwitch), 
-    	   IsSwitchTriggered(UInSwitch), 
-    	   IsSwitchTriggered(UOutSwitch), 
-    	   IsSwitchTriggered(DInSwitch), 
-    	   IsSwitchTriggered(DOutSwitch));
+    	   IsSwitchTriggered(LInSwitch), IsSwitchTriggered(LOutSwitch), 
+    	   IsSwitchTriggered(FInSwitch), IsSwitchTriggered(FOutSwitch), 
+    	   IsSwitchTriggered(RInSwitch), IsSwitchTriggered(ROutSwitch), 
+    	   IsSwitchTriggered(BInSwitch), IsSwitchTriggered(BOutSwitch), 
+    	   IsSwitchTriggered(UInSwitch), IsSwitchTriggered(UOutSwitch), 
+    	   IsSwitchTriggered(DInSwitch), IsSwitchTriggered(DOutSwitch));
     sendRspOk(cmdPkt);
+}
+
+static void chGetRawSensors(CmdPkt* cmdPkt)
+{
+    stepper_set_address_hw_UFR(0x00); printf("UFR ADDR - 0 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
+    stepper_set_address_hw_UFR(0x01); printf("UFR ADDR - 1 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
+    stepper_set_address_hw_UFR(0x02); printf("UFR ADDR - 2 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
+    stepper_set_address_hw_UFR(0x03); printf("UFR ADDR - 3 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_UFR(), stepper_get_alt_sensor_hw_UFR());
+
+    stepper_set_address_hw_DBL(0x00); printf("DBL ADDR - 0 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_DBL(), stepper_get_alt_sensor_hw_DBL());
+    stepper_set_address_hw_DBL(0x01); printf("DBL ADDR - 1 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_DBL(), stepper_get_alt_sensor_hw_DBL());
+    stepper_set_address_hw_DBL(0x02); printf("DBL ADDR - 2 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_DBL(), stepper_get_alt_sensor_hw_DBL());
+    stepper_set_address_hw_DBL(0x03); printf("DBL ADDR - 3 ALT = %d, HOME = %d\n", stepper_get_alt_sensor_hw_DBL(), stepper_get_alt_sensor_hw_DBL());
+
+    sendRspOk(cmdPkt);
+}
+
+static void chGetSwitch(CmdPkt* cmdPkt)
+{
+    RspPkt rspPkt;
+
+    bool isTriggered = false;
+
+    if      (strcmp("UIn",  cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(UInSwitch);} 
+    else if (strcmp("UOut", cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(UInSwitch);} 
+    else if (strcmp("FIn",  cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(FInSwitch);} 
+    else if (strcmp("FOut", cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(FInSwitch);} 
+    else if (strcmp("RIn",  cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(RInSwitch);} 
+    else if (strcmp("ROut", cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(RInSwitch);} 
+    else if (strcmp("DIn",  cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(DInSwitch);} 
+    else if (strcmp("DOut", cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(DInSwitch);} 
+    else if (strcmp("BIn",  cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(BInSwitch);} 
+    else if (strcmp("BOut", cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(BInSwitch);} 
+    else if (strcmp("LIn",  cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(LInSwitch);} 
+    else if (strcmp("LOut", cmdPkt->params[0]) == 0) {isTriggered = IsSwitchTriggered(LInSwitch);} 
+    else
+    {
+        sendRspStatusInvalidParameter(cmdPkt);
+        return;
+    }
+
+    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
+    addParamToRspPkt(&rspPkt, "%d", isTriggered);
+    sendRspPkt(&rspPkt);
+}
+
+static void chGetSensor(CmdPkt* cmdPkt)
+{
+    RspPkt rspPkt;
+
+    bool isBeamBroken = false;
+
+    if      (strcmp("U", cmdPkt->params[0]) == 0) {isBeamBroken = isSensorBeamBroken(stepperU);} 
+    else if (strcmp("F", cmdPkt->params[0]) == 0) {isBeamBroken = isSensorBeamBroken(stepperF);} 
+    else if (strcmp("R", cmdPkt->params[0]) == 0) {isBeamBroken = isSensorBeamBroken(stepperR);} 
+    else if (strcmp("D", cmdPkt->params[0]) == 0) {isBeamBroken = isSensorBeamBroken(stepperD);} 
+    else if (strcmp("B", cmdPkt->params[0]) == 0) {isBeamBroken = isSensorBeamBroken(stepperB);} 
+    else if (strcmp("L", cmdPkt->params[0]) == 0) {isBeamBroken = isSensorBeamBroken(stepperL);} 
+    else
+    {
+        sendRspStatusInvalidParameter(cmdPkt);
+        return;
+    }
+
+    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
+    addParamToRspPkt(&rspPkt, "%d", isBeamBroken);
+    sendRspPkt(&rspPkt);
 }
 
 // EOF

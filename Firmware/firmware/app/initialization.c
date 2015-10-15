@@ -74,12 +74,12 @@ typedef struct
 // Local function prototypes
 
 static bool startInitTask(void* unused);
-static void sendTaskInfo(int reference, ErrorCodes error, const char* errorDesc);
-static void finishInitTask(ErrorCodes error, const char* errorDesc);
+// static void sendTaskInfo(int reference, ErrorCodes error, const char* errorDesc);
+// static void finishInitTask(ErrorCodes error, const char* errorDesc);
 
-static void motionInitStart();
-static void motionInitProcess();
-static void motionInitCallback(int reference, ErrorCodes error, const char* errorDesc);
+// static void motionInitStart();
+// static void motionInitProcess();
+// static void motionInitCallback(int reference, ErrorCodes error, const char* errorDesc);
 
 
 
@@ -157,99 +157,99 @@ static bool startInitTask(void* unused)
 }
 
 
-static void sendTaskInfo(int reference, ErrorCodes error, const char* errorDesc)
-{
-    if(initData.callback.infoCallbackFunc)
-    {
-        initData.callback.infoCallbackFunc(reference, error, errorDesc);
-    }
-}
+// static void sendTaskInfo(int reference, ErrorCodes error, const char* errorDesc)
+// {
+//     if(initData.callback.infoCallbackFunc)
+//     {
+//         initData.callback.infoCallbackFunc(reference, error, errorDesc);
+//     }
+// }
 
 
-static void finishInitTask(ErrorCodes error, const char* errorDesc)
-{
-    if(initData.callback.completedCallbackFunc)
-    {
-        initData.callback.completedCallbackFunc(initData.callback.reference, error, errorDesc);
-        initData.callback.completedCallbackFunc = NULL;
-    }
-}
+// static void finishInitTask(ErrorCodes error, const char* errorDesc)
+// {
+//     if(initData.callback.completedCallbackFunc)
+//     {
+//         initData.callback.completedCallbackFunc(initData.callback.reference, error, errorDesc);
+//         initData.callback.completedCallbackFunc = NULL;
+//     }
+// }
 
 
 
 ///////////////////////////////////////////////////
 // Motion Init Functions - Sequential Init Steps
 
-static void motionInitStart()
-{
-    motionInitProcess();
-}
+// static void motionInitStart()
+// {
+//     motionInitProcess();
+// }
 
-static void motionInitProcess()
-{
-    initData.motion.state = MotionState_Complete;
-    switch(initData.motion.state)
-    {
-        case MotionState_Idle:
-            initData.motion.state = MotionState_Complete;
-            break;
+// static void motionInitProcess()
+// {
+//     initData.motion.state = MotionState_Complete;
+//     switch(initData.motion.state)
+//     {
+//         case MotionState_Idle:
+//             initData.motion.state = MotionState_Complete;
+//             break;
 
-        case MotionState_FilterInit:
-            printf("Filter init...\n");
+//         case MotionState_FilterInit:
+//             printf("Filter init...\n");
         
-            break;
+//             break;
 
-        case MotionState_LidInit:
-            printf("Lid init...\n");
+//         case MotionState_LidInit:
+//             printf("Lid init...\n");
 
-            break;
+//             break;
 
-        case MotionState_DoorInit:
-            printf("Door init...\n");
+//         case MotionState_DoorInit:
+//             printf("Door init...\n");
 
-            break;
+//             break;
 
-        case MotionState_Complete:
-            initData.motion.state = MotionState_Idle;
-            finishInitTask(initData.motion.error, NULL);
-            break;
+//         case MotionState_Complete:
+//             initData.motion.state = MotionState_Idle;
+//             finishInitTask(initData.motion.error, NULL);
+//             break;
             
-        default:
-            ASSERT(false);
-    }
-}
+//         default:
+//             ASSERT(false);
+//     }
+// }
 
-static void motionInitCallback(int reference, ErrorCodes error, const char* errorDesc)
-{
-     switch(initData.motion.state)
-    {
-        case MotionState_Idle:
-            break;
+// static void motionInitCallback(int reference, ErrorCodes error, const char* errorDesc)
+// {
+//      switch(initData.motion.state)
+//     {
+//         case MotionState_Idle:
+//             break;
 
-        case MotionState_FilterInit:
-
-
-            break;
+//         case MotionState_FilterInit:
 
 
-        case MotionState_LidInit:
+//             break;
 
 
-            break;
+//         case MotionState_LidInit:
 
-        case MotionState_DoorInit:
 
-            break;
+//             break;
 
-        case MotionState_Complete:
-            break;
+//         case MotionState_DoorInit:
+
+//             break;
+
+//         case MotionState_Complete:
+//             break;
             
-        default:
-            ASSERT(false);
-    }
+//         default:
+//             ASSERT(false);
+//     }
 
-    motionInitProcess();
-}
+//     motionInitProcess();
+// }
 
 
 // EOF

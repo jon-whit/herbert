@@ -15,10 +15,10 @@
 
 typedef struct
 {
-    volatile uint32 relay_U; // U Face Air Cylinder (1 bit)
     volatile uint32 relay_F; // F Face Air Cylinder (1 bit)
     volatile uint32 relay_R; // R Face Air Cylinder (1 bit)
     volatile uint32 relay_D; // D Face Air Cylinder (1 bit)
+    volatile uint32 relay_U; // U Face Air Cylinder (1 bit)
     volatile uint32 relay_B; // B Face Air Cylinder (1 bit)
     volatile uint32 relay_L; // L Face Air Cylinder (1 bit)
 } RelayRegs;

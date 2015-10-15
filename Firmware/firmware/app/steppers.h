@@ -54,6 +54,7 @@ void stepper_set_home_sensor_break_hook( StepperMotor stepper, bool ( *hook_func
 void stepper_set_alt_sensor_make_hook( StepperMotor stepper, bool ( *hook_func )( int ) );
 void stepper_set_alt_sensor_break_hook( StepperMotor stepper, bool ( *hook_func )( int ) );
 int  get_stepper_position( StepperMotor stepper );
+bool stepper_set_parameter( StepperMotor stepper, StepperParameter param, int value );
 
 bool isSensorBeamBroken(StepperMotor stepper);
 

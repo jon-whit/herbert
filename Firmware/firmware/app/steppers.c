@@ -80,6 +80,10 @@ enum stepper_hardware_constants
     fSensorAddressMask       = 0x03,
     uSensorAddressMask       = 0x02,
 
+    dSensorAddressMask       = 0x03,
+    bSensorAddressMask       = 0x03,
+    lSensorAddressMask       = 0x02,
+
 };
 
 static void stepper_init_instance( stepper_instance *stepper, StepperMotor id );
@@ -472,9 +476,9 @@ bool isSensorBeamBroken(StepperMotor stepper)
     case stepperU: stepper_set_address_hw_UFR(uSensorAddressMask); return stepper_get_alt_sensor_hw_UFR(); break;
     case stepperF: stepper_set_address_hw_UFR(fSensorAddressMask); return stepper_get_alt_sensor_hw_UFR(); break;
     case stepperR: stepper_set_address_hw_UFR(rSensorAddressMask); return stepper_get_alt_sensor_hw_UFR(); break;
-    case stepperD: stepper_set_address_hw_DBL(uSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
-    case stepperB: stepper_set_address_hw_DBL(uSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
-    case stepperL: stepper_set_address_hw_DBL(uSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
+    case stepperD: stepper_set_address_hw_DBL(dSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
+    case stepperB: stepper_set_address_hw_DBL(bSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
+    case stepperL: stepper_set_address_hw_DBL(lSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
     default:                                                                                               break;
     }
     return 0;
