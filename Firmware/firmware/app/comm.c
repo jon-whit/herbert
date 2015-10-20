@@ -283,6 +283,8 @@ static void chGetRawSensors(CmdPkt* cmdPkt);
 static void chGetSwitch(CmdPkt* cmdPkt);
 static void chGetSensor(CmdPkt* cmdPkt);
 
+static void chExecuteMoves(CmdPkt* cmdPkt);
+
 // -------------------------- Test & Dianostic Commands --------------------------
 
 
@@ -334,6 +336,8 @@ static const CommCommand commCommands[] =
 
     { "GetSwitch",                          1,               chGetSwitch,                          },
     { "GetSensor",                          1,               chGetSensor,                          },
+
+    { "ExecuteMoves",                       VAR_PARAM_COUNT, chExecuteMoves,                       },
 
     // -------------------------- Test & Dianostic Commands --------------------------
 
@@ -498,8 +502,6 @@ static bool parseCmdPkt(CmdPkt* cmdPkt)
         printf("Invalid Cmd Pkt CRC (%lu): '%s %s' \n", calcCrc, cmdPkt->buf, cmdPkt->crc);
         return false;
     }
-
-
 
 
     unsigned i;
@@ -1687,6 +1689,65 @@ static void chGetSensor(CmdPkt* cmdPkt)
     initRspPkt(&rspPkt, cmdPkt, RSP_OK);
     addParamToRspPkt(&rspPkt, "%d", isBeamBroken);
     sendRspPkt(&rspPkt);
+}
+
+static void chExecuteMoves(CmdPkt* cmdPkt)
+{
+    unsigned i;
+    for(i = 0; i < cmdPkt->paramCount; ++i)
+    {
+        printf("Executing Move %s\n", cmdPkt->params[i]);
+        StepperMotor stepper;
+        RotationDirection dir = rotation_clockwise;
+        TurnSize turnSize = turn_quarter;
+
+        if (strlen(cmdPkt->params[i]) > 0)
+        {
+            switch(cmdPkt->[i][0])
+            {
+	        case 'U':
+		    stepper = stepperU;
+	            break;
+	        case 'F':
+	            stepper = stepperF;
+	            break;
+	        case 'R':
+	            stepper = stepperR;
+    	            break;
+	        case 'D':
+	            stepper = stepperD;
+	            break;
+	       case 'B':
+	            stepper = stepperB;
+	            break;
+	       case 'L':
+	           stepper = stepperL;
+	           break;
+	       default:
+	           sendRspStatusInvalidParameter(cmdPkt);
+	           return;
+	    }
+            if(strlen(cmdPkt->params[i]) == 2)
+            {
+	        switch(cmdPkt->[i][1])
+	        {
+ 	            case 'b':
+   	  	        dir = rotation_counterClockwise;
+		        break;
+   	            case '2':
+		        turnSize = half_turn;
+		        break;
+	            default:
+		        sendRspStatusInvalidParameter(cmdPkt);
+	                return;
+	        }
+            }
+	    RotateArm(stepper, dir, turnSize, 1);
+        }
+        sendRspStatusInvalidParameter(cmdPkt);
+        return;
+    }
+    sendRspOk(cmdPkt);
 }
 
 // EOF
