@@ -1592,7 +1592,6 @@ static void chActuateArm(CmdPkt* cmdPkt)
     }
 
     sendRspOk(cmdPkt);
-
 }
 
 static void chDisableMotors(CmdPkt* cmdPkt)
@@ -1603,7 +1602,6 @@ static void chDisableMotors(CmdPkt* cmdPkt)
 
 static void chTimingTest(CmdPkt* cmdPkt)
 {
-    RotateArm(stepperR, rotation_clockwise, turn_half, 1);
     sendRspOk(cmdPkt);
 }
 
@@ -1742,11 +1740,14 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
 	                return;
 	        }
             }
-	    RotateArm(stepper, dir, turnSize, 1);
+	    queueRotation(stepper, dir, turnSize);
         }
         sendRspStatusInvalidParameter(cmdPkt);
         return;
     }
+    executeRotations();
+    
+    // Response OK does not indicate all the moves are performed already
     sendRspOk(cmdPkt);
 }
 

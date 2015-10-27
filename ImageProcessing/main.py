@@ -114,4 +114,5 @@ if __name__ == '__main__':
         print ("Solution Found: %s") % sol_seq
         print ("Process Time: %d") % proc_time
     
-    sendCommand("ExecuteMoves " + sol_sequence)
+    fullPacket = generateFullCommandPacket("ExecuteMoves " + sol_sequence, 0)
+    sendCommand("COM1", fullPacket)
