@@ -65,7 +65,7 @@ void InitializeSwitches()
 
 bool IsSwitchTriggered(SwitchLocation switchLoc)
 {
-	/*InitializeSwitches();
+	InitializeSwitches();
 	if     (switchLoc == LInSwitch)  {return SWITCH.SWITCH_L_IN_SIGNAL; }
 	else if(switchLoc == LOutSwitch) {return SWITCH.SWITCH_L_OUT_SIGNAL;}
 	else if(switchLoc == FInSwitch)  {return SWITCH.SWITCH_F_IN_SIGNAL; }
@@ -79,7 +79,7 @@ bool IsSwitchTriggered(SwitchLocation switchLoc)
 	else if(switchLoc == DInSwitch)  {return SWITCH.SWITCH_D_IN_SIGNAL; }
 	else if(switchLoc == DOutSwitch) {return SWITCH.SWITCH_D_OUT_SIGNAL;}
 	else {return false;}
-	return false;*/
+	return false;
 	return 0;
 }
 

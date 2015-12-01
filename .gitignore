@@ -265,3 +265,14 @@ docs/_build/
 
 # PyBuilder
 target/
+Firmware/fpga/__xps/system.gui
+*.mk
+*.vhdPreview
+Firmware/firmware/app.dmp
+Firmware/firmware/app_image.bin
+Firmware/firmware/app_vectors.bin
+Firmware/fpga/implementation/download.bit
+Firmware/herbert_scb.bin
+Firmware/herbert_scb.bin.md5
+Firmware/herbert_scb.bin.ver
+Firmware/herbert_scb_DBLMotorTest.bin

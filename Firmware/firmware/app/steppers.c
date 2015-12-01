@@ -18,8 +18,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
-
 typedef struct
 {
     int position;
@@ -37,13 +35,12 @@ typedef struct
     bool adjust_home_position;
     uint32 hw_address;
     uint32 hw_enable_mask;
+    bool isDBL;
     bool ( *home_sensor_make_hook )( int );
     bool ( *home_sensor_break_hook )( int );
     bool ( *alt_sensor_make_hook )( int );
     bool ( *alt_sensor_break_hook )( int );
 } stepper_instance;
-
-
 
 struct
 {
@@ -58,39 +55,42 @@ struct
     int increment;
 } stepper_data;
 
-
-
 enum stepper_hardware_constants
 {
-    max_lid_steps                 = 20000,
-    max_door_steps                = 35000,
-    max_filter_steps              = 35000,
+    max_lid_steps            = 20000,
+    max_door_steps           = 35000,
+    max_filter_steps         = 35000,
 
-    lid_home_pin_location         = 50,
-    door_home_pin_location        = 20,
-    filter_home_pin_location      = 0,
+    lid_home_pin_location    = 50,
+    door_home_pin_location   = 20,
+    filter_home_pin_location = 0,
 
-    lid_home_position             = 0,
-    door_home_position            = 0,
-    filter_home_position          = 0,
+    lid_home_position        = 0,
+    door_home_position       = 0,
+    filter_home_position     = 0,
 
-    lid_hw_enable_mask            = 0x04,
-    lid_hw_address                = 0x01,
-    filter_hw_enable_mask         = 0x02,
-    filter_hw_address             = 0x03,
-    door_hw_enable_mask           = 0x01,
-    door_hw_address               = 0x00,
+    lid_hw_enable_mask       = 0x04,
+    lid_hw_address           = 0x01,
+    filter_hw_enable_mask    = 0x02,
+    filter_hw_address        = 0x03,
+    door_hw_enable_mask      = 0x01,
+    door_hw_address          = 0x00,
+
+    rSensorAddressMask       = 0x03,
+    fSensorAddressMask       = 0x03,
+    uSensorAddressMask       = 0x02,
+
+    dSensorAddressMask       = 0x03,
+    bSensorAddressMask       = 0x03,
+    lSensorAddressMask       = 0x02,
+
 };
-
-
 
 static void stepper_init_instance( stepper_instance *stepper, StepperMotor id );
 static void stepper_motor_callback( void );
 static int  stepper_find_ramp_freq_adjust( stepper_instance *stepper );
 static void stepper_disable( stepper_instance * moving_stepper );
-
-
-
+static bool isDBLMotor(StepperMotor stepper);
 
 //------------------------------------------------------------------------------
 //! Initialize the stepper motor module.
@@ -109,11 +109,9 @@ void stepper_init( void )
                                 stepper_index );
     }
 
-    InitStepperHW_UFR(stepper_motor_callback);
-    InitStepperHW_DBL(stepper_motor_callback);
+    init_stepper_hw_UFR(stepper_motor_callback);
+    init_stepper_hw_DBL(stepper_motor_callback);
 }
-
-
 
 //------------------------------------------------------------------------------
 void stepper_abort( void )
@@ -152,8 +150,6 @@ void stepper_abort( void )
     }
     exitCriticalRegion(crdata);
 }
-
-
 
 //------------------------------------------------------------------------------
 //! Function to set the various stepper parameters.
@@ -238,9 +234,23 @@ bool stepper_enable( StepperMotor stepper, bool enable )
     if( stepper_data.moving_stepper != &stepper_data.steppers[ stepper ] )
     {
         if( enable )
-            stepper_set_enable_hw( stepper_data.steppers[ stepper ].hw_enable_mask );
+            if(isDBLMotor(stepper))
+            {
+                stepper_set_enable_hw_DBL( stepper_data.steppers[ stepper ].hw_enable_mask );
+            }
+            else
+            {
+                stepper_set_enable_hw_UFR( stepper_data.steppers[ stepper ].hw_enable_mask );
+            }
         else
-            stepper_clear_enable_hw( stepper_data.steppers[ stepper ].hw_enable_mask );
+            if(isDBLMotor(stepper))
+            {
+                stepper_clear_enable_hw_DBL( stepper_data.steppers[ stepper ].hw_enable_mask );
+            }
+            else
+            {
+                stepper_clear_enable_hw_UFR( stepper_data.steppers[ stepper ].hw_enable_mask );
+            }
 
         return true;
     }
@@ -263,25 +273,46 @@ bool stepper_move_to_position( StepperMotor stepper, int position )
     if( stepper_data.moving_stepper )
         return false;
 
-    stepper_set_address_hw( stepper_data.steppers[ stepper ].hw_address );
-
-    if( ( stepper_data.steppers[ stepper ].position == position ) ||
-        ( stepper_get_home_sensor_hw() && position == stepperHome ) )
+    if(isDBLMotor(stepper))
     {
-        return true; // No need to move, we are already there.
+        stepper_set_address_hw_DBL( stepper_data.steppers[ stepper ].hw_address );
     }
+    else
+    {
+        stepper_set_address_hw_UFR( stepper_data.steppers[ stepper ].hw_address );
+    }
+    
+    // if( ( stepper_data.steppers[ stepper ].position == position ) ||
+    //     ( stepper_get_home_sensor_hw_UFR() && position == stepperHome ) )
+    // {
+    //     return true; // No need to move, we are already there.
+    // }
 
     stepper_data.moving_stepper  = &stepper_data.steppers[ stepper ];
     stepper_data.target_position = position;
     stepper_data.steps_taken     = 0;
-    stepper_data.freq_adjust     =
-        stepper_find_ramp_freq_adjust( stepper_data.moving_stepper );
-    stepper_set_enable_hw( stepper_data.moving_stepper->hw_enable_mask );
+    stepper_data.freq_adjust     = stepper_find_ramp_freq_adjust( stepper_data.moving_stepper );
+    
+    if(isDBLMotor(stepper))
+    {
+        stepper_set_enable_hw_DBL( stepper_data.moving_stepper->hw_enable_mask );
+    }
+    else
+    {
+        stepper_set_enable_hw_UFR( stepper_data.moving_stepper->hw_enable_mask );
+    }
 
     if( position == stepperHome )
     {
         stepper_data.increment = -1;
-        stepper_clear_direction_hw( stepper_data.moving_stepper );
+        if(isDBLMotor(stepper))
+        {
+            stepper_clear_direction_hw_DBL( stepper_data.moving_stepper );
+        }
+        else
+        {
+            stepper_clear_direction_hw_UFR( stepper_data.moving_stepper );
+        }
 
         stepper_data.down_steps = stepper_data.remaining_steps = 0;
         stepper_data.up_steps = stepper_data.moving_stepper->ramp_steps;
@@ -294,12 +325,26 @@ bool stepper_move_to_position( StepperMotor stepper, int position )
         if( position < stepper_data.moving_stepper->position )
         {
             stepper_data.increment = -1;
-            stepper_clear_direction_hw( stepper_data.moving_stepper );
+            if(isDBLMotor(stepper))
+            {
+                stepper_clear_direction_hw_DBL( stepper_data.moving_stepper );
+            }
+            else
+            {
+                stepper_clear_direction_hw_UFR( stepper_data.moving_stepper );
+            }
         }
         else
         {
             stepper_data.increment = 1;
-            stepper_set_direction_hw( stepper_data.moving_stepper );
+            if(isDBLMotor(stepper))
+            {
+                stepper_set_direction_hw_DBL( stepper_data.moving_stepper );
+            }
+            else
+            {
+                stepper_set_direction_hw_UFR( stepper_data.moving_stepper );
+            }
         }
 
         if ( stepper_data.remaining_steps >=
@@ -317,7 +362,14 @@ bool stepper_move_to_position( StepperMotor stepper, int position )
 
     stepper_data.moving_stepper->current_freq = stepper_data.moving_stepper->slow_freq;
 
-    stepper_start_step_hw( stepper_data.moving_stepper->current_freq );
+    if(isDBLMotor(stepper))
+    {
+        stepper_start_step_hw_DBL( stepper_data.moving_stepper->current_freq );
+    }
+    else
+    {
+        stepper_start_step_hw_UFR( stepper_data.moving_stepper->current_freq );
+    }
 
     return true;
 }
@@ -360,8 +412,26 @@ bool stepper_is_at_home_position( StepperMotor stepper )
 {
     ASSERT( stepper < numSteppers );
     if( !stepper_busy() )
-        stepper_set_address_hw( stepper_data.steppers[ stepper ].hw_address );
-    return stepper_get_home_sensor_hw();
+    {
+        if(isDBLMotor(stepper))
+        {
+            stepper_set_address_hw_DBL( stepper_data.steppers[ stepper ].hw_address );
+        }
+        else
+        {
+            stepper_set_address_hw_UFR( stepper_data.steppers[ stepper ].hw_address );
+        }
+    }
+    bool isAtHomePosition = false;
+    if(isDBLMotor(stepper))
+    {
+        isAtHomePosition = stepper_get_home_sensor_hw_DBL();
+    }
+    else
+    {
+        isAtHomePosition = stepper_get_home_sensor_hw_UFR();
+    }
+    return isAtHomePosition;
 }
 
 
@@ -370,10 +440,27 @@ bool stepper_is_at_alt_position( StepperMotor stepper )
 {
     ASSERT( stepper < numSteppers );
     if( !stepper_busy() )
-        stepper_set_address_hw( stepper_data.steppers[ stepper ].hw_address );
-    return stepper_get_alt_sensor_hw( &stepper_data.steppers[ stepper ] );
+    {
+        if(isDBLMotor(stepper))
+        {
+            stepper_set_address_hw_DBL( stepper_data.steppers[ stepper ].hw_address );
+        }
+        else
+        {
+            stepper_set_address_hw_UFR( stepper_data.steppers[ stepper ].hw_address );
+        }
+    }
+    bool isAtAltPosition = false;
+    if(isDBLMotor(stepper))
+    {
+        isAtAltPosition = stepper_get_alt_sensor_hw_DBL();
+    }
+    else
+    {
+        isAtAltPosition = stepper_get_alt_sensor_hw_UFR();
+    }
+    return isAtAltPosition;
 }
-
 
 //------------------------------------------------------------------------------
 int get_stepper_position( StepperMotor stepper )
@@ -382,6 +469,20 @@ int get_stepper_position( StepperMotor stepper )
     return stepper_data.steppers[ stepper ].position;
 }
 
+bool isSensorBeamBroken(StepperMotor stepper)
+{
+    switch(stepper)
+    {
+    case stepperU: stepper_set_address_hw_UFR(uSensorAddressMask); return stepper_get_alt_sensor_hw_UFR(); break;
+    case stepperF: stepper_set_address_hw_UFR(fSensorAddressMask); return stepper_get_alt_sensor_hw_UFR(); break;
+    case stepperR: stepper_set_address_hw_UFR(rSensorAddressMask); return stepper_get_alt_sensor_hw_UFR(); break;
+    case stepperD: stepper_set_address_hw_DBL(dSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
+    case stepperB: stepper_set_address_hw_DBL(bSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
+    case stepperL: stepper_set_address_hw_DBL(lSensorAddressMask); return stepper_get_alt_sensor_hw_DBL(); break;
+    default:                                                                                               break;
+    }
+    return 0;
+}
 
 //------------------------------------------------------------------------------
 //! Stepper motor ISR callback.
@@ -399,7 +500,7 @@ int get_stepper_position( StepperMotor stepper )
 static void stepper_motor_callback( void )
 {
     bool abort_move = false;
-    stepper_instance * moving_stepper = stepper_data.moving_stepper;
+    stepper_instance* moving_stepper = stepper_data.moving_stepper;
 
     if(!moving_stepper)
     {
@@ -409,7 +510,8 @@ static void stepper_motor_callback( void )
     moving_stepper->position += stepper_data.increment;
     ++stepper_data.steps_taken;
 
-    if( stepper_get_home_sensor_hw() )
+    if( (stepper_get_home_sensor_hw_UFR() && !moving_stepper->isDBL) ||
+        (stepper_get_home_sensor_hw_DBL() && moving_stepper->isDBL))
     {
         if( moving_stepper->home_sensor_make_hook )
         {
@@ -424,7 +526,8 @@ static void stepper_motor_callback( void )
         }
     }
 
-    if( stepper_get_alt_sensor_hw() )
+    if( (stepper_get_alt_sensor_hw_UFR() && !moving_stepper->isDBL) ||
+        (stepper_get_alt_sensor_hw_DBL() && moving_stepper->isDBL))
     {
         if( moving_stepper->alt_sensor_make_hook )
         {
@@ -446,7 +549,8 @@ static void stepper_motor_callback( void )
             moving_stepper->fault = 1;
             abort_move = true;
         }
-        else if( stepper_get_home_sensor_hw( moving_stepper ) )
+        else if( (stepper_get_home_sensor_hw_UFR() && !moving_stepper->isDBL) ||
+                 (stepper_get_home_sensor_hw_DBL() && moving_stepper->isDBL))
         {
             moving_stepper->fault = 0;
             moving_stepper->position = moving_stepper->home_pin_location;
@@ -494,7 +598,15 @@ static void stepper_motor_callback( void )
                 stepper_data.moving_stepper->slow_freq;
         }
 
-        stepper_start_step_hw( stepper_data.moving_stepper->current_freq );
+        if(moving_stepper->isDBL)
+        {
+            stepper_start_step_hw_DBL( stepper_data.moving_stepper->current_freq );
+        }
+        else
+        {
+            stepper_start_step_hw_UFR( stepper_data.moving_stepper->current_freq );
+
+        }
     }
 }
 
@@ -534,6 +646,7 @@ static void stepper_init_instance( stepper_instance *stepper, StepperMotor id )
         stepper->disable_after_move_at_alt  = false;
         stepper->disable_after_move_between = true;
         stepper->adjust_home_position       = true;
+        stepper->isDBL                      = false;
         break;
     case stepperF:
         stepper->hw_address                 = door_hw_address;
@@ -548,6 +661,7 @@ static void stepper_init_instance( stepper_instance *stepper, StepperMotor id )
         stepper->disable_after_move_at_alt  = false;
         stepper->disable_after_move_between = true;
         stepper->adjust_home_position       = true;
+        stepper->isDBL                      = false;
         break;
     case stepperR:
         stepper->hw_address                 = filter_hw_address;
@@ -562,18 +676,65 @@ static void stepper_init_instance( stepper_instance *stepper, StepperMotor id )
         stepper->disable_after_move_at_alt  = false;
         stepper->disable_after_move_between = true;
         stepper->adjust_home_position       = false;
+        stepper->isDBL                      = false;
+        break;
+    case stepperD:
+        stepper->hw_address                 = lid_hw_address;
+        stepper->hw_enable_mask             = lid_hw_enable_mask;
+        stepper->max_steps                  = max_lid_steps;
+        stepper->slow_freq                  = defaultSlowFrequency;
+        stepper->fast_freq                  = defaultFastFrequency;
+        stepper->ramp_steps                 = defaultRampSteps;
+        stepper->home_position              = lid_home_position;
+        stepper->home_pin_location          = lid_home_pin_location;
+        stepper->disable_after_move_at_home = true;
+        stepper->disable_after_move_at_alt  = false;
+        stepper->disable_after_move_between = true;
+        stepper->adjust_home_position       = true;
+        stepper->isDBL                      = true;
+        break;
+    case stepperB:
+        stepper->hw_address                 = door_hw_address;
+        stepper->hw_enable_mask             = door_hw_enable_mask;
+        stepper->max_steps                  = max_door_steps;
+        stepper->slow_freq                  = defaultSlowFrequency;
+        stepper->fast_freq                  = defaultFastFrequency;
+        stepper->ramp_steps                 = defaultRampSteps;
+        stepper->home_position              = door_home_position;
+        stepper->home_pin_location          = door_home_pin_location;
+        stepper->disable_after_move_at_home = false;
+        stepper->disable_after_move_at_alt  = false;
+        stepper->disable_after_move_between = true;
+        stepper->adjust_home_position       = true;
+        stepper->isDBL                      = true;
+        break;
+    case stepperL:
+        stepper->hw_address                 = filter_hw_address;
+        stepper->hw_enable_mask             = filter_hw_enable_mask;
+        stepper->max_steps                  = max_filter_steps;
+        stepper->slow_freq                  = defaultSlowFrequency;
+        stepper->fast_freq                  = defaultFastFrequency;
+        stepper->ramp_steps                 = defaultRampSteps;
+        stepper->home_position              = filter_home_position;
+        stepper->home_pin_location          = filter_home_pin_location;
+        stepper->disable_after_move_at_home = false;
+        stepper->disable_after_move_at_alt  = false;
+        stepper->disable_after_move_between = true;
+        stepper->adjust_home_position       = false;
+        stepper->isDBL                      = true;
         break;
     default:
-        ASSERT( 0 );
+        ;
     }
 
-    stepper_clear_enable_hw( stepper->hw_enable_mask );
+    stepper_clear_enable_hw_UFR( stepper->hw_enable_mask );
+    stepper_clear_enable_hw_DBL( stepper->hw_enable_mask );
 }
 
 
 
 //------------------------------------------------------------------------------
-static void stepper_disable( stepper_instance * moving_stepper )
+static void stepper_disable( stepper_instance* moving_stepper )
 {
     if(!moving_stepper)
     {
@@ -584,7 +745,11 @@ static void stepper_disable( stepper_instance * moving_stepper )
         // Home
         if( moving_stepper->disable_after_move_at_home )
         {
-            stepper_clear_enable_hw( moving_stepper->hw_enable_mask );
+            if(moving_stepper)
+            {
+                stepper_clear_enable_hw_UFR( moving_stepper->hw_enable_mask );
+                stepper_clear_enable_hw_DBL( moving_stepper->hw_enable_mask );
+            }
         }
     }
     else if( moving_stepper->position == stepper_data.target_position )
@@ -592,7 +757,8 @@ static void stepper_disable( stepper_instance * moving_stepper )
         // Alt
         if( moving_stepper->disable_after_move_at_alt )
         {
-            stepper_clear_enable_hw( moving_stepper->hw_enable_mask );
+            stepper_clear_enable_hw_UFR( moving_stepper->hw_enable_mask );
+            stepper_clear_enable_hw_DBL( moving_stepper->hw_enable_mask );
         }
     }
     else
@@ -600,12 +766,16 @@ static void stepper_disable( stepper_instance * moving_stepper )
         // In between
         if( moving_stepper->disable_after_move_between )
         {
-            stepper_clear_enable_hw( moving_stepper->hw_enable_mask );
+            stepper_clear_enable_hw_UFR( moving_stepper->hw_enable_mask );
+            stepper_clear_enable_hw_DBL( moving_stepper->hw_enable_mask );
         }
     }
 }
 
-
+static bool isDBLMotor(StepperMotor stepper)
+{
+    return stepper == stepperD || stepper == stepperB || stepper == stepperL;
+}
 
 
 

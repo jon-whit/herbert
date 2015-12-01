@@ -275,7 +275,7 @@ endif
 # Add the version define to the list
 APP_DEFINES :=                          \
     $(APP_DEFINES)                      \
-    -DFW_VER_APP=\""$(APP_VERSION)"\"
+#    -DFW_VER_APP=\""$(APP_VERSION)"\"
 
 # Determine the list of source directories.  The patsubst function
 # removes the '/filename' part of each source file, and the sort
