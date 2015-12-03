@@ -107,6 +107,9 @@ void         lowerLid(OfflineTaskCompleteCallback callbackFunc, int callbackRef)
 void         openCavity(OfflineTaskCompleteCallback callbackFunc, int callbackRef);
 void         closeCavity(OfflineTaskCompleteCallback callbackFunc, int callbackRef);
 
+void queueRotation(StepperMotor stepperMotor, RotationDirection direction, TurnSize turnSize);
+void executeRotations(void);
+
 
 
 // Debug Functions
