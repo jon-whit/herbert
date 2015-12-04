@@ -285,6 +285,9 @@ static void chGetSensor(CmdPkt* cmdPkt);
 
 static void chExecuteMoves(CmdPkt* cmdPkt);
 
+static void chIsIdle(CmdPkt* cmdPkt);
+
+
 // -------------------------- Test & Dianostic Commands --------------------------
 
 
@@ -338,6 +341,7 @@ static const CommCommand commCommands[] =
     { "GetSensor",                          1,               chGetSensor,                          },
 
     { "ExecuteMoves",                       VAR_PARAM_COUNT, chExecuteMoves,                       },
+    { "IsIdle",                             0,               chIsIdle,                             },
 
     // -------------------------- Test & Dianostic Commands --------------------------
 
@@ -1694,14 +1698,9 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
     unsigned i;
     for(i = 0; i < cmdPkt->paramCount; ++i)
     {
-        printf("Executing Move %s\n", cmdPkt->params[i]);
         StepperMotor stepper;
         RotationDirection dir = rotation_clockwise;
         TurnSize turnSize = turn_quarter;
-
-        printf("Move = %c\n", cmdPkt->params[i][0]);
-
-        printf("String Length = %d\n", strlen(cmdPkt->params[i]));
 
         if (strlen(cmdPkt->params[i]) > 0)
         {
@@ -1726,7 +1725,6 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
 	           stepper = stepperL;
 	           break;
 	       default:
-               printf("Got Here 1\n");
 	           sendRspStatusInvalidParameter(cmdPkt);
 	           return;
     	    }
@@ -1741,7 +1739,6 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
         	            turnSize = turn_half;
         	            break;
                     default:
-                        printf("Got Here 2\n");
         	            sendRspStatusInvalidParameter(cmdPkt);
                         return;
                 }
@@ -1750,7 +1747,6 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
         }
         else
         {
-            printf("Got Here 3\n");
             sendRspStatusInvalidParameter(cmdPkt);
             return;
         }
@@ -1761,4 +1757,13 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
     sendRspOk(cmdPkt);
 }
 
+
+static void chIsIdle(CmdPkt* cmdPkt)
+{ 
+    RspPkt rspPkt;
+    bool idle = isIdle();
+    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
+    addParamToRspPkt(&rspPkt, "%d", idle);
+    sendRspPkt(&rspPkt);
+}
 // EOF

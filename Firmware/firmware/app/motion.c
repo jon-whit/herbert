@@ -496,6 +496,11 @@ void executeRotations(void)
     motionData.state = state_actuatingArmIn;
 }
 
+bool isIdle(void) 
+{
+    return motionData.state == state_idle;
+}
+
 
 ///////////////////////////////////////////////////
 // Debug functions
