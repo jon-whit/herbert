@@ -89,12 +89,12 @@ enum LidConstants
 
 enum ArmMotionConstants
 {
-    halfTurnSteps                    = 200,
-    quarterTurnStepsClockwise        = 100,
-    quarterTurnStepsCounterClockwise = -100,
+    halfTurnSteps                    = 90,
+    quarterTurnStepsClockwise        = 40,
+    quarterTurnStepsCounterClockwise = -40,
 
     armMotionTimeout_ms              = 100000,
-    actuateTimeout_ms                = 1000,
+    actuateTimeout_ms                = 500,
 };
 
 ///////////////////////////////////////////////////
@@ -199,14 +199,14 @@ typedef struct
     int                         reference;
 } OperationCallback;
 
-struct ArmMotionData
+typedef struct 
 {
     StepperMotor      motor;
     TurnSize          turnSize;
     RotationDirection direction;
     Timer             timer;
     Timer             actuateTimer;
-} 
+} ArmMotionData;
 
 ///////////////////////////////////////////////////
 // Local function prototypes
@@ -214,6 +214,7 @@ struct ArmMotionData
 void motionTest();
 
 static void finishMotorMove(ErrorCodes error, const char* errorDesc);
+static char convertMotorToChar(StepperMotor motor);
 
 
 ///////////////////////////////////////////////////
@@ -241,6 +242,8 @@ static struct QueuedRotations
     ArmMotionData      rotations[MAX_ROTATIONS];   
 } queuedRotations;
 
+static bool isSensorAdjustmentDone = false;
+
 
 ///////
 ////////////////////////////////////////////
@@ -261,7 +264,7 @@ void motionInit()
 
     memset(&queuedRotations, 0, sizeof(queuedRotations));
     queuedRotations.totalRotations = 0;
-    queudRotations.currentRotation = 0;
+    queuedRotations.currentRotation = 0;
 }
 
 
@@ -320,32 +323,63 @@ bool motionProcess(void* unused)
             break;
 
         case state_armActuatedIn:
-            switch(queuedRotations.rotation[queuedRotations.currentRotation].turnSize)
+            switch(queuedRotations.rotations[queuedRotations.currentRotation].turnSize)
             {
                 case turn_half:
-                    stepper_move_relative(queuedRotations.rotation[queuedRotations.currentRotation].motor, halfTurnSteps);
+                    stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, halfTurnSteps);
                     break;
 
                 case turn_quarter:
-                    switch(queuedRotations.rotation[queuedRotations.currentRotation].direction)
+                    switch(queuedRotations.rotations[queuedRotations.currentRotation].direction)
                     {
                         case rotation_clockwise:
-                            stepper_move_relative(queuedRotations.rotation[queuedRotations.currentRotation].motor, quarterTurnStepsClockwise);
+                            stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, quarterTurnStepsClockwise);
                             break;
 
                         case rotation_counterClockwise:
-                            stepper_move_relative(queuedRotations.rotation[queuedRotations.currentRotation].motor, quarterTurnStepsCounterClockwise);
+                            stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, quarterTurnStepsCounterClockwise);
                             break;
                     }    
                     break;  
             }
             motionData.state = state_armSpinning;
+            isSensorAdjustmentDone = false;
             break;
 
         case state_armSpinning:
 	    // Makes sure that the stepper is finished moving
             if(!stepper_busy())
-                motionData.state = state_armDoneSpinning;
+            {
+                if(isSensorBeamBroken(queuedRotations.rotations[queuedRotations.currentRotation].motor))
+                {
+                    if(queuedRotations.rotations[queuedRotations.currentRotation].direction == rotation_clockwise)
+                    {
+                        stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, 1);
+                    }
+                    else
+                    {
+                        stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, -1);
+                    }
+                }
+                else if(!isSensorAdjustmentDone)
+                {
+                    if(queuedRotations.rotations[queuedRotations.currentRotation].direction == rotation_clockwise)
+                    {
+                        stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, 2);
+                    }
+                    else
+                    {
+                        stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, -2);
+                    }
+                    isSensorAdjustmentDone = true;
+                }
+                else 
+                {
+                    motionData.state = state_armDoneSpinning;
+                    isSensorAdjustmentDone = false;
+                }
+            }
+            
             break;
 
         case state_armDoneSpinning:
@@ -357,9 +391,10 @@ bool motionProcess(void* unused)
         case state_actuatingArmOut:
             if(timerExpired(&queuedRotations.rotations[queuedRotations.currentRotation].actuateTimer))
             {
+                queuedRotations.currentRotation++;
                 if(queuedRotations.currentRotation < queuedRotations.totalRotations)
                 {            
-                        switch(queuedRotations.rotation[queuedRotations.currentRotation].motor)
+                        switch(queuedRotations.rotations[queuedRotations.currentRotation].motor)
                         {
                             case stepperU:
                                 ActuateArmIn('U');
@@ -388,13 +423,12 @@ bool motionProcess(void* unused)
                             default:
                                 break;
                         }
-
+                        startTimer(&queuedRotations.rotations[queuedRotations.currentRotation].actuateTimer, MSEC_TO_TICKS(actuateTimeout_ms));
                         motionData.state = state_actuatingArmIn;
-                        queuedRotations.currentRotation++;
                 }
                 else
                 {
-		    printf("%d\n", (int)getTimer_ms(&queuedRotations.rotations[queuedRotations.currentRotation].timer))
+		    printf("%d\n", (int)getTimer_ms(&queuedRotations.rotations[queuedRotations.currentRotation].timer));
 		    disableMotors();
 		    queuedRotations.currentRotation = 0;
 		    queuedRotations.totalRotations = 0;
@@ -415,20 +449,21 @@ bool motionProcess(void* unused)
 // Local filter functions
 void queueRotation(StepperMotor stepperMotor, RotationDirection direction, TurnSize turnSize)
 {
-    queuedRotations.rotation[queuedRotations.totalRotations].motor        = stepperMotor;
-    queuedRotations.rotation[queuedRotations.totalRotations].direction    = direction;
-    queuedRotations.rotation[queuedRotations.totalRotations].turnSize     = turnSize;
+    queuedRotations.rotations[queuedRotations.totalRotations].motor        = stepperMotor;
+    queuedRotations.rotations[queuedRotations.totalRotations].direction    = direction;
+    queuedRotations.rotations[queuedRotations.totalRotations].turnSize     = turnSize;
     queuedRotations.totalRotations++;
 }
 
-void executeRotations()
+void executeRotations(void)
 {
-    ASSERT(queuedRotations.totalRotations == 0 && queuedRotations.currentRotation == 0); 
+    queuedRotations.currentRotation = 0;
+    ASSERT(queuedRotations.totalRotations > 0); 
     // TODO: ASSERT that the switches etc etc
     startTimer(&queuedRotations.rotations[0].timer, MSEC_TO_TICKS(actuateTimeout_ms));
     startTimer(&queuedRotations.rotations[0].actuateTimer, MSEC_TO_TICKS(actuateTimeout_ms));
 
-    switch(queuedRotations.rotation[0].motor)
+    switch(queuedRotations.rotations[0].motor)
     {
         case stepperU:
             ActuateArmIn('U');
@@ -459,6 +494,11 @@ void executeRotations()
     }
 
     motionData.state = state_actuatingArmIn;
+}
+
+bool isIdle(void) 
+{
+    return motionData.state == state_idle;
 }
 
 
@@ -548,6 +588,19 @@ static void finishMotorMove(ErrorCodes error, const char* errorDesc)
     printf("Motor move finished.\n");
 }
 
+static char convertMotorToChar(StepperMotor motor)
+{
+    switch(motor)
+    {
+        case stepperU: return 'U';
+        case stepperF: return 'F';
+        case stepperR: return 'R';
+        case stepperD: return 'D';
+        case stepperB: return 'B';
+        case stepperL: return 'L';
+        default: return 0;
+    }
+}
 
 
 // EOF

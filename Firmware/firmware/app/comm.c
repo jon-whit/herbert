@@ -285,6 +285,9 @@ static void chGetSensor(CmdPkt* cmdPkt);
 
 static void chExecuteMoves(CmdPkt* cmdPkt);
 
+static void chIsIdle(CmdPkt* cmdPkt);
+
+
 // -------------------------- Test & Dianostic Commands --------------------------
 
 
@@ -338,6 +341,7 @@ static const CommCommand commCommands[] =
     { "GetSensor",                          1,               chGetSensor,                          },
 
     { "ExecuteMoves",                       VAR_PARAM_COUNT, chExecuteMoves,                       },
+    { "IsIdle",                             0,               chIsIdle,                             },
 
     // -------------------------- Test & Dianostic Commands --------------------------
 
@@ -1694,14 +1698,13 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
     unsigned i;
     for(i = 0; i < cmdPkt->paramCount; ++i)
     {
-        printf("Executing Move %s\n", cmdPkt->params[i]);
         StepperMotor stepper;
         RotationDirection dir = rotation_clockwise;
         TurnSize turnSize = turn_quarter;
 
         if (strlen(cmdPkt->params[i]) > 0)
         {
-            switch(cmdPkt->[i][0])
+            switch(cmdPkt->params[i][0])
             {
 	        case 'U':
 		    stepper = stepperU;
@@ -1724,26 +1727,29 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
 	       default:
 	           sendRspStatusInvalidParameter(cmdPkt);
 	           return;
-	    }
+    	    }
             if(strlen(cmdPkt->params[i]) == 2)
             {
-	        switch(cmdPkt->[i][1])
-	        {
- 	            case 'b':
-   	  	        dir = rotation_counterClockwise;
-		        break;
-   	            case '2':
-		        turnSize = half_turn;
-		        break;
-	            default:
-		        sendRspStatusInvalidParameter(cmdPkt);
-	                return;
-	        }
+                switch(cmdPkt->params[i][1])
+                {
+        	        case 'b':
+        	  	        dir = rotation_counterClockwise;
+        	            break;
+        	        case '2':
+        	            turnSize = turn_half;
+        	            break;
+                    default:
+        	            sendRspStatusInvalidParameter(cmdPkt);
+                        return;
+                }
             }
-	    queueRotation(stepper, dir, turnSize);
+	        queueRotation(stepper, dir, turnSize);
         }
-        sendRspStatusInvalidParameter(cmdPkt);
-        return;
+        else
+        {
+            sendRspStatusInvalidParameter(cmdPkt);
+            return;
+        }
     }
     executeRotations();
     
@@ -1751,4 +1757,13 @@ static void chExecuteMoves(CmdPkt* cmdPkt)
     sendRspOk(cmdPkt);
 }
 
+
+static void chIsIdle(CmdPkt* cmdPkt)
+{ 
+    RspPkt rspPkt;
+    bool idle = isIdle();
+    initRspPkt(&rspPkt, cmdPkt, RSP_OK);
+    addParamToRspPkt(&rspPkt, "%d", idle);
+    sendRspPkt(&rspPkt);
+}
 // EOF

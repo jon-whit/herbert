@@ -107,6 +107,10 @@ void         lowerLid(OfflineTaskCompleteCallback callbackFunc, int callbackRef)
 void         openCavity(OfflineTaskCompleteCallback callbackFunc, int callbackRef);
 void         closeCavity(OfflineTaskCompleteCallback callbackFunc, int callbackRef);
 
+void         queueRotation(StepperMotor stepperMotor, RotationDirection direction, TurnSize turnSize);
+void         executeRotations(void);
+bool         isIdle(void);
+
 
 
 // Debug Functions
@@ -130,6 +134,5 @@ int          getLidAltPinBreak2Pos(void);
 int          getStepperParameter(StepperMotor motor, StepperParameter stepperParam);
 void         setStepperParameter(StepperMotor motor, StepperParameter stepperParam, int value);
 void         RotateArm(StepperMotor stepperMotor, RotationDirection direction, TurnSize turnSize, int rotations);
-
 
 #endif

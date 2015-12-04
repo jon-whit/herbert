@@ -43,12 +43,12 @@ void InitializeAirCylinders()
 void ActuateArmIn(char armFace)
 {
 	InitializeAirCylinders();
-	if(armFace == 'U')      { RELAY.relay_U = ON; ;}
-	else if(armFace == 'F') { RELAY.relay_F = ON; }
-	else if(armFace == 'R') { RELAY.relay_R = ON; }
-	else if(armFace == 'D') { RELAY.relay_D = ON; }
-	else if(armFace == 'B') { RELAY.relay_B = ON; }
-	else if(armFace == 'L') { RELAY.relay_L = ON; }
+	if(armFace == 'U')      { RELAY.relay_U = ON; RELAY.relay_D = ON;}
+	else if(armFace == 'F') { RELAY.relay_F = ON; RELAY.relay_B = ON;}
+	else if(armFace == 'R') { RELAY.relay_R = ON; RELAY.relay_L = ON;}
+	else if(armFace == 'D') { RELAY.relay_D = ON; RELAY.relay_U = ON;}
+	else if(armFace == 'B') { RELAY.relay_B = ON; RELAY.relay_F = ON;}
+	else if(armFace == 'L') { RELAY.relay_L = ON; RELAY.relay_R = ON;}
 	else {/*Do Nothing*/}
 
 }

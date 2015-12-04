@@ -76,13 +76,13 @@ enum stepper_hardware_constants
     door_hw_enable_mask      = 0x01,
     door_hw_address          = 0x00,
 
+    uSensorAddressMask       = 0x01,
+    fSensorAddressMask       = 0x02,
     rSensorAddressMask       = 0x03,
-    fSensorAddressMask       = 0x03,
-    uSensorAddressMask       = 0x02,
 
-    dSensorAddressMask       = 0x03,
-    bSensorAddressMask       = 0x03,
-    lSensorAddressMask       = 0x02,
+    dSensorAddressMask       = 0x01,
+    bSensorAddressMask       = 0x02,
+    lSensorAddressMask       = 0x03,
 
 };
 
