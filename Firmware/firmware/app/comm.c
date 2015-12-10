@@ -287,6 +287,7 @@ static void chExecuteMoves(CmdPkt* cmdPkt);
 
 static void chIsIdle(CmdPkt* cmdPkt);
 
+static void chInitializeArms(CmdPkt* cmdPkt);
 
 // -------------------------- Test & Dianostic Commands --------------------------
 
@@ -342,6 +343,7 @@ static const CommCommand commCommands[] =
 
     { "ExecuteMoves",                       VAR_PARAM_COUNT, chExecuteMoves,                       },
     { "IsIdle",                             0,               chIsIdle,                             },
+    { "InitArms",                           0,               chInitializeArms,                     },
 
     // -------------------------- Test & Dianostic Commands --------------------------
 
@@ -1766,4 +1768,11 @@ static void chIsIdle(CmdPkt* cmdPkt)
     addParamToRspPkt(&rspPkt, "%d", idle);
     sendRspPkt(&rspPkt);
 }
+
+static void chInitializeArms(CmdPkt* cmdPkt)
+{
+    initializeArms();
+    sendRspOk(cmdPkt);
+}
+
 // EOF
