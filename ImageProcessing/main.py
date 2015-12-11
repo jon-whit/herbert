@@ -4,7 +4,6 @@ import cv2
 import flycapture2 as fc2
 import numpy as np
 import time
-from matplotlib import pyplot as plt
 import os
 import subprocess
 import signal
@@ -17,6 +16,18 @@ RED = 4
 ORANGE = 5
 OTHER = 6
 COLORS = ['B', 'G', 'W', 'Y', 'R', 'O', '?']
+
+RED_HUE = (1, 6)
+ORANGE_HUE = (8, 10)
+WHITE_YELLOW_HUE = (13, 29)
+GREEN_HUE = (41, 60)
+BLUE_HUE = (101, 140)
+
+WHITE_SAT = (0, 139)
+ORANGE_SAT = (140, 255)
+
+HUES = [BLUE_HUE, GREEN_HUE, WHITE_YELLOW_HUE, WHITE_YELLOW_HUE, RED_HUE, ORANGE_HUE]
+SATS = [WHITE_SAT, ORANGE_SAT]
 
 STATE = [('R', 'top', 'top_full.txt', [6, 7, 8, 5, 2, 14, 17, 21, 24]),
              ('R', 'R1', 'top_right.txt', [25, 26]),
@@ -67,16 +78,15 @@ STATE = [('R', 'top', 'top_full.txt', [6, 7, 8, 5, 2, 14, 17, 21, 24]),
 
 # Define a set of points for each file to use and the index that it is associated with
 
+
 def syncExecuteMoves(HerbertSerialConnection, move_sequence):
     fullPacket = ci.generateFullCommandPacket("ExecuteMoves " + move_sequence, 0)
-    ci.sendCommand(HerbertSerialConnection, fullPacket)
-
+    response = ci.sendCommand(HerbertSerialConnection, fullPacket)
     while(True):
         fullPacket = ci.generateFullCommandPacket("IsIdle", 0)
         response = ci.sendCommand(HerbertSerialConnection, fullPacket)
         if(int(response.split()[4]) == 1):
             break
-        time.sleep(0.3)
 
 def abortSolutionProcess(HerbertSerialConnection):
     fullPacket = ci.generateFullCommandPacket("Abort", 0)
@@ -88,21 +98,23 @@ def captureCubeState(HerbertSerialConnection, captureTop, camera_id):
     camera_context.connect(*camera_context.get_camera_from_index(camera_id))
     camera_context.set_video_mode_and_frame_rate(fc2.VIDEOMODE_1280x960Y8,
             fc2.FRAMERATE_7_5)  
-    camera_context.start_capture()
 
     state = STATE
+    camera_context.start_capture()
 
     for st in state:
         if(st[1] != None):
             image = fc2.Image()
             camera_context.retrieve_buffer(image)
+            camera_context.retrieve_buffer(image)
             image = fc2.convert(fc2.PIXEL_FORMAT_BGR, image)
             image.save(st[1] + '.bmp', fc2.BMP) # The filename is not finalized
         syncExecuteMoves(HerbertSerialConnection, st[0])
-
+        
     camera_context.stop_capture()
     camera_context.disconnect()
 
+# Old code for categorizing code
 def classify_pixel(pixel):
     hue = pixel[0]
     sat = pixel[1]
@@ -117,8 +129,8 @@ def classify_pixel(pixel):
         return RED
     elif(hue > 7 and hue <= 10):
         return ORANGE
-    elif(hue > 15 and hue < 30):
-        if(sat < 140):
+    elif(hue > 12 and hue < 30):
+        if(hue > 15 and sat < 140):
             return WHITE
         else:
             return YELLOW
@@ -129,7 +141,7 @@ def classify_pixel(pixel):
     else:
         return OTHER
 
-def categorizeCubeState():
+def categorizeCubeState(optimized):
     facelets = np.chararray(54)
 
     facelets[4] = COLORS[WHITE]
@@ -159,19 +171,42 @@ def categorizeCubeState():
                 facelet_mask = np.zeros(hsv_img.shape[:2], np.uint8)
                 cv2.fillPoly(facelet_mask, [np.array(polygon)], (255, 255,255))
                 masked_hsv_img = cv2.bitwise_and(hsv_img, hsv_img, mask = facelet_mask)
-               
-                # Calculate a bounding rectangle
-                ret,thresh = cv2.threshold(facelet_mask,127,255,cv2.THRESH_BINARY)
-                contours = cv2.findContours(thresh, 1, 2)
-                x_start,y_start,w,h = cv2.boundingRect(contours[0])
 
-                # Categorize the colors
-                count = [0, 0, 0, 0, 0, 0, 0]
-                for x in range(x_start, x_start+w):
-                    for y in range(y_start, y_start+h):
-                        count[classify_pixel(masked_hsv_img[y][x])]+=1
+                if optimized:
+                    hue_hist = cv2.calcHist([masked_hsv_img], [0], None, [180], [1, 180])
+                    sat_hist = cv2.calcHist([masked_hsv_img], [1], None, [256], [1, 256])
+                    hue_freq = [0, 0, 0, 0, 0, 0]
+                    sat_freq = [0, 0]
 
-                facelets[state[3][facelet_index]] = COLORS[count.index(max(count[:6]))]
+                    for hue_range in HUES:
+                        for hue in range(hue_range[0], hue_range[1] + 1):
+                            hue_freq[HUES.index(hue_range)] = hue_freq[HUES.index(hue_range)] + hue_hist[hue - 1]
+
+                    if(max(hue_freq) == hue_freq[HUES.index(WHITE_YELLOW_HUE)]):
+                        for sat_range in SATS:
+                            for sat in range(sat_range[0], sat_range[1] + 1):
+                                sat_freq[SATS.index(sat_range)] = sat_freq[SATS.index(sat_range)] + sat_hist[sat - 1]
+
+                        if(sat_freq[0] > sat_freq[1]):
+                            color = COLORS[WHITE]
+                        else:
+                            color = COLORS[YELLOW]
+                    else:
+                        color = COLORS[hue_freq.index(max(hue_freq))]
+                else: 
+                    # # Calculate a bounding rectangle
+                    ret,thresh = cv2.threshold(facelet_mask,127,255,cv2.THRESH_BINARY)
+                    contours = cv2.findContours(thresh, 1, 2)
+                    x_start,y_start,w,h = cv2.boundingRect(contours[0])
+
+                    # Categorize the colors
+                    count = [0, 0, 0, 0, 0, 0, 0]
+                    for x in range(x_start, x_start+w):
+                        for y in range(y_start, y_start+h):
+                            count[classify_pixel(masked_hsv_img[y][x])]+=1
+                    color = COLORS[count.index(max(count[:6]))]
+
+                facelets[state[3][facelet_index]] = color
                 facelet_index = facelet_index + 1
 
     cube_state = formatCubeState(facelets)
@@ -187,7 +222,7 @@ def formatCubeState(facelets):
         cubeState[i / 9] = cubeState[i / 9] + facelets[i]
     return cubeState
 
-def getCubeSolution(rep, kcube_path):
+def getCubeSolution(rep, kcube_path, t_thresh=2):
     """
     Gets the solution sequence for the supplied Rubik's representation.
 
@@ -196,72 +231,80 @@ def getCubeSolution(rep, kcube_path):
     :sol_threshold: The threshold indicating the minimum number of moves.
     """
 
-    # change into the directory where KCube lives
+    # Change into the directory where KCube lives
     os.chdir(kcube_path)
 
     proc_time = None
 
-    # invoke the KCube application with the supplied cube representation
+    # Invoke the KCube application with the supplied cube representation
+    process = subprocess.Popen(["KCUBE", rep[0], rep[1], rep[2], rep[3], rep[4], rep[5]], stdout=subprocess.PIPE,
+                                stderr=subprocess.STDOUT)
     starttime = time.time()
-    process = subprocess.Popen(["KCUBE", rep[0], rep[1], rep[2], rep[3], rep[4], rep[5]], shell=True, stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT, preexec_fn=os.setsid)
 
-    # poll the ongoing process for new output until finished
-    solution_found = False
+    # Poll the ongoing process for new output until finished
+    # Solution_found = False
     sol_sequence = None
-    while True:
-        if solution_found: 
-            break
 
+    while (time.time() - starttime) < t_thresh  or sol_sequence == None:
         nextline = process.stdout.readline()
+
         if nextline == '' and process.poll() != None:
             break
 
         for x in range(25):
             if "(" + str(25 - x) + ")" in nextline and not "threshold" in nextline:
-                endtime  = time.time()
-                proc_time = endtime - starttime
                 sol_sequence = nextline
-                solution_found = True
-                break
+
+    endtime = time.time()
+    proc_time = endtime - starttime
 
     # if the sol_sequence is not empty, replace the period and remove the last 4 character assum 
     if(sol_sequence != None):
         sol_sequence = sol_sequence.replace(". ", "").replace("'", "b").replace("'", "").split("(")[:-1][0]
 
     # Kill the Kcube process and return
-    os.killpg(process.pid, signal.SIGTERM)
+
     return (sol_sequence, proc_time)
 
 if __name__ == '__main__':
-    # create the CLI options
+    print "Finished importing packages..."
+    
+    start_time = time.time()
+    # Create the CLI options
     parser = argparse.ArgumentParser(description='')
-    parser.add_argument("--topid", required=True, help="The device ID for top Camera.")
-    parser.add_argument("--bottomid", required=True, help="The device ID for bottom Camera.")
+    parser.add_argument("--id", required=True, type=int, help="The device ID for top Camera.")
+    parser.add_argument("--disableOptimized", "-do", action='store_false', help="Disable optimization.")
+    parser.add_argument("--sequenceMode", "-fast", action='store_true', help="Disable optimization.")
     parser.add_argument("--debug", "-d", action='store_true', help="Enable debugging.")
+    parser.add_argument("--t_thresh", "-thresh", default=2, type=int, help="Amount of time to look for optimal solution.")
+    parser.add_argument("--port", "-p", default="COM9", help="The COM port which the FPGA is plugged into.")
 
     args = parser.parse_args()
-
-    topid = args.topid
-    bottomid = args.bottomid
     debug = args.debug
 
-    HerbertSerialConnection = ci.HerbertSerial("COM1")
+    HerbertSerialConnection = ci.HerbertSerial(args.port)
     try:
-        captureCubeState(HerbertSerialConnection, True, int(topid))
+        # Captures the cube state
+        captureCubeState(HerbertSerialConnection, True, args.id)
 
-        # get the solution sequence by invoking Kociemba's algorithm on the cube
+        # Get the solution sequence by invoking Kociemba's algorithm on the cube
         # representation
         kcube_path = "kcube"
-        (sol_seq, proc_time) = getCubeSolution(categorizeCubeState(), kcube_path)
-        
+        (sol_seq, proc_time) = getCubeSolution(categorizeCubeState(args.disableOptimized), kcube_path, args.t_thresh)
         print sol_seq
         if sol_seq != None:
-            syncExecuteMoves(HerbertSerialConnection, sol_seq)
+            # If sequence mode is true then it will send execute command one at a time
+            if args.sequenceMode: 
+                syncExecuteMoves(HerbertSerialConnection, sol_seq)
+            else:
+                for move in sol_seq.split():
+                    if move != "":
+                        syncExecuteMoves(HerbertSerialConnection, move)
+
+        print time.time() - start_time
     except KeyboardInterrupt:
         print "Aborting Gracefully!"
     finally:
-      abortSolutionProcess(HerbertSerialConnection)
-      HerbertSerialConnection.close()
-
+        abortSolutionProcess(HerbertSerialConnection)
+        HerbertSerialConnection.close()
 

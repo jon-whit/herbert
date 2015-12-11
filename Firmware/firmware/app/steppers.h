@@ -29,7 +29,7 @@ typedef enum
 enum StepperConstants
 {
     stepperHome = INT_MAX,
-    defaultFastFrequency    = 300,
+    defaultFastFrequency    = 700,
     defaultSlowFrequency    = 100,
     defaultRampSteps        = 10,
 };
