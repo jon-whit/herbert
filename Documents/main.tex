@@ -34,14 +34,14 @@
 \maketitle
 
 \begin{abstract}
-Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of a complex network of mechanical and electrical devices. In this project our team will be interfacing with these complex mechanical and electrical devices so as to design and create an autonomous robot that is capable of achieving record-breaking Rubik's Cube solution sequences.  This project will be an integration of various technologies including: mechanical actuators, electrical stepper motors, single-board computers, field-programmable gate arrays, and video cameras.
+Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of a complex network of mechanical and electrical devices. In this project our team interfaced with these complex mechanical and electrical devices so as to design and create an autonomous robot that is capable of solving a Rubik's cube within two minutes of time.  This project is an integration of various technologies including: mechanical actuators, electrical stepper motors, single-board computers, field-programmable gate arrays, and video cameras.
 \end{abstract}
 
 \section{Introduction}
 \label{sec:intro}
-The purpose of this project is to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components needed in our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). The video cameras connect to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video cameras are responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer will then apply Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm will return will be in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer will communicate through an RS232 serial connection to an FPGA board which will drive the mechanical actuation and stepper motor rotations needed to physically manipulate the cube. The FPGA will act as a system control board and will be responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram} of section \ref{sec:Project Design}.
+The goal of this project was to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components integrated into our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). A video camera connects to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video camera is responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer applies Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm returns is in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer communicates through an RS232 serial connection to an FPGA control board which drives the mechanical actuations and stepper motor rotations needed to physically manipulate the cube. The FPGA acts as a system control board and is responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram} of section \ref{sec:Project Design}.
 
-Upon completion of the robotic Rubik's Cube solver, if time permits, we hope to take Project Herbert one step further and obtain a Guinness World Record for the fastest robot to solve a Rubik's Cube. CubeStormer3 is the current record holder \cite{GuinnessWR}. The uniqueness of this project is rooted in the optimizations that we will have to make in each component of our system, especially the electro-mechanical stepper motors and the mechanical actuators. We will have to fine-tune these mechanical components to perform physical operations quicker than the human eye in order to obtain record-breaking speed. In this process we will have to maintain the precision needed to rotate the cube.
+%Upon completion of the robotic Rubik's Cube solver, if time permits, we hope to take Project Herbert one step further and obtain a Guinness World Record for the fastest robot to solve a Rubik's Cube. CubeStormer3 is the current record holder \cite{GuinnessWR}. The uniqueness of this project is rooted in the optimizations that we will have to make in each component of our system, especially the electro-mechanical stepper motors and the mechanical actuators. We will have to fine-tune these mechanical components to perform physical operations quicker than the human eye in order to obtain record-breaking speed. In this process we will have to maintain the precision needed to rotate the cube.
 
 \section{Project Design}
 \label{sec:Project Design}
@@ -82,7 +82,7 @@ Capturing the faces of a cube requires three primary operations:
  Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours, Suzuki85} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cubelets on each of the three faces of the cube.
 \end{itemize}
 
-After the individual cubelets have been identified within the image, a matrix model like that shown in Fig. \ref{fig:matrix layout} will be generated. Each individual position (U1, U2, F1, F2, etc.) can be represented as a single ASCII character indicating the color at that cubelet position. Table \ref{table:cubelet representation} defines the mapping scheme we will employ for the Rubik's Cube matrix model. Once this matrix model has been generated for the cube, we will pass it on to an application written by Greg Schmidt known as \textit{Kcube} \cite{TheTwo-PhaseAlgorithm}. Kcube will process the cube permutation (see \ref{sec:Kcube}), apply Kociemba's algorithm, and generate a solution sequence.
+After the individual cubelets have been identified using the captured frames, a matrix model like that shown in Fig. \ref{fig:matrix layout} is generated. Each individual position (U1, U2, F1, F2, etc.) is represented as a single ASCII character indicating the color at that cubelet position. Table \ref{table:cubelet representation} defines the mapping scheme we employed for the Rubik's Cube matrix model. Once this matrix model is generated for the cube, we pass it on to an application written by Greg Schmidt known as \textit{Kcube} \cite{TheTwo-PhaseAlgorithm}. Kcube processes the cube permutation (see \ref{sec:Kcube}), applies Kociemba's algorithm to it, and generates a solution sequence for that permutation.
 \begin{figure}[!ht]
 \begin{center}
 \begin{BVerbatim}
@@ -120,24 +120,24 @@ After the individual cubelets have been identified within the image, a matrix mo
 \begin{tabular}{|c|c|}
 \hline
 \textbf{COLOR} & \textbf{CHARACTER} \\ \hline
-WHITE          & 'W'              \\ \hline
-RED            & 'R'              \\ \hline
-BLUE           & 'B'              \\ \hline
-GREEN          & 'G'              \\ \hline
-ORANGE         & 'O'              \\ \hline
-YELLOW         & 'Y'              \\ \hline
+WHITE          & `W'              \\ \hline
+RED            & `R'              \\ \hline
+BLUE           & `B'              \\ \hline
+GREEN          & `G'              \\ \hline
+ORANGE         & `O'              \\ \hline
+YELLOW         & `Y'              \\ \hline
 \end{tabular}
 \end{table}
 
 \subsection{Kcube and the Solution Sequence}
 \label{sec:Kcube}
-Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{TheTwo-PhaseAlgorithm}. The Kcube application will be used to generate the solution sequence needed to solve the Rubik's Cube that was captured during the image processing phase. The matrix model generated from the image processing phase will allow us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you would invoke Kcube with the following command:
+Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{TheTwo-PhaseAlgorithm}. We utilized the Kcube application to generate the solution sequence needed to solve the Rubik's Cube that was captured during the image processing phase. The matrix model generated from the image processing phase allows us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you invoke Kcube with the following command:
 
 \begin{lstlisting}[style=DOS]
 c:>kcube L:GGWWOWBRB F:GWGBGYWBO U:YOOOWYROY D:ORGWYYYRB R:OGBBRYWRR B:YBROBGWGR
 \end{lstlisting}
 
-Kcube will then process the input parameters and generate a sequence of twenty-three or less moves (see \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move will be mapped to a unique integer value (see Table \ref{table:moves table}), and these values will be transmitted sequentially over an RS232 serial connection to the FPGA control board, at which point the control board will take responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
+Kcube processes the input parameters and generates a sequence of twenty-three or less moves (see Appendix \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move is mapped to a unique character or set of characters (see Table \ref{table:moves table}), and these characters are transmitted over an RS232 serial connection to the FPGA control board, at which point the control board takes responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
 
 
 \begin{figure}[!ht]
@@ -148,29 +148,29 @@ Kcube will then process the input parameters and generate a sequence of twenty-t
 \end{figure}
 
 \begin{table}[!ht]
-\caption{Cube moves to integer mapping}
+\caption{Cube moves to character set mapping}
 \label{table:moves table}
 \centering
 \begin{tabular}{|c|c|c|c|c|c|}
 \hline
-\textbf{MOVE} & \textbf{VALUE} & \textbf{MOVE} & \textbf{VALUE} & \textbf{MOVE} & \textbf{VALUE} \\ \hline
-F             & 1              & R             & 7              & D             & 13             \\ \hline
-F'            & 2              & R'            & 8              & D'            & 14             \\ \hline
-F2            & 3              & R2            & 9              & D2            & 15             \\ \hline
-L             & 4              & U             & 10             & B             & 16             \\ \hline
-L'            & 5              & U'            & 11             & B'            & 17             \\ \hline
-L2            & 6              & U2            & 12             & B2            & 18             \\ \hline
+\textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} \\ \hline
+F             & F              & R             & R              & D             & D             \\ \hline
+F'            & Fb              & R'            & Rb              & D'            & Db            \\ \hline
+F2            & F2              & R2            & R2              & D2            & D2             \\ \hline
+L             & L              & U             & U             & B             & B             \\ \hline
+L'            & Lb              & U'            & Ub             & B'            & Bb             \\ \hline
+L2            & L2              & U2            & U2             & B2            & B2             \\ \hline
 \end{tabular}
 \end{table}
 
 \subsection{Mechanical Actuators}
 \label{sec:Mechanical Actuators}
-To physically manipulate the cube, Herbert will employ a six arm design. One arm for each face of the cube. In order to achieve a six arm design, each arm must actuate in and out so as to avoid conflict
+Herbert employs a six arm design to physically manipulate the cube. One arm for each face of the cube. In order to achieve a six arm design, each arm actuates in and out so as to avoid conflict
 with the other arms. This actuation process is a time critical component of
-the design, and therefore needs to be as fast as possible.  We initially planned on implementing the
-arm actuation with motors.  However, preliminary testing has showed that using
+the design.  We initially planned on implementing the
+arm actuation with motors.  However, preliminary testing showed that using
 motors to convert rotary motion into linear motion is too slow, and using a linear motor
-actuator is too costly. Our design requires high speed and affordable cost. We believe pneumatic actuation is the solution to this problem.  Each of the arms will be attached to a double action pneumatic air cylinder as show in Fig. \ref{fig:Pneumatic Air Cylinder}.
+actuator is too costly. We decided that pneumatic actuation is the solution to this problem.  Each of the arms is attached to a double action pneumatic air cylinder as show in Fig. \ref{fig:Pneumatic Air Cylinder}.
 
 \begin{figure}[!ht]
 \centering
@@ -179,15 +179,14 @@ actuator is too costly. Our design requires high speed and affordable cost. We b
 \label{fig:Pneumatic Air Cylinder}
 \end{figure}
 
-The FPGA control board will be responsible for controlling a relay control board (see Fig. \ref{fig:System Block Diagram}) which will control coaxial pairs of air cylinders. The actuation distance for each control arm will be fixed. The relay switches coaxial pairs of arms will either be in an extended or retracted position. Potential optimizations and more stable cube manipulations  are obtained by simultaneously extending and retracting coaxial pairs of arms. The linear actuation motion allows two coaxial pairs of
+The FPGA control board is responsible for controlling a relay control board (see Fig. \ref{fig:System Block Diagram}) which controls coaxial pairs of air cylinders. The actuation distance for each control arm is fixed. The coaxial pairs of arms are kept in an extended or retracted position, depending on the current move being executed. Potential optimizations and more stable cube manipulations  are obtained by simultaneously extending and retracting coaxial pairs of arms. The linear actuation motion allows two coaxial pairs of
 arms to extend, thus encasing two sides of the cube in the sockets of the arms. After a pair of arms extend,
-a stepper motor will spin the arm corresponding to the appropriate move from the solution sequence (see section \ref{sec:Stepper Motors}). Each air cylinder will be provided approximately 80-100 psi supplied from an air compressor. To protect against any
-arm collisions only one pair of arms will be in the extended position at any given time.
+a stepper motor spins the arm corresponding to the appropriate move from the solution sequence (see section \ref{sec:Stepper Motors}). Each air cylinder is provided approximately 40-60 psi supplied from an air compressor. To protect against any arm collisions, only one pair of arms is in the extended position at any given time.
 
 
 \subsection{Electro-mechanical Stepper Motors}
 \label{sec:Stepper Motors}
-Each actuating arm will have a stepper motor which will be responsible for rotating a single face. A stepper motor will rotate a face either 90 degrees or 180 degress clockwise or counter-clockwise based on the solution move that is being processed (as specified in Appendix \ref{sec:Appendix A}). A square axle (as seen Fig. \ref{fig:Stepper Motor Arm}) will be fastened to the stepper motors. This axle will twist the arm pieces in order to spin the faces of the Rubik's Cube.
+Each actuating arm has a stepper motor which is responsible for rotating a single face. A stepper motor rotates a face either 90 degrees or 180 degress clockwise or counter-clockwise based on the solution move that is being processed (as specified in Appendix \ref{sec:Appendix A}). A 3D printed axle (as seen Fig. \ref{fig:Stepper Motor Arm}) is fastened to the stepper motors. This axle twists a 3D printed arm piece in order to spin a face of the Rubik's Cube.
 
 \begin{figure}[!ht]
 \centering
@@ -196,82 +195,13 @@ Each actuating arm will have a stepper motor which will be responsible for rotat
 \label{fig:Stepper Motor Arm}
 \end{figure}
 
-Each stepper motor will be driven by a motor control board which will be controlled by the FPGA control board (see Fig. \ref{fig:System Block Diagram}). The motor control boards will contain a motor driver chip for each stepper motor. The FPGA control board will be responsible for controlling the angular and temporal timing of each stepper motor rotation.
-
-
-\section{Schedule}
-Our work will be distributed over the upcoming summer months and Fall 2015 semester, spanning May 13-December 2015. Table \ref{table:herbert timeline} outlines the milestones we hope to have completed by the end of this upcoming summer. A brief description of each one of these milestones is presented in Section \ref{sec:Milestones}. Come Fall semester 2015, we hope to be integrating each component and testing the robustness of our system.
-\begin{table}[!ht]
-\caption{Herbert itemized timeline}
-\label{table:herbert timeline}
-\resizebox{\textwidth}{!}{\begin{tabular}{|l|c|c|c|}
-\hline
-\multicolumn{1}{|c|}{\textbf{Tasks}}      & \textbf{Start} & \textbf{Finish} & \textbf{Milestone}                 \\ \hline
-\textbf{}                                 & 2015-05-13     & 2015-05-20      & OpenCV Setup                       \\ \hline
-Setup Windows Embedded VM using Vagrant   &                &                 &                                    \\ \hline
-Install Camera Drivers and Interfaces     &                &                 &                                    \\ \hline
-Download and Install OpenCV               &                &                 &                                    \\ \hline
-\textbf{}                                 & 2015-05-20     & 2015-06-19      & Basic Cube Capture                 \\ \hline
-Research Object Detection Algorithms      &                &                 &                                    \\ \hline
-Experiment with Canny Edge Detection      &                &                 &                                    \\ \hline
-Experiment with Contour Identification    &                &                 &                                    \\ \hline
-                                          & 2015-06-19     & 2015-07-02      & Finalize Object Detection Software \\ \hline
-Implement Object Detection Algorithm      &                &                 &                                    \\ \hline
-Generate Output Representation of Cube    &                &                 &                                    \\ \hline
-\textbf{}                                 & 2015-05-13     & 2015-05-26      & Mechanical Tasks                   \\ \hline
-Build The Herbert Frame                   &                &                 &                                    \\ \hline
-Determine fastener hardware               &                &                 &                                    \\ \hline
-Gather Hardware                           &                &                 &                                    \\ \hline
-Print 3D Arms                             &                &                 &                                    \\ \hline
-Attach Hardware to Frame                  &                &                 &                                    \\ \hline
-\textbf{}                                 & 2015-05-13     & 2015-06-12      & Firmware for Solution Sequence     \\ \hline
-Implement firmware for solution execution &                &                 &                                    \\ \hline
-Create Offline Command in comm.c          &                &                 &                                    \\ \hline
-\textbf{}                                 & 2015-06-15     & 2015-07-10      & Herbert Test Application           \\ \hline
-Add tab for Basic Movements               &                &                 &                                    \\ \hline
-Add tab for Manual Solution Input         &                &                 &                                    \\ \hline
-Add tab for testing motors and sensors    &                &                 &                                    \\ \hline
-                                          & 2015-12-16     & 2015-07-11      & Integration and Testing            \\ \hline
-T.B.D.                                    &                &                 &                                    \\ \hline
-\end{tabular}}
-\end{table}
-
-\subsection{Milestones}
-\label{sec:Milestones}
-\begin{itemize}
-  \item {\bf OpenCV Setup} \hfill \\
-  In this milestone we will configure a stable development environment for OpenCV, which will include setting up a development box, installing camera device drivers, and installing and configuring OpenCV.
-
-  \item {\bf Basic Cube Capture} \hfill \\
-  In this milestone we will familiarize ourselves with the OpenCV technologies and experiment with Canny edge detection and contour identification algorithms. This will give us the background we need to implement our cube capture application.
-  \item {\bf Kcube and the Solution Sequence} \hfill \\
-  By the end of this milestone we will be able to capture a cube, process it using the Kcube application, and generate a solution sequence that can be passed on to the FPGA control board for further processing.
-
-  \item {\bf Mechanical Tasks} \hfill \\
-  This milestone is dedicated to getting all of the mechanical parts integrated. This includes fastening the electro-mechanical stepper motors to the actuating arms and connecting the arms to the main chassis. Upon completion of this milestone we should have functioning mechanical components and a  working robot skeleton that can be operated by the FPGA control board.
-
-  \item {\bf Firmware for Solution Execution} \hfill \\
-  By the end of this milestone all FPGA control board firmware should be finalized and tested. When given a solution from Kcube, Herbert should be able to carry out the operations needed to solve the cube.
-
-  \item {\bf Herbert Test Application} \hfill \\
-  This goal of this milestone is to create a test application that allows us to interact with the mechancial components through a software interfaces communicating through the firmware on the FPGA control board. At the end of this milestone we should be able to manually control the rotation and actuation of the mechanical arms.
-
-  \item {\bf Integration and Testing} \hfill \\
-  Every part should be integrated together and tested for robustness and speed by the end of this milestone. If there are any errors or optimizations needed, then they are done upon completing this milestone as well. This milestone is tentatively scheduled after every other milestone is completed.
-\end{itemize}
-
-
-We believe that parallelizing these tasks by distributing them across our team will allow us to design this system in a time efficient manner. We hope to stay close to the timeline we present above, however the timeline is tentative, and will likely change over the course of summer and Fall semester.
+Each stepper motor is driven by a motor control board which is controlled by the FPGA control board (see Fig. \ref{fig:System Block Diagram}). The motor control boards contain a motor driver chip for each stepper motor. The FPGA control board is responsible for controlling the angular and temporal timing of each stepper motor rotation.
 
 \section{Required Resources}
 Table \ref{table:BOM} is the bill of materials (BOM) needed to realize this project. This BOM defines the main materials needed to realize the system as outlined in Fig. \ref{fig:System Block Diagram}.
-Many of the components that we will be using are being donated to us by industry sponsors. The components being donated to us include: the stepper motors, FPGA system control board, the
-motor control boards, and the Chameleon USB2.0 cameras. The stepper motors, motor control boards, and the FPGA system control board are ``in-house" proprietary boards developed by BioFire Defense Systems.
-The FPGA board embeds a Xilinx Spartan3 with a softcore Microblaze processor. The Chameleon USB2.0 cameras donated to us by Point Grey Research are 1.3 megapixel cameras with a Sony ICX445 CCD, 1/3", 3.75 micron sensor.
-
-As a team we will be distributing the cost of the pneumatic air cylinders, pneumatic solenoid valves, the 8 channel relay board needed to drive the valves, and any other unforseen costs
-that may arise. We are aware that additional costs may arise for standard industrial items such as screws and wiring. We hope to minimize these additional costs by utilizing the resources
-available to us as students in the ECE department at the University of Utah.
+Many of the components that we used were donated to us by industry sponsors. The components that were donated to us include: the stepper motors, FPGA system control board, the
+motor control boards, and the Chameleon USB2.0 camera. The stepper motors, motor control boards, and the FPGA system control board are ``in-house" proprietary boards developed by BioFire Defense Systems.
+The FPGA board embeds a Xilinx Spartan3 with a softcore Microblaze processor. The Chameleon USB2.0 cameras were donated to us by Point Grey Research. They a 1.3 megapixel camera with a Sony ICX445 CCD, 1/3", 3.75 micron sensor.
 
 \begin{table}[!ht]
 \caption{Main component BOM}
@@ -289,25 +219,15 @@ Chameleon USB2.0 Camera                    & 2                 & Point Grey Rese
 \end{tabular}}
 \end{table}
 
-\section{Risk Assessment}
-The main risk associated with this project is the image processing. The likelihood of error in the cube capture phase is high. Capturing the cube orientation is error-prone because of changes in environmental lighting conditions. Object detection algorithms present a steep learning curve. Likewise, interfacing with camera device parameters to aid in eliminating changes in ambient lighting can further increase the complexity of obtaining the initial cube configuration. Capturing the initial cube state is a core component of this project. Without accurate cube capture, the autonomous aspect of our project is void. As a result of this, we will put a large emphasis on accurate cube capture. If adapting to various lighting conditions proves too difficult and becomes too time costly, we will design our system under ideal lighting conditions to eliminate this risk altogether.
-
-Another high risk component of project Herbert is the chance of mechanical failure. There are various mechanical components that could cause total system failure if they were to break. If mechanical failures occur, the entire project may be jeopardized. In order to mitigate this risk, we have made sure that spare hardware parts can be obtained quickly from our industry sponsors.
+\section{Challenges}
 
 \section{Summary}
-Project Herbert is a project that integrates various technologies and domains of engineering into one complete package. Working on this project will help expose us to a real-world application of system integration and, most importantly, teamwork. Project Herbert will be broken down into three primary parts: cube detection, solution generation, and the physical manipulation of the cube using mechanical components. Each of these
-will present their own set of challenges. Implementing the cube detection application will require a lot of research in the field of image processing/computer vision, especially if we attempt to operate the system under various lighting conditions. The mechanical
+Project Herbert is a project that integrates various technologies and domains of engineering into one complete package. Working on this project has exposed us to a real-world application of system integration and, most importantly, teamwork. Project Herbert was broken down into three primary parts: cube detection, solution generation, and the physical manipulation of the cube using mechanical components. Each of these presented their own set of challenges. Implementing the cube detection application will require a lot of research in the field of image processing/computer vision, especially if we attempt to operate the system under various lighting conditions. The mechanical
 aspect of this project will require a fundamental understanding of mechatronics and robotics. The mechanical aspect of this proejct will also pose the greatest limitations. We will have to optimize the mechanical components by reducing frictional effects so as to ensure operation timings that are
 within the window of time needed to solve a cube in record breaking time.
 
-The workload associated with this project is ambitious. As a result of this, the workload will be distributed and worked on in parallel over the upcoming summer
-and Fall 2015 term. Working in parallel over the summer will allow us to get the bulk of the individual components implemented before Fall term, which will allow us to focus on integration, testing, and
-optimizations over the Fall semester. Thanks to many industry sponsors we are confident that the risks associated with our project will be mitigated in the case of component failure. This will allow
-our team to focus the majority of our time on design, integration, and testing.
-
 \section{Acknowledgements}
 Our team would like to thank BioFire Defense LLC, Point Grey Research Inc., and Futura Industries for all the support and resources they have provided us. Your contributions are greatly appreciated.
-
 
 \begin{figure}[!htb]
 \minipage{0.32\textwidth}
@@ -325,11 +245,11 @@ Our team would like to thank BioFire Defense LLC, Point Grey Research Inc., and 
 \label{fig:project_sponsors}
 \end{figure}
 
-BioFire Defense has given us the various control boards and mechanical components needed for this project. They have also given us access to various prototyping tools including high precision 3D printers and laser cutters. A special thanks goes out to BioFire engineers Logan Taylor (Mechanical), Pat Riley (Electrical/Systems), Matt Murdock (Electrical), and David Nielsen (VP of Product Development). These individuals have provided invaluable time and knowledge to our team.
+BioFire Defense donated the various control boards and mechanical components needed for this project. They also gave us access to various prototyping tools including high precision 3D printers and laser cutters. A special thanks goes out to BioFire engineers Logan Taylor (Mechanical), Pat Riley (Electrical/Systems), Matt Murdock (Electrical), and David Nielsen (VP of Product Development). These individuals provided invaluable time and knowledge to our team.
 
-We'd also like to thank Vladimir Tucakov of Point Grey Research. He has provided our team with their Chameleon CMLN-13S2M-CS camera which we will use for precise and fast image acquisition. Vladimir has also discussed our project and ideas with his colleagues at Point Grey, and they have mentioned featuring our project in their newsletter.
+We'd also like to thank Vladimir Tucakov of Point Grey Research. He provided our team with their Chameleon CMLN-13S2M-CS camera which we used for image acquisition.
 
-We couldn't put all these components together without a nice chassis to house them all. For this, we would like to thank Futura Industries. They have helped us in the design and construction of the aluminum frame we will use to build Herbert. Another special thanks goes out to Futura's Kenton Frandsen (Mechanical/Manufacturing Engineer) who has assisted in the mechanical design of the arm and frame of our project.
+We couldn't have put all these components together without a nice chassis to house them all. For this, we would like to thank Futura Industries. They helped us in the design and construction of the aluminum frame we used to house Herbert. Another special thanks goes out to Futura's Kenton Frandsen (Mechanical/Manufacturing Engineer) who assisted in the mechanical design of the mechanical arms and frame of our project.
 
 % Insert the Bibliography
 \printbibliography
