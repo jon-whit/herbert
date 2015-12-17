@@ -94,7 +94,7 @@ enum ArmMotionConstants
     quarterTurnStepsCounterClockwise = -40,
 
     armMotionTimeout_ms              = 100000,
-    actuateTimeout_ms                = 250,
+    actuateTimeout_ms                = 500,
 };
 
 ///////////////////////////////////////////////////
@@ -374,6 +374,8 @@ bool motionProcess(void* unused)
                         switch(queuedRotations.rotations[queuedRotations.currentRotation].motor)
                         {
                             case stepperU: 
+                                stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, 5);
+                                break;
                             case stepperR: 
                             case stepperD: 
                             case stepperB: 
@@ -389,17 +391,19 @@ bool motionProcess(void* unused)
                     {
                         switch(queuedRotations.rotations[queuedRotations.currentRotation].motor)
                         {
-                            case stepperF: 
-                                stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, -4);
-                                break;
-                            case stepperU: 
-                            case stepperD: 
+                            
+                                //stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, -4);
+                                //break;
                             case stepperB: 
+                            case stepperU: 
+                            case stepperD:
+                                stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, -1);
+                                break;
+                            case stepperF: 
                                 stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, -3);
                                 break;
+                            case stepperR:
                             case stepperL: 
-                            case stepperR: 
-                                stepper_move_relative(queuedRotations.rotations[queuedRotations.currentRotation].motor, -2);
                                 break;
                         }
                     }
