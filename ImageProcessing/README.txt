@@ -59,5 +59,10 @@ cube_capture.py contains prototype code for dynamic cube state detection.
 
 ---------
 main.cpp
---------
+---------
 main.cpp contains old image processing code in C++ before we had to port to python.
+
+---------
+*.bmp
+---------
+Some example images we taken during a solve sequence
