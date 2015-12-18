@@ -39,7 +39,14 @@ Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of
 
 \section{Introduction}
 \label{sec:intro}
-The goal of this project was to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components integrated into our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). A video camera connects to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video camera is responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer applies Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm returns is in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer communicates through an RS232 serial connection to an FPGA control board which drives the mechanical actuations and stepper motor rotations needed to physically manipulate the cube. The FPGA acts as a system control board and is responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators.
+The goal of this project was to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components integrated into our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). A video camera connects to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video camera is responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer applies Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm returns is in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer communicates through an RS232 serial connection to an FPGA control board which drives the mechanical actuations and stepper motor rotations needed to physically manipulate the cube. The FPGA acts as a system control board and is responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram}.
+
+\begin{figure*}[!ht]
+\centering
+\includegraphics{"Herbert System Diagram".pdf}
+\caption{Herbert Block Diagram}
+\label{fig:System Block Diagram}
+\end{figure*}
 
 \begin{figure}[!ht]
 \centering
@@ -72,13 +79,12 @@ The final camera configuration used a single camera to capture the entire state 
 
 \subsubsection{Cube Orientation}
 \subsubsection{Color Recognition}
-After all 
 \paragraph{Color Space}
 Several factors affects the robustness of the color recognition. 
 \paragraph{Categorization Algorithm}
 
 
-\subsection{Kcube and Solution Sequence}
+\subsection{Kcube and the Solution Sequence}
 \begin{figure*}[!ht]
 \begin{center}
 \begin{BVerbatim}
@@ -125,7 +131,6 @@ YELLOW         & `Y'              \\ \hline
 \end{tabular}
 \end{table}
 
-\subsection{Kcube and the Solution Sequence}
 \label{sec:Kcube}
 Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{TheTwo-PhaseAlgorithm}. We utilized the Kcube application to generate the solution sequence needed to solve the Rubik's Cube that was captured during the image processing phase. The matrix model generated from the image processing phase allows us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you invoke Kcube with the following command:
 
@@ -164,9 +169,6 @@ L2            & L2              & U2            & U2             & B2           
 \end{tabular}
 \end{table}
 
-
-\subsection{Serial Communication and Command Format}
-
 \section{Hardware Implementation}
 \subsection{Mechanical Actuators}
 \label{sec:Mechanical Actuators}
@@ -200,7 +202,7 @@ Another mechanical optimization that would help reduce the time to completion is
 \label{fig:Pneumatic Air Cylinder}
 \end{figure}
 
-\subsubsection{Electro-mechanical Stepper Motors}
+\subsection{Electro-mechanical Stepper Motors}
 \label{sec:Stepper Motors}
 Each actuating arm has a stepper motor which is responsible for rotating a single face. A stepper motor rotates a face either 90 degrees or 180 degrees clockwise or counter-clockwise based on the solution move that is being processed (as specified in Appendix \ref{sec:Appendix A}). A 3D printed axle (as seen Fig. \ref{fig:Stepper Motor Arm}) is fastened to the stepper motors. This axle twists a 3D printed arm piece in order to spin a face of the Rubik's Cube.
 
@@ -238,8 +240,6 @@ The 3D printed arm piece at the end of each arm assembly (see Fig. \ref{fig:Step
 
 \section{Firmware}
 Table \ref{table:CMDS} is a detailed list of the commands we used for this project.
-
-Default behavior of the stepper motors is to continuously draw power and hold when in a static position.
 
 \begin{table*}[!ht]
 \caption{Firmware Commands}
