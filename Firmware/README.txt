@@ -8,6 +8,8 @@ firmware
 		-contains the bootloader code (we did not modify this)
 	- common 
 		-contains code common to bootloader and application (we did not modify this)
+       - firmware-original.zip
+		-contains a clean copy of the original source code that we modified
 
 fpga
 	- contains all of the vhdl code for the fpga (we added all vhdl code for our peripherals)
