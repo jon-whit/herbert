@@ -224,6 +224,45 @@ The 3D printed arm piece at the end of each arm assembly (see Fig. \ref{fig:Step
 \label{fig:Arm Progression}
 \end{figure}
 
+
+\section{Firmware}
+Table \ref{table:CMDS} is a detailed list of the commands we used for this project.
+
+\begin{table*}[!ht]
+\caption{Firmware Commands}
+\label{table:CMDS}
+\resizebox{\textwidth}{!}{\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Command} & \textbf{Parameters} & \textbf{Description}                                                                                        	                  \\ \hline
+
+ActuateArm           & 1 	     & Toggles the relay board to control the pneumatic actuations of coaxial arms.                     \\ \hline
+	     
+DisableMotors       & 0 	     & Default behavior of the stepper motors is to continuously draw power and hold when in a static position.  This command disables the motors.  \\ \hline
+				     
+TimingTest             & 0 	     & Perform an actuation and spin motion for preliminary testing to determine how fast we could perform.  \\ \hline
+
+Abort                      & 0 	     & Halts all motion and clears buffers holding the solution sequence.                    \\ \hline   
+
+MoveRelative         & 2 	     & Manually spin the arm by moving the specified stepper motor the given number of steps                   \\ \hline      
+                                                                                 
+MR                         & 2 	     & Equivalent to MoveRelative just a shortened command                      \\ \hline
+                                                 
+GetRawSwitches   & 0 	     & Gets all of the current values for all of the switches.                      \\ \hline   
+                                                                                      
+GetRawSensors    & 0 	     & Gets all of the current values for all of the break sensors.                       \\ \hline
+	     
+GetSwitch             & 1            & Gets the current value for the specified switch.                      \\ \hline  
+		                                     
+GetSensor            & 1           & Gets the current value for the specified break sensor.                      \\ \hline
+                                                 
+ExecuteMoves     & Variable & Performs the correct actuation and spin sequence for each of the moves provided.                    \\ \hline  
+                                                                                      
+IsIdle                    & 0           &  Queries the motion state machine to determine if motion is still in progress.                   \\ \hline
+                                                 
+InitArms               & 0           & Spins each arm until its corresponding break sensor is made, This aligns the arms in a 90 degree position.                     \\ \hline                                                                           
+\end{tabular}}
+\end{table*}
+
 \section{Required Resources}
 Table \ref{table:BOM} is the bill of materials (BOM) needed to realize this project. This BOM defines the main materials needed to realize the system as outlined in Fig. \ref{fig:System Block Diagram}.
 Many of the components that we used were donated to us by industry sponsors. The components that were donated to us include: the stepper motors, FPGA system control board, the
