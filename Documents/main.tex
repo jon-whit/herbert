@@ -41,8 +41,6 @@ Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of
 \label{sec:intro}
 The goal of this project was to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components integrated into our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). A video camera connects to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video camera is responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer applies Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm returns is in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer communicates through an RS232 serial connection to an FPGA control board which drives the mechanical actuations and stepper motor rotations needed to physically manipulate the cube. The FPGA acts as a system control board and is responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram} of section \ref{sec:Project Design}.
 
-%Upon completion of the robotic Rubik's Cube solver, if time permits, we hope to take Project Herbert one step further and obtain a Guinness World Record for the fastest robot to solve a Rubik's Cube. CubeStormer3 is the current record holder \cite{GuinnessWR}. The uniqueness of this project is rooted in the optimizations that we will have to make in each component of our system, especially the electro-mechanical stepper motors and the mechanical actuators. We will have to fine-tune these mechanical components to perform physical operations quicker than the human eye in order to obtain record-breaking speed. In this process we will have to maintain the precision needed to rotate the cube.
-
 \section{Project Design}
 \label{sec:Project Design}
 
@@ -186,8 +184,8 @@ Another mechanical optimization that would help reduce the time to completion is
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.35]{AirCylinder.jpg}
-\caption{Pneumatic Air Cylinder}
+\includegraphics[scale=0.28]{AirCylinder.jpg}
+\caption{Pneumatic Air Cylinder and 3D Printed Axel Support}
 \label{fig:Pneumatic Air Cylinder}
 \end{figure}
 
@@ -197,12 +195,34 @@ Each actuating arm has a stepper motor which is responsible for rotating a singl
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.35]{StepperMotorArm.jpg}
-\caption{Stepper Motor Arm}
+\includegraphics[scale=0.30]{StepperMotorArm.jpg}
+\caption{Stepper Motor Arm Assembly}
 \label{fig:Stepper Motor Arm}
 \end{figure}
 
 Each stepper motor is driven by a motor control board which is controlled by the FPGA control board (see Fig. \ref{fig:System Block Diagram}). The motor control boards contain a motor driver chip for each stepper motor. The FPGA control board is responsible for controlling the angular and temporal timing of each stepper motor rotation.
+
+\subsection{Infrared Break Sensors}
+\label{sec:Infrared Break Sensors}
+Rotations must end at a 90 degree angle so as to not interrupt the rotation of another arm.  These exact angles are hard to accomplish by counting steps, because it is difficult to detect whether steps are skipped.  To compensate for this we used infrared break sensors like that shown in Fig. \ref{fig:Infrared Break Sensor}. Each arm assembly has an infrared sensor (see Fig. \ref{fig:Stepper Motor Arm}). The infrared sensor is broken at all angles that are not a multiple of 90 degrees. These break sensors are monitored and controlled through the motor control boards.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.28]{InfraredBreakSensor.jpg}
+\caption{Infrared Break Sensor}
+\label{fig:Infrared Break Sensor}
+\end{figure}
+
+\subsection{Arm Progression}
+\label{sec:Arm Progression}
+The 3D printed arm piece at the end of each arm assembly (see Fig. \ref{fig:Stepper Motor Arm}) underwent a great progression. Fig. \ref{fig:Arm Progression} highlights the progression of the arm pieces from left to right. The first iteration was a simple arm that had a square socket and connected directly to the stepper motor without any intermediate axel piece.  The inner part of the socket had chamfered edges to correct for any error in alignment.  The second iteration included tabs for break sensor detection, and it was elongated to accommodate the length of the center pin.  We also modified the socket into four prongs. This allowed better visibility of the cube for the image processing. In the last arm revision we changed from tabbed break sensor detection to slits. This improvement allowed more precise angle detection.  We also shortened the arm, added more chamfered edges for minor alignment error corrections, and included slight height changes to fit the slider piece and circular cutouts to avoid arm collisions.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{ArmProgression.jpg}
+\caption{Arm Progresssion}
+\label{fig:Arm Progression}
+\end{figure}
 
 \section{Required Resources}
 Table \ref{table:BOM} is the bill of materials (BOM) needed to realize this project. This BOM defines the main materials needed to realize the system as outlined in Fig. \ref{fig:System Block Diagram}.
