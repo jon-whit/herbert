@@ -1,5 +1,5 @@
 % pre-amble section
-\documentclass[final, letterpaper, 10 pt, conference, onecolumn]{IEEEtran}
+\documentclass[final, letterpaper, 10 pt, conference, onecolumn]{IEEEconf}
 
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
@@ -196,6 +196,29 @@ Each actuating arm has a stepper motor which is responsible for rotating a singl
 \end{figure}
 
 Each stepper motor is driven by a motor control board which is controlled by the FPGA control board (see Fig. \ref{fig:System Block Diagram}). The motor control boards contain a motor driver chip for each stepper motor. The FPGA control board is responsible for controlling the angular and temporal timing of each stepper motor rotation.
+
+\subsection{Infrared Break Sensors}
+\label{sec:Infrared Break Sensors}
+In order for a rotation to be successful it must end at a 90 degree angle as to not interrupt the rotation of another arm.  These exact angles are hard to accomplish by counting steps because we are unable to detect whether steps were skipped.  To compensate for this we used ifrared break sensors (see Fig. \ref{fig:Infrared Break Sensor}).  The sensor is placed on the arm as to have the sensor broken at all angles but at 90 degree increments.  These break sensors are controlled through connections on the motor control boards.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.5]{InfraredBreakSensor.jpg}
+\caption{Infrared Break Sensor}
+\label{fig:Infrared Break Sensor}
+\end{figure}
+
+\subsection{Arm Progression}
+\label{sec:Arm Progression}
+
+The original idea behind the six arm solution was to have 6 socket-like arm pieces to actuate in to spin the Rubik's cube.  The first iteration was a simple arm that had a square socket and connects to the stepper motor.  The inner part of the socket had chamfered edges to correct for any error in alignment.  The next iteration included tabs for break sensor detection and it was long to accomodate the length of the center pin.  Also the socket was seperated into four prongs instead of an entire socket as to allow for more visibility of the cube.  For the last iterations we changed from tabbed break sensor detection to slits to allow for more precision on angle detection.  We also shortened the arm and added more chamfered edges for corrections.  We angled out the out the end of the prongs to provide more alignment correction.  Other corrections included slight height changes to fit the slider piece and circular cutouts to avoid arm collisions.  Below is an image showing examples from these iterations (see Fig. \ref{fig:Arm Progression}). 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[width=\linewidth]{ArmProgression.jpg}
+\caption{Arm Progresssion}
+\label{fig:Arm Progression}
+\end{figure}
 
 \section{Required Resources}
 Table \ref{table:BOM} is the bill of materials (BOM) needed to realize this project. This BOM defines the main materials needed to realize the system as outlined in Fig. \ref{fig:System Block Diagram}.
