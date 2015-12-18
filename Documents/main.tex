@@ -43,28 +43,88 @@ The goal of this project was to create an autonomous robotic Rubik's Cube solver
 
 %Upon completion of the robotic Rubik's Cube solver, if time permits, we hope to take Project Herbert one step further and obtain a Guinness World Record for the fastest robot to solve a Rubik's Cube. CubeStormer3 is the current record holder \cite{GuinnessWR}. The uniqueness of this project is rooted in the optimizations that we will have to make in each component of our system, especially the electro-mechanical stepper motors and the mechanical actuators. We will have to fine-tune these mechanical components to perform physical operations quicker than the human eye in order to obtain record-breaking speed. In this process we will have to maintain the precision needed to rotate the cube.
 
-\section{Project Design}
-\label{sec:Project Design}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.25]{"Rubik's Cube Positioning".png}
+\caption{Initial ideal cube image capture}
+\label{fig:Camera Positioning}
+\end{figure}
+
 
 \begin{figure}[!ht]
 \centering
-\includegraphics{"Herbert System Diagram".pdf}
-\caption{Herbert Block Diagram}
-\label{fig:System Block Diagram}
+\includegraphics[scale=0.20]{actual_cube_capture.png}
+\caption{Obscured cube image capture}
+\label{fig:Obscured Cube}
 \end{figure}
 
-\subsection{Capturing the Cube with OpenCV}
+\section{Software Implementation}
+\label{sec:Software Implementation}
+
+
+
+The project uses a good software implementation. (This won't be included in the actual report)
+
+\subsection{Image Processing}
+
+
+\subsubsection{Point Grey Camera and FlyCapture Software Development Kit}
+The cameras was supplied by Point Grey and interfaced through FlyCapture software development kit (SDK). The FlyCapture SDK was implemented in C. Cython, an optimised static compiler for Python to C, was used to bind with the SDK from Python.  The FlyCapture SDK  provided high configurability and flexible interface for the cameras which was adjust for image capturing mode and synchronizing image buffer retrieval. 
+
+The initial design was to use two camera connected to a SBC through a standard USB 2.0 connection. Each one of these cameras is responsible for capturing exactly three of the six faces of the cube with a view as shown in Fig. \ref{fig:Camera Positioning}. However, various parts from the mechanical system obscured the view a majority of the facelets on the three faces. Additionally, the challenges dealing with color recognition made using the initial camera configuration even more complex.
+
+The final camera orientation uses a single camera to capture the entire state of the cube as shown in Fig. \ref{fig:Obscured Cube}. A static sequence of rotation using the mechnical system is used to capture multiple 
+
+\subsubsection{Cube Orientation}
+
+
+
+\subsubsection{Color Recognition}
+\subsubsection{Color Space}
+\subsubsection{Categorization Algorithm}
+
+\subsection{Kcube and Solution Sequence}
+Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{TheTwo-PhaseAlgorithm}. We utilized the Kcube application to generate an suboptimal solution sequence in an configurable time frame needed to solve the Rubik's Cube that was captured during the image processing phase. 
+
+The matrix model generated from the image processing phase allows us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you invoke Kcube with the following command:
+
+\begin{lstlisting}[style=DOS]
+c:>kcube L:GGWWOWBRB F:GWGBGYWBO U:YOOOWYROY D:ORGWYYYRB R:OGBBRYWRR B:YBROBGWGR
+\end{lstlisting}
+
+Kcube processes the input parameters and generates a sequence of twenty-three or less moves (see Appendix \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move is mapped to a unique character or set of characters (see Table \ref{table:moves table}), and these characters are transmitted over an RS232 serial connection to the FPGA control board, at which point the control board takes responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=1.25]{"Scrambled Cube".jpg}
+\caption{A scrambled cube}
+\label{fig:scrambled cube}
+\end{figure}
+
+\begin{table}[!ht]
+\caption{Cube moves to character set mapping}
+\label{table:moves table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} \\ \hline
+F             & F              & R             & R              & D             & D             \\ \hline
+F'            & Fb              & R'            & Rb              & D'            & Db            \\ \hline
+F2            & F2              & R2            & R2              & D2            & D2             \\ \hline
+L             & L              & U             & U             & B             & B             \\ \hline
+L'            & Lb              & U'            & Ub             & B'            & Bb             \\ \hline
+L2            & L2              & U2            & U2             & B2            & B2             \\ \hline
+\end{tabular}
+\end{table}
+
+\subsection{Serial Communication and Command Format}
+
+
 \label{sec:opencv}
 
 \subsubsection{Camera Orientation}
 As seen in Fig. \ref{fig:System Block Diagram}, two cameras will be connected to a SBC through a standard USB 2.0 connection. Each one of these cameras is responsible for capturing exactly three of the six faces of the cube. One camera will capture the front, top, and left faces of the cube. The other camera will be responsible for capturing the back, bottom, and right faces of the cube. To do this, each camera will be positioned so that it faces the corner piece that connects the edges of the faces it is responsible for capturing. An example of this cube orientation is shown in Fig. \ref{fig:Camera Positioning}.
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.25]{"Rubik's Cube Positioning".png}
-\caption{Camera Positioning}
-\label{fig:Camera Positioning}
-\end{figure}
 
 \subsubsection{Utilizing OpenCV for Image Processing}
 \label{sec:image processing}
@@ -126,40 +186,6 @@ BLUE           & `B'              \\ \hline
 GREEN          & `G'              \\ \hline
 ORANGE         & `O'              \\ \hline
 YELLOW         & `Y'              \\ \hline
-\end{tabular}
-\end{table}
-
-\subsection{Kcube and the Solution Sequence}
-\label{sec:Kcube}
-Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{TheTwo-PhaseAlgorithm}. We utilized the Kcube application to generate the solution sequence needed to solve the Rubik's Cube that was captured during the image processing phase. The matrix model generated from the image processing phase allows us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you invoke Kcube with the following command:
-
-\begin{lstlisting}[style=DOS]
-c:>kcube L:GGWWOWBRB F:GWGBGYWBO U:YOOOWYROY D:ORGWYYYRB R:OGBBRYWRR B:YBROBGWGR
-\end{lstlisting}
-
-Kcube processes the input parameters and generates a sequence of twenty-three or less moves (see Appendix \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move is mapped to a unique character or set of characters (see Table \ref{table:moves table}), and these characters are transmitted over an RS232 serial connection to the FPGA control board, at which point the control board takes responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
-
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=1.25]{"Scrambled Cube".jpg}
-\caption{A scrambled cube}
-\label{fig:scrambled cube}
-\end{figure}
-
-\begin{table}[!ht]
-\caption{Cube moves to character set mapping}
-\label{table:moves table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-\textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} \\ \hline
-F             & F              & R             & R              & D             & D             \\ \hline
-F'            & Fb              & R'            & Rb              & D'            & Db            \\ \hline
-F2            & F2              & R2            & R2              & D2            & D2             \\ \hline
-L             & L              & U             & U             & B             & B             \\ \hline
-L'            & Lb              & U'            & Ub             & B'            & Bb             \\ \hline
-L2            & L2              & U2            & U2             & B2            & B2             \\ \hline
 \end{tabular}
 \end{table}
 
