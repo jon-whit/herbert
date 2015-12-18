@@ -1,5 +1,5 @@
 % pre-amble section
-\documentclass[final, letterpaper, 10 pt, conference, onecolumn]{IEEEconf}
+\documentclass[final, letterpaper, 10 pt, conference, twocolumn]{IEEEtran}
 
 \usepackage[utf8]{inputenc}
 \usepackage{geometry}
@@ -39,9 +39,7 @@ Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of
 
 \section{Introduction}
 \label{sec:intro}
-The goal of this project was to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components integrated into our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). A video camera connects to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video camera is responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer applies Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm returns is in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer communicates through an RS232 serial connection to an FPGA control board which drives the mechanical actuations and stepper motor rotations needed to physically manipulate the cube. The FPGA acts as a system control board and is responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators. An overview of this process can be found below in Fig. \ref{fig:System Block Diagram} of section \ref{sec:Project Design}.
-
-%Upon completion of the robotic Rubik's Cube solver, if time permits, we hope to take Project Herbert one step further and obtain a Guinness World Record for the fastest robot to solve a Rubik's Cube. CubeStormer3 is the current record holder \cite{GuinnessWR}. The uniqueness of this project is rooted in the optimizations that we will have to make in each component of our system, especially the electro-mechanical stepper motors and the mechanical actuators. We will have to fine-tune these mechanical components to perform physical operations quicker than the human eye in order to obtain record-breaking speed. In this process we will have to maintain the precision needed to rotate the cube.
+The goal of this project was to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components integrated into our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). A video camera connects to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video camera is responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer applies Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm returns is in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer communicates through an RS232 serial connection to an FPGA control board which drives the mechanical actuations and stepper motor rotations needed to physically manipulate the cube. The FPGA acts as a system control board and is responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators.
 
 \begin{figure}[!ht]
 \centering
@@ -50,10 +48,9 @@ The goal of this project was to create an autonomous robotic Rubik's Cube solver
 \label{fig:Camera Positioning}
 \end{figure}
 
-
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.20]{actual_cube_capture.png}
+\includegraphics[scale=0.15]{actual_cube_capture.png}
 \caption{Obscured cube image capture}
 \label{fig:Obscured Cube}
 \end{figure}
@@ -61,89 +58,28 @@ The goal of this project was to create an autonomous robotic Rubik's Cube solver
 \section{Software Implementation}
 \label{sec:Software Implementation}
 
-
-
 The project uses a good software implementation. (This won't be included in the actual report)
 
 \subsection{Image Processing}
-
+The image processing functionalities aims to capture the state of the cube using camera. The criteria for evaluating the success of the image processing implementation is robustness and speed of the algorithm.
 
 \subsubsection{Point Grey Camera and FlyCapture Software Development Kit}
 The cameras was supplied by Point Grey and interfaced through FlyCapture software development kit (SDK). The FlyCapture SDK was implemented in C. Cython, an optimised static compiler for Python to C, was used to bind with the SDK from Python.  The FlyCapture SDK  provided high configurability and flexible interface for the cameras which was adjust for image capturing mode and synchronizing image buffer retrieval. 
 
 The initial design was to use two camera connected to a SBC through a standard USB 2.0 connection. Each one of these cameras is responsible for capturing exactly three of the six faces of the cube with a view as shown in Fig. \ref{fig:Camera Positioning}. However, various parts from the mechanical system obscured the view a majority of the facelets on the three faces. Additionally, the challenges dealing with color recognition made using the initial camera configuration even more complex.
 
-The final camera orientation uses a single camera to capture the entire state of the cube as shown in Fig. \ref{fig:Obscured Cube}. A static sequence of rotation using the mechnical system is used to capture multiple 
+The final camera configuration used a single camera to capture the entire state of a Rubik's Cube as shown in Fig. \ref{fig:Obscured Cube}. A static sequence of rotation using the mechnical system is used to capture the cube in various configurations until all the facelets on the cube has been visible one or more times. The cube is then returned to its original state and the collection of images are saved off for later processing.
 
 \subsubsection{Cube Orientation}
-
-
-
 \subsubsection{Color Recognition}
-\subsubsection{Color Space}
-\subsubsection{Categorization Algorithm}
+After all 
+\paragraph{Color Space}
+Several factors affects the robustness of the color recognition. 
+\paragraph{Categorization Algorithm}
+
 
 \subsection{Kcube and Solution Sequence}
-Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{TheTwo-PhaseAlgorithm}. We utilized the Kcube application to generate an suboptimal solution sequence in an configurable time frame needed to solve the Rubik's Cube that was captured during the image processing phase. 
-
-The matrix model generated from the image processing phase allows us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you invoke Kcube with the following command:
-
-\begin{lstlisting}[style=DOS]
-c:>kcube L:GGWWOWBRB F:GWGBGYWBO U:YOOOWYROY D:ORGWYYYRB R:OGBBRYWRR B:YBROBGWGR
-\end{lstlisting}
-
-Kcube processes the input parameters and generates a sequence of twenty-three or less moves (see Appendix \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move is mapped to a unique character or set of characters (see Table \ref{table:moves table}), and these characters are transmitted over an RS232 serial connection to the FPGA control board, at which point the control board takes responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
-
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=1.25]{"Scrambled Cube".jpg}
-\caption{A scrambled cube}
-\label{fig:scrambled cube}
-\end{figure}
-
-\begin{table}[!ht]
-\caption{Cube moves to character set mapping}
-\label{table:moves table}
-\centering
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-\textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} \\ \hline
-F             & F              & R             & R              & D             & D             \\ \hline
-F'            & Fb              & R'            & Rb              & D'            & Db            \\ \hline
-F2            & F2              & R2            & R2              & D2            & D2             \\ \hline
-L             & L              & U             & U             & B             & B             \\ \hline
-L'            & Lb              & U'            & Ub             & B'            & Bb             \\ \hline
-L2            & L2              & U2            & U2             & B2            & B2             \\ \hline
-\end{tabular}
-\end{table}
-
-\subsection{Serial Communication and Command Format}
-
-
-\label{sec:opencv}
-
-\subsubsection{Camera Orientation}
-As seen in Fig. \ref{fig:System Block Diagram}, two cameras will be connected to a SBC through a standard USB 2.0 connection. Each one of these cameras is responsible for capturing exactly three of the six faces of the cube. One camera will capture the front, top, and left faces of the cube. The other camera will be responsible for capturing the back, bottom, and right faces of the cube. To do this, each camera will be positioned so that it faces the corner piece that connects the edges of the faces it is responsible for capturing. An example of this cube orientation is shown in Fig. \ref{fig:Camera Positioning}.
-
-\subsubsection{Utilizing OpenCV for Image Processing}
-\label{sec:image processing}
-OpenCV is an open source computer vision and machine learning software library \cite{OpenCV}. We will be leveraging this library to perform image analysis on a Rubik's Cube, which will allow us to generate a matrix model for any cube orientation. The OpenCV library will be installed on the SBC, which will enable us to capture and analyze video frames from the USB connected cameras.
-
-Capturing the faces of a cube requires three primary operations:
-
-\begin{itemize}
-  \item \textbf{Grayscale conversion} -
- A video frame will be captured and converted to Grayscale using OpenCV's \textit{cvtColor} function \cite{cvtColor}. Grayscale conversion transforms RGB pixel values into black and white intensity values \cite{Grayscale}. Converting to Grayscale allows an easy transformation to a binary (black and white) image, which is used to filter out features that are not important.
-  \item  \textbf{Canny edge detection} -
- Canny edge detection is a multi-stage algorithm used to detect a wide range of edges in an image \cite{CannyEdgeDetection, MoeslundEdgeDetection}. We will be using OpenCV's \textit{Canny} function \cite{OpenCVCanny} to identify the edges of the Rubik's Cube, which, when combined with contour filtering, will allow us to dynamically identify the planes in the frame that represent the three faces of the cube.
-
-  \item \textbf{Contour filtering} -
- Contour filtering will be used to identify the contours of the Rubik's Cube within the image. OpenCV's \textit{findContours} function \cite{findContours, Suzuki85} will allow us to identify the region of space in the image where the Rubik's Cube resides. Likewise, it will enable us to identify individual cubelets on each of the three faces of the cube.
-\end{itemize}
-
-After the individual cubelets have been identified using the captured frames, a matrix model like that shown in Fig. \ref{fig:matrix layout} is generated. Each individual position (U1, U2, F1, F2, etc.) is represented as a single ASCII character indicating the color at that cubelet position. Table \ref{table:cubelet representation} defines the mapping scheme we employed for the Rubik's Cube matrix model. Once this matrix model is generated for the cube, we pass it on to an application written by Greg Schmidt known as \textit{Kcube} \cite{TheTwo-PhaseAlgorithm}. Kcube processes the cube permutation (see \ref{sec:Kcube}), applies Kociemba's algorithm to it, and generates a solution sequence for that permutation.
-\begin{figure}[!ht]
+\begin{figure*}[!ht]
 \begin{center}
 \begin{BVerbatim}
              |************|
@@ -171,7 +107,7 @@ After the individual cubelets have been identified using the captured frames, a 
 \end{center}
 \caption{Rubik's Cube matrix representation}
 \label{fig:matrix layout}
-\end{figure}
+\end{figure*}
 
 \begin{table}[!ht]
 \caption{Cubelet color to ASCII character mapping}
@@ -189,6 +125,49 @@ YELLOW         & `Y'              \\ \hline
 \end{tabular}
 \end{table}
 
+\subsection{Kcube and the Solution Sequence}
+\label{sec:Kcube}
+Kcube is a C++ application developed by Greg Schmidt that utilizes Kociemba's two-phase algorithm which uses two stages of an iterative depth first search algorithm \cite{TheTwo-PhaseAlgorithm}. We utilized the Kcube application to generate the solution sequence needed to solve the Rubik's Cube that was captured during the image processing phase. The matrix model generated from the image processing phase allows us to provide Kcube's command-line interface with the cube representation needed to generate a solution sequence. Kcube's command-line interface takes six parameters, one for each face of the cube. The values for these parameters are the color characters at each of the cubelet locations for that face (as seen in Fig. \ref{fig:matrix layout}). For example, to solve the scrambled cube shown in Fig. \ref{fig:scrambled cube} you invoke Kcube with the following command:
+
+\begin{lstlisting}[style=DOS]
+c:>kcube L:GGWWOWBRB
+         F:GWGBGYWBO
+         U:YOOOWYROY
+         D:ORGWYYYRB
+         R:OGBBRYWRR
+         B:YBROBGWGR
+\end{lstlisting}
+
+Kcube processes the input parameters and generates a sequence of twenty-three or less moves (see Appendix \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move is mapped to a unique character or set of characters (see Table \ref{table:moves table}), and these characters are transmitted over an RS232 serial connection to the FPGA control board, at which point the control board takes responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
+
+
+\begin{figure}[!hb]
+\centering
+\includegraphics[scale=1.0]{"Scrambled Cube".jpg}
+\caption{A scrambled cube}
+\label{fig:scrambled cube}
+\end{figure}
+
+\begin{table}[!ht]
+\caption{Cube moves to character set mapping}
+\label{table:moves table}
+\centering
+\begin{tabular}{|c|c|c|c|c|c|}
+\hline
+\textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} & \textbf{MOVE} & \textbf{CHAR} \\ \hline
+F             & F              & R             & R              & D             & D             \\ \hline
+F'            & Fb              & R'            & Rb              & D'            & Db            \\ \hline
+F2            & F2              & R2            & R2              & D2            & D2             \\ \hline
+L             & L              & U             & U             & B             & B             \\ \hline
+L'            & Lb              & U'            & Ub             & B'            & Bb             \\ \hline
+L2            & L2              & U2            & U2             & B2            & B2             \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Serial Communication and Command Format}
+
+\section{Hardware Implementation}
 \subsection{Mechanical Actuators}
 \label{sec:Mechanical Actuators}
 Herbert employs a six arm design to physically manipulate the cube. One arm for each face of the cube. In order to achieve a six arm design, each arm actuates in and out so as to avoid conflict
@@ -200,7 +179,7 @@ actuator is too costly. We decided that pneumatic actuation is the solution to t
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.5]{AirCylinder.jpg}
+\includegraphics[scale=0.28]{AirCylinder.jpg}
 \caption{Pneumatic Air Cylinder}
 \label{fig:Pneumatic Air Cylinder}
 \end{figure}
@@ -214,14 +193,21 @@ Initially our design incorporated mechanical switches that would be triggered by
 If we were to continue the project there are many improvements and optimizations that could be made. The first optimization would be to implement the switch design we initially planned on.  Improving the robustness of the switches would help reduce the time the mechanical motion takes. This would reduce the overall time to completion, because the mechanical motion is the most time intensive component of the solution. 
 Another mechanical optimization that would help reduce the time to completion is to modify the arm.  The image processing was a very difficult component of this project, because the arm assembly was obtrusive to the view of the cube for the cameras.  Our thought is to remove two of the four prongs of each arm.  This modification would give the cameras a more clear view of the cube, as well as potentially giving us the ability to actuate in and out more quickly, because potential arm collisions would be reduced.
 
-\subsection{Electro-mechanical Stepper Motors}
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.28]{AirCylinder.jpg}
+\caption{Pneumatic Air Cylinder and 3D Printed Axel Support}
+\label{fig:Pneumatic Air Cylinder}
+\end{figure}
+
+\subsubsection{Electro-mechanical Stepper Motors}
 \label{sec:Stepper Motors}
 Each actuating arm has a stepper motor which is responsible for rotating a single face. A stepper motor rotates a face either 90 degrees or 180 degrees clockwise or counter-clockwise based on the solution move that is being processed (as specified in Appendix \ref{sec:Appendix A}). A 3D printed axle (as seen Fig. \ref{fig:Stepper Motor Arm}) is fastened to the stepper motors. This axle twists a 3D printed arm piece in order to spin a face of the Rubik's Cube.
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.5]{StepperMotorArm.jpg}
-\caption{Stepper Motor Arm}
+\includegraphics[scale=0.30]{StepperMotorArm.jpg}
+\caption{Stepper Motor Arm Assembly}
 \label{fig:Stepper Motor Arm}
 \end{figure}
 
@@ -229,19 +215,18 @@ Each stepper motor is driven by a motor control board which is controlled by the
 
 \subsection{Infrared Break Sensors}
 \label{sec:Infrared Break Sensors}
-In order for a rotation to be successful it must end at a 90 degree angle as to not interrupt the rotation of another arm.  These exact angles are hard to accomplish by counting steps because we are unable to detect whether steps were skipped.  To compensate for this we used ifrared break sensors (see Fig. \ref{fig:Infrared Break Sensor}).  The sensor is placed on the arm as to have the sensor broken at all angles but at 90 degree increments.  These break sensors are controlled through connections on the motor control boards.
+Rotations must end at a 90 degree angle so as to not interrupt the rotation of another arm.  These exact angles are hard to accomplish by counting steps, because it is difficult to detect whether steps are skipped.  To compensate for this we used infrared break sensors like that shown in Fig. \ref{fig:Infrared Break Sensor}. Each arm assembly has an infrared sensor (see Fig. \ref{fig:Stepper Motor Arm}). The infrared sensor is broken at all angles that are not a multiple of 90 degrees. These break sensors are monitored and controlled through the motor control boards.
 
 \begin{figure}[!ht]
 \centering
-\includegraphics[scale=0.5]{InfraredBreakSensor.jpg}
+\includegraphics[scale=0.28]{InfraredBreakSensor.jpg}
 \caption{Infrared Break Sensor}
 \label{fig:Infrared Break Sensor}
 \end{figure}
 
 \subsection{Arm Progression}
 \label{sec:Arm Progression}
-
-The original idea behind the six arm solution was to have 6 socket-like arm pieces to actuate in to spin the Rubik's cube.  The first iteration was a simple arm that had a square socket and connects to the stepper motor.  The inner part of the socket had chamfered edges to correct for any error in alignment.  The next iteration included tabs for break sensor detection and it was long to accomodate the length of the center pin.  Also the socket was seperated into four prongs instead of an entire socket as to allow for more visibility of the cube.  For the last iterations we changed from tabbed break sensor detection to slits to allow for more precision on angle detection.  We also shortened the arm and added more chamfered edges for corrections.  We angled out the out the end of the prongs to provide more alignment correction.  Other corrections included slight height changes to fit the slider piece and circular cutouts to avoid arm collisions.  Below is an image showing examples from these iterations (see Fig. \ref{fig:Arm Progression}). 
+The 3D printed arm piece at the end of each arm assembly (see Fig. \ref{fig:Stepper Motor Arm}) underwent a great progression. Fig. \ref{fig:Arm Progression} highlights the progression of the arm pieces from left to right. The first iteration was a simple arm that had a square socket and connected directly to the stepper motor without any intermediate axel piece.  The inner part of the socket had chamfered edges to correct for any error in alignment.  The second iteration included tabs for break sensor detection, and it was elongated to accommodate the length of the center pin.  We also modified the socket into four prongs. This allowed better visibility of the cube for the image processing. In the last arm revision we changed from tabbed break sensor detection to slits. This improvement allowed more precise angle detection.  We also shortened the arm, added more chamfered edges for minor alignment error corrections, and included slight height changes to fit the slider piece and circular cutouts to avoid arm collisions.
 
 \begin{figure}[!ht]
 \centering
@@ -256,7 +241,7 @@ Many of the components that we used were donated to us by industry sponsors. The
 motor control boards, and the Chameleon USB2.0 camera. The stepper motors, motor control boards, and the FPGA system control board are ``in-house" proprietary boards developed by BioFire Defense Systems.
 The FPGA board embeds a Xilinx Spartan3 with a softcore Microblaze processor. The Chameleon USB2.0 cameras were donated to us by Point Grey Research. They a 1.3 megapixel camera with a Sony ICX445 CCD, 1/3", 3.75 micron sensor.
 
-\begin{table}[!ht]
+\begin{table*}[!ht]
 \caption{Main component BOM}
 \label{table:BOM}
 \resizebox{\textwidth}{!}{\begin{tabular}{|l|c|c|c|c|}
@@ -270,19 +255,14 @@ Motor Control Board       & 2                 & BioFire Defense       & NA      
 8 Channel 5V Relay Board               & 1                 & SainSmart           & 20-018-102         & 11.99               \\ \hline
 Chameleon USB2.0 Camera                    & 2                 & Point Grey Research & CMLN-13S2C-CS      & DONATED                \\ \hline
 \end{tabular}}
-\end{table}
-
-\section{Challenges}
+\end{table*}
 
 \section{Summary}
-Project Herbert is a project that integrates various technologies and domains of engineering into one complete package. Working on this project has exposed us to a real-world application of system integration and, most importantly, teamwork. Project Herbert was broken down into three primary parts: cube detection, solution generation, and the physical manipulation of the cube using mechanical components. Each of these presented their own set of challenges. Implementing the cube detection application will require a lot of research in the field of image processing/computer vision, especially if we attempt to operate the system under various lighting conditions. The mechanical
-aspect of this project will require a fundamental understanding of mechatronics and robotics. The mechanical aspect of this proejct will also pose the greatest limitations. We will have to optimize the mechanical components by reducing frictional effects so as to ensure operation timings that are
-within the window of time needed to solve a cube in record breaking time.
-
-\section{Acknowledgements}
+This project is evidence of our team's ability to design a complex system containing software, electrical hardware, and mechanical hardware components. Project Herbert is a project that integrates various technologies and domains of engineering into one complete package. Working on this project has exposed us to a real-world application of system integration and, most importantly, teamwork. Project Herbert brought many challenges to our team, and we were able to overcome them with clever compromises. The image processing proved to be very difficult due to the lack of vision and poor lighting effects. We overcame this by creating a clever execution of moves that allowed us to capture all of the facelets using a single camera, as well as a unique color characterization that uses histogram calculations. We were unable to get robust and reliable switches for the mechanical actuations, and so we slowed down the actuations to ensure that any two adjacent arms would not collide with one another. Likewise, team scheduling proved to be another challenge for us. Half of our team works part-time. This made it difficult to find times to work on the project together. However, despite these challenges, we were able to implement the Rubik's cube solver as we had planned. We did not have enough time to make further optimizations to go for a Guinness World Record, but we are very satisfied to have a completely automated solver despite all of the compromises that we had to make. \section{Acknowledgements}
 Our team would like to thank BioFire Defense LLC, Point Grey Research Inc., and Futura Industries for all the support and resources they have provided us. Your contributions are greatly appreciated.
 
-\begin{figure}[!htb]
+\begin{figure}[!hb]
+\begin{center}
 \minipage{0.32\textwidth}
   \includegraphics[width=\linewidth]{biofire_logo.png}
   \label{fig:biofire_logo}
@@ -296,6 +276,7 @@ Our team would like to thank BioFire Defense LLC, Point Grey Research Inc., and 
   \label{fig:futura_indst}
 \endminipage
 \label{fig:project_sponsors}
+\end{center}
 \end{figure}
 
 BioFire Defense donated the various control boards and mechanical components needed for this project. They also gave us access to various prototyping tools including high precision 3D printers and laser cutters. A special thanks goes out to BioFire engineers Logan Taylor (Mechanical), Pat Riley (Electrical/Systems), Matt Murdock (Electrical), and David Nielsen (VP of Product Development). These individuals provided invaluable time and knowledge to our team.
@@ -317,7 +298,7 @@ A Rubik's Cube is composed of six faces: right (\textbf{R}), left (\textbf{L}), 
 
 \begin{figure}[!hb]
 \centering
-\includegraphics{"Cube Orientation".png}
+\includegraphics[scale=0.75]{"Cube Orientation".png}
 \caption{Cube orientation}
 \label{fig:Cube Orientation}
 \end{figure}
@@ -347,21 +328,23 @@ For each of the fundamental moves above, there are modifiers that can be appende
 \subsection{Cubelets}
 A cubelet refers to a particular piece on the cube. Cubelets are categorized based on their position. There are three types of cubelets: center cubelets, edge cubelets, and corner cubelets (see Fig. \ref{fig:cubelet_categories}). A center cubelet is unique. All other cubelets revolve around the center cubelets, they never move (go ahead, try and move the center piece). Edge cubelets connect two face pieces together at an edge. A corner cubelet connects three pieces together at the corner of the cube.
 
-\begin{figure}[!htb]
+\begin{figure}[!hb]
+\begin{center}
 \minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{"Center cubelets".png}
+  \includegraphics[scale=0.75]{"Center cubelets".png}
   \label{fig:center_cubelets}
 \endminipage\hfill
 \minipage{0.32\textwidth}
-  \includegraphics[width=\linewidth]{"Edge cubelets".png}
+  \includegraphics[scale=0.75]{"Edge cubelets".png}
   \label{fig:edge_cubelets}
 \endminipage\hfill
 \minipage{0.32\textwidth}%
-  \includegraphics[width=\linewidth]{"Corner cubelets".png}
+  \includegraphics[scale=0.75]{"Corner cubelets".png}
   \label{fig:corner_cubelets}
 \endminipage
 \caption{Cubelet categories}
 \label{fig:cubelet_categories}
+\end{center}
 \end{figure}
 
 \end{document}
