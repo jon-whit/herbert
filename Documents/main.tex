@@ -41,20 +41,6 @@ Project Herbert is an autonomous robotic Rubik's Cube solver that is composed of
 \label{sec:intro}
 The goal of this project was to create an autonomous robotic Rubik's Cube solver through the integration of several components. The main components integrated into our project include video cameras, electrical stepper motors, mechanical actuators, a single-board computer (SBC), and field-programmable gate arrays (FPGAs). A video camera connects to the computer through standard universal serial bus (USB) 2.0 protocol \cite{USB2.0}. The video camera is responsible for capturing the initial configuration of the Rubik's Cube, and the single board computer is responsible for processing the video frame information and generating a matrix model for the initial state of the cube. After generating a matrix model for the initial cube, the computer applies Kociemba's algorithm \cite{Kociemba} (an optimal algorithm used to solve a Rubik's Cube) to generate a solution sequence that can be processed sequentially. The solution sequence that Kociemba's algorithm returns is in the standard notation used in Rubik's Cube discussion and theory (see Appendix \ref{sec:Appendix A}). As each solution sequence is processed, the computer communicates through an RS232 serial connection to an FPGA control board which drives the mechanical actuations and stepper motor rotations needed to physically manipulate the cube. The FPGA acts as a system control board and is responsible for controlling the actions of two motor control boards and a relay board used to trigger the mechanical actuators.
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.25]{"Rubik's Cube Positioning".png}
-\caption{Initial ideal cube image capture}
-\label{fig:Camera Positioning}
-\end{figure}
-
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.15]{actual_cube_capture.png}
-\caption{Obscured cube image capture}
-\label{fig:Obscured Cube}
-\end{figure}
-
 \section{Software Implementation}
 \label{sec:Software Implementation}
 
@@ -70,13 +56,69 @@ The initial design was to use two camera connected to a SBC through a standard U
 
 The final camera configuration used a single camera to capture the entire state of a Rubik's Cube as shown in Fig. \ref{fig:Obscured Cube}. A static sequence of rotation using the mechnical system is used to capture the cube in various configurations until all the facelets on the cube has been visible one or more times. The cube is then returned to its original state and the collection of images are saved off for later processing.
 
-\subsubsection{Cube Orientation}
-\subsubsection{Color Recognition}
-After all 
-\paragraph{Color Space}
-Several factors affects the robustness of the color recognition. 
-\paragraph{Categorization Algorithm}
+\subsubsection {OpenCV Library}
+OpenCV is an open source computer vision and machine learning software library \cite{OpenCV}. The OpenCV library is leveraged to perform image analysis on a Rubik's Cube, which is used to generate a matrix model for any cube orientation. The OpenCV library was installed on the SBC and used to capture and analyze video frames from the USB connected cameras.
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.25]{"Rubik's Cube Positioning".png}
+\caption{Initial ideal cube image capture}
+\label{fig:Camera Positioning}
+\end{figure}
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.15]{actual_cube_capture.png}
+\caption{Obscured cube image capture}
+\label{fig:Obscured Cube}
+\end{figure}
+
+\subsubsection{Cube Orientation} 
+The pixel region of each of the facelets  must be identified for color recognition. Initially, a combination of grayscale conversion and contour filtering image processing technique is used to dynamically detect a bounding contour around each of the facelets. However, the dynamic approach to identifying a facelet pixel region was inconsistent because of mechanical imprecision. 
+
+Because the camera and the Rubik's Cube remains fixed inside the mechanical frame, a static approach is used in the final implementation. Through a GUI interface, a static polygon for each of the facelets was defined. Each of the static polygons bounds a facelet pixel region. The static approach to identifying the cube orientation proved to be consistent but necessitated high maintenance. Each of the static polygons must be redefined each time the camera position changes or if a mechanical change affects the orientation of the cube. 
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{hsv_color.jpg}
+\caption{HSV color wheel}
+\label{fig:HSV}
+\end{figure}
+
+\subsubsection{Color Space}
+Lighting condition severally affects the robustness of the color recognition algorithm. Color values on a Rubik's Cube facelet drastically changes if the facelet is reflective or if a shadow is casted upon it. Although maintaining a consistent lighting around the mechnical frame will mitigate a majority of these problems, the color recognition algorithm should remain robust under normal lighting conditions.
+
+Choosing a color space that is robust to lighting conditions was critical to enabling a robust color recognition algorithm. Several color spaces such as RGB, CMYK, and HSV were examined. The HSV color space provided the best consistency under various lighting conditions. The three components of the HSV color space is hue, saturation, and value. The hue component describes the similarity of the color to an unique hue: red, green, blue, and yellow as shown in Fig. \ref{fig:HSV}. The saturation component measures the intensity or colorfulness of the specific hue. Finally, the value measures the brightness of the color value. HSV is ideal for developing a robust color recognition because shadows and high gloss values merely changes a the value component of the color without affecting the hue and saturation component of the color. Additionally, the hue component can be used to distinctly distinguishes each of the primary color such as red, green, and blue that are found on a Rubik's Cube.
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.4]{example_blue_histogram.png}
+\caption{Example HSV color histogram for blue}
+\label{fig:Example Histogram}
+\end{figure}
+
+\begin{table}[!ht]
+\caption{HSV color ranges}
+\label{table:color ranges}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{COLOR} & \textbf{HUE} & \textbf{SATURATION} \\ \hline
+WHITE          & 25 - 58  & 0 - 139               \\ \hline
+RED            & 1  - 12     & 0 - 255            \\ \hline
+BLUE           & 200 - 280   & 0 - 255              \\ \hline
+GREEN          & 80 - 120   & 0 - 255            \\ \hline
+ORANGE         & 15 - 20     & 0 - 255         \\ \hline
+YELLOW         & 25 - 58   & 140 - 255            \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Categorization Algorithm}
+After identifying the bounding contour around each of the facelet, a categorization algorithm was used to determine the color on the facelet. The image was first converted to the HSV color space. The hue and saturation components of each pixel value is then used to categorize the color. Several color histogram such as the one shown in Fig. \ref{fig:Example Histogram} were constructed for each facelet color and were used to determine the ranges of each HSV component to use to categorize color. For example, the histogram shown in Fig. \ref{fig:Example Histogram} was constructed for a blue facelet and the hue values range between 100 to 130 and the saturation values ranges from 150 to 180. The resulting HSV ranges are shown in Table. \ref{table:color ranges}.
+
+Based on these color ranges, the categorization algorithm can be implemented based the average of all the pixel values in the facelet region or the frequency of each pixel value. A categorizaton algorithm based on the average of HSV values was quick but also error-prone due to outliers. A categorization algorithm based on frequency of each HSV component was robust but less optimized. The final implementation computes a histogram of the facelet pixel region and computes a HSV histogram using OpenCV. Based on the histogram, the frequency of each facelet colors are determined. The highest frequency of a facelet color determine the categorized color.
+
+Initially the algorithm implemented needed approximately a minute to categorize each facelet because of the unoptimized looping in Python and hardware limitations. After several iterative optimization using the OpenCV library, the overall color categorization time used approximately three seconds.  In the future, the categorization can still be optimized for both robustness and speed. For example, the image resolution or the overall pixel region can be reduced to improve performance at the cost of reliability. Additionally, a filtering algorithm can be used to reduce the effects on abnormal lighting. 
 
 \subsection{Kcube and Solution Sequence}
 \begin{figure*}[!ht]
@@ -140,6 +182,8 @@ c:>kcube L:GGWWOWBRB
 
 Kcube processes the input parameters and generates a sequence of twenty-three or less moves (see Appendix \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move is mapped to a unique character or set of characters (see Table \ref{table:moves table}), and these characters are transmitted over an RS232 serial connection to the FPGA control board, at which point the control board takes responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
 
+\subsection{Serial Communication and Command}
+After retrieving the solution sequence from Kcube, the solution sequence is sent over to the FPGA component serially. A serial python communication library with CRC32 error detection is implemented and used communicate to the FPGA. The command sent over to the FPGA is the ExecuteMoves command that described in section \ref{sec:Firmware}.
 
 \begin{figure}[!hb]
 \centering
@@ -163,9 +207,6 @@ L'            & Lb              & U'            & Ub             & B'           
 L2            & L2              & U2            & U2             & B2            & B2             \\ \hline
 \end{tabular}
 \end{table}
-
-
-\subsection{Serial Communication and Command Format}
 
 \section{Hardware Implementation}
 \subsection{Mechanical Actuators}
@@ -237,6 +278,7 @@ The 3D printed arm piece at the end of each arm assembly (see Fig. \ref{fig:Step
 
 
 \section{Firmware}
+\label{Firmware}
 Table \ref{table:CMDS} is a detailed list of the commands we used for this project.
 
 Default behavior of the stepper motors is to continuously draw power and hold when in a static position.
