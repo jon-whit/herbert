@@ -55,13 +55,6 @@ The goal of this project was to create an autonomous robotic Rubik's Cube solver
 \label{fig:Camera Positioning}
 \end{figure}
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.15]{actual_cube_capture.png}
-\caption{Obscured cube image capture}
-\label{fig:Obscured Cube}
-\end{figure}
-
 \section{Software Implementation}
 \label{sec:Software Implementation}
 The single board computer in our system operates a software stack composed of Python, Cython, and OpenCV. We utilized a 3rd party Python library called \textit{pyflycapture2} \cite{pyflycapture2} to capture images from the camera that was provided to us by Point Grey Research. Once the images of the cube are captured, we apply color recognition and categorization using OpenCV-Python \cite{OpenCVPython}. The characterization phase in OpenCV generates a matrix model of the Rubik's cube. We pass this matrix model on to an application called Kcube to generate a solution sequence needed to solve the cube permutation. We go into each these components in more detail in the next few sections.
@@ -69,7 +62,7 @@ The single board computer in our system operates a software stack composed of Py
 \subsection{Image Processing}
 The image processing aims to capture the initial state of the cube using a camera. The criteria for evaluating the success of the image processing implementation is robustness and speed of the algorithm.
 
-\begin{figure}[!ht]
+\begin{figure}[!hb]
 \centering
 \includegraphics[scale=0.6]{hsv_color.jpg}
 \caption{HSV color wheel}
@@ -87,6 +80,13 @@ We decided to compromise and use a single camera configuration. A single camera 
 The pixel region of each of the facelets  must be identified for color recognition. We initially planned on using a combination of grayscale conversion and contour filtering to dynamically detect a bounding contour around each of the facelets. However, the dynamic approach to identifying a facelet pixel region proved to be difficult due to the lack of vision of the cube. The arm assemblies were too obtrusive to capture a clean image (see Fig. \ref{fig:Obscured Cube}).
 
 Because the camera and the Rubik's Cube remains fixed inside the mechanical frame, we decided to implement a static solution. Through a GUI interface, a static polygon for each of the facelets was defined. Each of the static polygons creates a bounding rectangle around a facelet pixel region. The static solution that we adopted proved to be consistent, but it necessitated high maintenance. Each of the static polygons must be redefined each time the camera position changes or if a mechanical change affects the orientation of the cube. If we were to continue on with this project, this is one aspect that we could improve. It would be nice to implement a robust dynamic approach.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.15]{actual_cube_capture.png}
+\caption{Obscured cube image capture}
+\label{fig:Obscured Cube}
+\end{figure}
 
 \subsubsection{Color Space}
 Lighting condition severally affects the robustness of the color recognition algorithm. Color values on a Rubik's Cube facelet drastically change if the facelet is reflective or if a shadow is cast upon it. This proved to be challenging for us. However, we were able to maintain a consistent lighting around the mechnical frame to mitigate a majority of these problems. We were very confident in the color recognition algorithm under normal lighting conditions. During demo day, we solved over 24 Rubik's Cubes without failure.
