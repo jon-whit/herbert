@@ -229,9 +229,10 @@ bool serialSendPkt(SerialPort port, const uint8* pkt, unsigned length, uint32 ti
         {
             // Load buffer including packet frame
             buffer->data[0] = FRAME_START_CHAR;
-            memcpy(&buffer->data[1], pkt, length);
+            memcpy(&buffer->data[1], pkt, length + 1);
             buffer->data[1 + length] = FRAME_END_CHAR;
-            buffer->count = length + 2; // Add 2 for frame characters
+            buffer->data[2 + length] = '\n';
+            buffer->count = length + 3; // Add 2 for frame characters
 
             enqueueTxBuffer(&uart->txQueue, buffer);
             updateTxFifo(uart);

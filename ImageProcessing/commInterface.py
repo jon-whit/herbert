@@ -1,7 +1,4 @@
 import serial
-import time
-import pandas
-import datetime
 
 crcTable = []
 
@@ -55,12 +52,8 @@ def crcCheck(responsePacket):
         print "CRC is invalid: Expected - " + str(expectedCrc) + " Actual - " +  receivedCrc
 
 
-def sendCommand(comPort, commandPacket):
-    try:
-        HerbertSerialConnection = HerbertSerial(comPort)
-        responsePacket = HerbertSerialConnection.sendPacket(str(commandPacket))
-    finally:
-        HerbertSerialConnection.close()
+def sendCommand(HerbertSerialConnection, commandPacket):
+    responsePacket = HerbertSerialConnection.sendPacket(str(commandPacket))
     return responsePacket
 
 def generateFullCommandPacket(preliminaryPacket, sequenceNumber):
