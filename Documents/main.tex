@@ -69,19 +69,60 @@ The single board computer in our system operates a software stack composed of Py
 \subsection{Image Processing}
 The image processing aims to capture the initial state of the cube using a camera. The criteria for evaluating the success of the image processing implementation is robustness and speed of the algorithm.
 
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.6]{hsv_color.jpg}
+\caption{HSV color wheel}
+\label{fig:HSV}
+\end{figure}
+
 \subsubsection{Point Grey Camera and FlyCapture Software Development Kit}
-We interfaced with the cameras using Point Grey's API, which was provided to us through the FlyCapture software development kit (SDK) \cite{FlyCapture}. The FlyCapture SDK was implemented in C. Since we chose to use Python as our base language, we had to use Cython, an optimized static compiler for C extensions in Python. We use Cython to bind the C functions within the FlyCapture API to Python functions.  The FlyCapture SDK  provided us with a large amount of configurability, and it gave us a flexible interface for the which the cameras settings could be adjusted to enhance capturing mode and synchronizing image buffer retrieval.
+We interfaced with the cameras using Point Grey's API, which was provided to us through the FlyCapture software development kit (SDK) \cite{FlyCapture}. The FlyCapture SDK was implemented in C. Since we chose to use Python as our base language, we had to use Cython, an optimized static compiler for C extensions in Python. We use Cython to bind the C functions within the FlyCapture API to Python functions.  The FlyCapture SDK  provided us with a large amount of configurability, and it gave us a flexible interface for which the cameras settings could be adjusted to enhance capturing mode and synchronizing image buffer retrieval.
 
 We initially had planned to use two cameras, each connected to the SBC through a standard USB 2.0 connection. Each one of these cameras was going to be responsible for capturing exactly three of the six faces of the cube with a view like that shown in Fig. \ref{fig:Camera Positioning}. However, as construction of the main frame of our project came to a close, we soon realized that various parts of the mechanical system obscured the view of a large majority of the facelets on the three faces. On top of this, we also experienced challenges dealing with color recognition in ambient lighting. Because of these challenges we decided that our original camera configuration was not ideal.
 
 We decided to compromise and use a single camera configuration. A single camera is used to capture the entire state of a Rubik's Cube. The single camera was best positioned like that shown in Fig. \ref{fig:Obscured Cube}. A static mechanical rotation sequence is used to capture the cube in various configurations until all of the facelets on the cube are captured. The cube is then returned to its original state, and the collection of images are saved off for facelet characterization.
 
-\subsubsection{Cube Orientation}
-\subsubsection{Color Recognition}
-\paragraph{Color Space}
-Several factors affects the robustness of the color recognition. 
-\paragraph{Categorization Algorithm}
+\subsubsection{Cube Orientation} 
+The pixel region of each of the facelets  must be identified for color recognition. We initially planned on using a combination of grayscale conversion and contour filtering to dynamically detect a bounding contour around each of the facelets. However, the dynamic approach to identifying a facelet pixel region proved to be difficult due to the lack of vision of the cube. The arm assemblies were too obtrusive to capture a clean image (see Fig. \ref{fig:Obscured Cube}).
 
+Because the camera and the Rubik's Cube remains fixed inside the mechanical frame, we decided to implement a static solution. Through a GUI interface, a static polygon for each of the facelets was defined. Each of the static polygons creates a bounding rectangle around a facelet pixel region. The static solution that we adopted proved to be consistent, but it necessitated high maintenance. Each of the static polygons must be redefined each time the camera position changes or if a mechanical change affects the orientation of the cube. If we were to continue on with this project, this is one aspect that we could improve. It would be nice to implement a robust dynamic approach.
+
+\subsubsection{Color Space}
+Lighting condition severally affects the robustness of the color recognition algorithm. Color values on a Rubik's Cube facelet drastically change if the facelet is reflective or if a shadow is cast upon it. This proved to be challenging for us. However, we were able to maintain a consistent lighting around the mechnical frame to mitigate a majority of these problems. We were very confident in the color recognition algorithm under normal lighting conditions. During demo day, we solved over 24 Rubik's Cubes without failure.
+
+Choosing a color space that was robust to lighting conditions was critical to enabling a robust color recognition algorithm. Several color spaces such as RGB, CMYK, and HSV were examined. The HSV color space provided the best consistency under various lighting conditions. The three components of the HSV color space are hue, saturation, and value. The hue component describes the similarity of the color to an unique hue: red, green, blue, and yellow as shown in Fig. \ref{fig:HSV}. The saturation component measures the intensity or ``colorfulness" of the specific hue. Finally, the value measures the brightness of the color value. HSV is ideal for developing a robust color recognition because shadows and high gloss merely change the value component of the color without affecting the hue and saturation component of the color. Additionally, the hue component can be used to distinctly distinguish each of the primary colors such as red, green, and blue that are found on a Rubik's Cube facelet.
+
+
+\begin{figure}[!ht]
+\centering
+\includegraphics[scale=0.4]{example_blue_histogram.png}
+\caption{Example HSV color histogram for blue}
+\label{fig:Example Histogram}
+\end{figure}
+
+\begin{table}[!ht]
+\caption{HSV color ranges}
+\label{table:color ranges}
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+\textbf{COLOR} & \textbf{HUE} & \textbf{SATURATION} \\ \hline
+WHITE          & 25 - 58  & 0 - 139               \\ \hline
+RED            & 1  - 12     & 0 - 255            \\ \hline
+BLUE           & 200 - 280   & 0 - 255              \\ \hline
+GREEN          & 80 - 120   & 0 - 255            \\ \hline
+ORANGE         & 15 - 20     & 0 - 255         \\ \hline
+YELLOW         & 25 - 58   & 140 - 255            \\ \hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Categorization Algorithm}
+After identifying a bounding contour around each of the facelets, a categorization algorithm was used to determine the color contained within the bounding rectangle. Each image was first converted to the HSV color space. The hue and saturation components of each pixel value is then used to categorize the color. Several color histograms such as the one shown in Fig. \ref{fig:Example Histogram} were constructed for each facelet and were used to determine the ranges of each HSV component in order to categorize a single facelet color. For example, the histogram shown in Fig. \ref{fig:Example Histogram} was constructed for a blue facelet. The hue values range between 100 to 130 and the saturation values ranges from 150 to 180. Our analysis led to the resulting HSV ranges shown in Table. \ref{table:color ranges}.
+
+Based on these color ranges, the categorization algorithm can be implemented based on the average of all the pixel values in the facelet region or the frequency of each pixel value. A categorization algorithm based on the average of HSV values proved to be quick, but it was also error-prone due to outliers. A categorization algorithm based on frequency of each HSV component proved to be more robust, but less optimized. Our final implementation computes a histogram of the facelet pixel region using OpenCV. Based on the histogram, the frequency of each of the facelet colors is determined. The highest frequency of a facelet color determines the color that facelet is binned into.
+
+Our initial trivial algorithm that we implemented took approximately a minute to categorize each facelet, because of the unoptimized looping in Python and hardware limitations. After several iterative optimizations using the OpenCV library, the overall color categorization time was reduced to approximately three seconds.  In the future, the categorization can still be optimized for both robustness and speed. For example, the image resolution or the overall pixel region can be reduced to improve performance. Additionally, a filtering algorithm can be used to reduce the effects on abnormal lighting. 
 
 \subsection{Kcube and the Solution Sequence}
 \begin{figure*}[!ht]
@@ -144,7 +185,6 @@ c:>kcube L:GGWWOWBRB
 
 Kcube processes the input parameters and generates a sequence of twenty-three or less moves (see Appendix \ref{sec:fundamental moves}) that, when applied to the cube, will solve the cube. Each move is mapped to a unique character or set of characters (see Table \ref{table:moves table}), and these characters are transmitted over an RS232 serial connection to the FPGA control board, at which point the control board takes responsibility for controlling the electro-mechanical stepper motors and mechanical actuators needed to physically manipulate the cube.
 
-
 \begin{figure}[!hb]
 \centering
 \includegraphics[scale=1.0]{"Scrambled Cube".jpg}
@@ -178,14 +218,7 @@ arm actuation with motors.  However, preliminary testing showed that using
 motors to convert rotary motion into linear motion is too slow, and using a linear motor
 actuator is too costly. We decided that pneumatic actuation is the solution to this problem.  Each of the arms is attached to a double action pneumatic air cylinder as show in Fig. \ref{fig:Pneumatic Air Cylinder}.
 
-\begin{figure}[!ht]
-\centering
-\includegraphics[scale=0.28]{AirCylinder.jpg}
-\caption{Pneumatic Air Cylinder}
-\label{fig:Pneumatic Air Cylinder}
-\end{figure}
-
-The FPGA control board is responsible for controlling a relay control board (see Fig. \ref{fig:System Block Diagram}) which controls coaxial pairs of air cylinders. The actuation distance for each control arm is fixed. The coaxial pairs of arms are kept in an extended or retracted position, depending on the current move being executed. Potential optimizations and more stable cube manipulations  are obtained by simultaneously extending and retracting coaxial pairs of arms. The linear actuation motion allows two coaxial pairs of
+The FPGA control board is responsible for controlling a relay control board (see Fig. \ref{fig:System Block Diagram}) which controls coaxial pairs of air cylinders. The actuation distance for each control arm is fixed. The coaxial pairs of arms are kept in an extended or retracted position, depending on the current move being executed. Potential optimizations and more stable cube manipulations  are obtained by simultaneously extending and retracting coaxial pairs of arms. The linear actuation motion allows a coaxial pair of
 arms to extend, thus encasing two sides of the cube in the sockets of the arms. After a pair of arms extend,
 a stepper motor spins the arm corresponding to the appropriate move from the solution sequence (see section \ref{sec:Stepper Motors}). Each air cylinder is provided approximately 40-60 psi supplied from an air compressor. To protect against any arm collisions, only one pair of arms is in the extended position at any given time.
 
@@ -238,6 +271,7 @@ The 3D printed arm piece at the end of each arm assembly (see Fig. \ref{fig:Step
 
 
 \section{Firmware}
+\label{sec:Firmware}
 Table \ref{table:CMDS} is a detailed list of the commands we used for this project.
 
 \begin{table*}[!ht]
