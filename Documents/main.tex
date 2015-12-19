@@ -64,18 +64,17 @@ The goal of this project was to create an autonomous robotic Rubik's Cube solver
 
 \section{Software Implementation}
 \label{sec:Software Implementation}
-
-The project uses a good software implementation. (This won't be included in the actual report)
+The single board computer in our system operates a software stack composed of Python, Cython, and OpenCV. We utilized a 3rd party Python library called \textit{pyflycapture2} \cite{pyflycapture2} to capture images from the camera that was provided to us by Point Grey Research. Once the images of the cube are captured, we apply color recognition and categorization using OpenCV-Python \cite{OpenCVPython}. The characterization phase in OpenCV generates a matrix model of the Rubik's cube. We pass this matrix model on to an application called Kcube to generate a solution sequence needed to solve the cube permutation. We go into each these components in more detail in the next few sections.
 
 \subsection{Image Processing}
-The image processing functionalities aims to capture the state of the cube using camera. The criteria for evaluating the success of the image processing implementation is robustness and speed of the algorithm.
+The image processing aims to capture the initial state of the cube using a camera. The criteria for evaluating the success of the image processing implementation is robustness and speed of the algorithm.
 
 \subsubsection{Point Grey Camera and FlyCapture Software Development Kit}
-The cameras was supplied by Point Grey and interfaced through FlyCapture software development kit (SDK). The FlyCapture SDK was implemented in C. Cython, an optimised static compiler for Python to C, was used to bind with the SDK from Python.  The FlyCapture SDK  provided high configurability and flexible interface for the cameras which was adjust for image capturing mode and synchronizing image buffer retrieval. 
+We interfaced with the cameras using Point Grey's API, which was provided to us through the FlyCapture software development kit (SDK) \cite{FlyCapture}. The FlyCapture SDK was implemented in C. Since we chose to use Python as our base language, we had to use Cython, an optimized static compiler for C extensions in Python. We use Cython to bind the C functions within the FlyCapture API to Python functions.  The FlyCapture SDK  provided us with a large amount of configurability, and it gave us a flexible interface for the which the cameras settings could be adjusted to enhance capturing mode and synchronizing image buffer retrieval.
 
-The initial design was to use two camera connected to a SBC through a standard USB 2.0 connection. Each one of these cameras is responsible for capturing exactly three of the six faces of the cube with a view as shown in Fig. \ref{fig:Camera Positioning}. However, various parts from the mechanical system obscured the view a majority of the facelets on the three faces. Additionally, the challenges dealing with color recognition made using the initial camera configuration even more complex.
+We initially had planned to use two cameras, each connected to the SBC through a standard USB 2.0 connection. Each one of these cameras was going to be responsible for capturing exactly three of the six faces of the cube with a view like that shown in Fig. \ref{fig:Camera Positioning}. However, as construction of the main frame of our project came to a close, we soon realized that various parts of the mechanical system obscured the view of a large majority of the facelets on the three faces. On top of this, we also experienced challenges dealing with color recognition in ambient lighting. Because of these challenges we decided that our original camera configuration was not ideal.
 
-The final camera configuration used a single camera to capture the entire state of a Rubik's Cube as shown in Fig. \ref{fig:Obscured Cube}. A static sequence of rotation using the mechnical system is used to capture the cube in various configurations until all the facelets on the cube has been visible one or more times. The cube is then returned to its original state and the collection of images are saved off for later processing.
+We decided to compromise and use a single camera configuration. A single camera is used to capture the entire state of a Rubik's Cube. The single camera was best positioned like that shown in Fig. \ref{fig:Obscured Cube}. A static mechanical rotation sequence is used to capture the cube in various configurations until all of the facelets on the cube are captured. The cube is then returned to its original state, and the collection of images are saved off for facelet characterization.
 
 \subsubsection{Cube Orientation}
 \subsubsection{Color Recognition}
